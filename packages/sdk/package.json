@@ -1,8 +1,14 @@
 {
   "name": "timr-sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Community TypeScript SDK for the timr time-tracking API",
-  "keywords": ["timr", "time-tracking", "sdk", "openapi", "client"],
+  "keywords": [
+    "timr",
+    "time-tracking",
+    "sdk",
+    "openapi",
+    "client"
+  ],
   "license": "MIT",
   "author": "Michael Jauk",
   "repository": {
@@ -22,7 +28,11 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "engines": {
     "node": ">=20"
   },
