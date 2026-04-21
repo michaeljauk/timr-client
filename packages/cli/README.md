@@ -109,52 +109,26 @@ timr users list \
   [--limit 500]
 ```
 
-## Recipes
+## Response shape
 
-### Total hours tracked in a month
+Every list endpoint returns `{ data: T[], next_page_token: string | null }`. The element type `T` is documented in the auto-generated [`skills/timr/SCHEMA.md`](./skills/timr/SCHEMA.md) (shipped with the package). Regenerate it after a spec bump with `pnpm --filter timr-cli generate`.
+
+To inspect a shape live:
+
+```bash
+timr users list --limit 1 | jq '.data[0] | keys'
+```
+
+## Recipe
+
+Total hours tracked in a month (the only field-level aggregation that's safe without consulting the schema - `duration` is a required field in seconds on every `ProjectTime`):
 
 ```bash
 timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
   | jq '[.data[].duration] | add / 3600'
 ```
 
-### Hours per task
-
-```bash
-timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
-  | jq '
-    [.data[] | {task: .task.name, hours: (.duration / 3600)}]
-    | group_by(.task)
-    | map({task: .[0].task, hours: (map(.hours) | add)})
-    | sort_by(-.hours)
-  '
-```
-
-### Who booked nothing last week?
-
-```bash
-# 1. everyone who tracked something
-timr project-times list --start-from 2026-04-14 --start-to 2026-04-20 \
-  | jq '[.data[].user.id] | unique' > tracked.json
-
-# 2. all active users
-timr users list --limit 500 \
-  | jq '[.data[] | select(.resigned == false) | .id]' > all.json
-
-# 3. the diff
-jq -n --slurpfile a all.json --slurpfile b tracked.json '$a[0] - $b[0]'
-```
-
-### Export to CSV
-
-```bash
-timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
-  | jq -r '
-    (["date","user","task","hours","notes"]),
-    (.data[] | [.start[:10], .user.name, .task.name, (.duration / 3600), (.notes // "")])
-    | @csv
-  ' > april.csv
-```
+Anything more specific - grouping by task, filtering by user, CSV export - build against `SCHEMA.md` or the typed SDK. Response field names like `user.fullname` (not `user.name`) are easy to guess wrong.
 
 ## Environment variables
 

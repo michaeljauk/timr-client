@@ -23,7 +23,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "generate": "node scripts/generate-commands.mjs",
+    "generate": "node scripts/generate-commands.mjs && node scripts/generate-schema.mjs",
     "test": "vitest run --passWithNoTests",
     "postinstall": "node scripts/postinstall.js",
     "typecheck": "tsc --noEmit",

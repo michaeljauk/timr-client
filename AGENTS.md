@@ -63,6 +63,8 @@ Regenerate after a spec bump:
 pnpm --filter timr-cli generate
 ```
 
+The same command also regenerates `packages/cli/skills/timr/SCHEMA.md` - the flat field reference that the Claude Code skill consults instead of guessing field names. Any hand-written jq recipe with a specific field name is a liability; point agents and users at `SCHEMA.md` or the typed SDK.
+
 Hand-written commands live next to the generated ones:
 
 - `packages/cli/src/commands/auth.ts` - `login` / `logout` / `status` for stored OAuth credentials
