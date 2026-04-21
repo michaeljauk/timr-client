@@ -26,7 +26,7 @@ Requires Node 20+ and pnpm 10+. The repo is ESM-only.
 ## Core conventions
 
 - **No hand-edits to `packages/sdk/src/generated.ts`.** It is regenerated from `openapi.json`. If you need to change something, change the spec or the hand-written `client.ts` wrapper.
-- **Commit style:** Conventional Commits, lowercase subject (`feat: ...`, `fix: ...`, `chore: ...`, `docs: ...`). No `Co-Authored-By` trailers. Commit types drive versioning via Release Please — `feat:` bumps minor, `fix:` bumps patch, `feat!:` or `BREAKING CHANGE:` footer bumps major.
+- **Commit style:** Conventional Commits, lowercase subject (`feat: ...`, `fix: ...`, `chore: ...`, `docs: ...`). Enforced by a husky `commit-msg` hook running commitlint (`@commitlint/config-conventional`) — a non-conforming subject is rejected locally. No `Co-Authored-By` trailers. Commit types drive versioning via Release Please — `feat:` bumps minor, `fix:` bumps patch, `feat!:` or `BREAKING CHANGE:` footer bumps major.
 - **No horizontal rules (`---`) or em dashes in code comments.** Regular hyphens only.
 - **Keep comments minimal.** Names and types should carry the meaning. Only add a comment when the *why* is non-obvious.
 - **No emojis** unless explicitly asked.

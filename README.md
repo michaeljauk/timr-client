@@ -261,10 +261,10 @@ timr-client/
 
 Issues and pull requests are welcome. A few ground rules:
 
-- **Conventional Commits drive releases** - `feat:` bumps minor, `fix:` patches, `feat!:` majors (via Release Please)
-- **Generated code stays generated** - don't hand-edit `packages/sdk/src/generated.ts`
-- **Spec drift should be a PR on its own** - bump `openapi.json`, regenerate, and ship that alone so downstream consumers see the diff clearly
-- Conventional commits, lowercase subject
+- **Conventional Commits drive releases** - `feat:` bumps minor, `fix:` patches, `feat!:` majors (via Release Please). Enforced locally by a `commit-msg` husky hook running commitlint.
+- **Generated code stays generated** - don't hand-edit `packages/sdk/src/generated.ts`.
+- **Spec drift should be a PR on its own** - bump `openapi.json`, regenerate, and ship that alone so downstream consumers see the diff clearly.
+- Lowercase commit subjects.
 
 ## Disclaimer
 
