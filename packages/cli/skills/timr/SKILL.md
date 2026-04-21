@@ -56,7 +56,7 @@ timr project-times list --users alice_user_id --start-from 2026-04-01 --limit 50
 timr project-times list --task task_xyz --start-from 2026-04-01
 ```
 
-Response shape: `{ items: ProjectTime[], next_page_token?: string }`. A `ProjectTime` has `start`, `end`, `duration` (seconds), `task.name`, `user.name`, `notes`, `billable`, `status`.
+Response shape: `{ data: ProjectTime[], next_page_token?: string }`. A `ProjectTime` has `start`, `end`, `duration` (seconds), `task.name`, `user.name`, `notes`, `billable`, `status`.
 
 ### Tasks and users
 
@@ -76,7 +76,7 @@ timr users list --limit 500
 
 ```bash
 timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
-  | jq '[.items[].duration] | add / 3600'
+  | jq '[.data[].duration] | add / 3600'
 ```
 
 ### "Break down my hours by task this month"
@@ -84,7 +84,7 @@ timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
 ```bash
 timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
   | jq '
-    [.items[] | {task: .task.name, hours: (.duration / 3600)}]
+    [.data[] | {task: .task.name, hours: (.duration / 3600)}]
     | group_by(.task)
     | map({task: .[0].task, hours: (map(.hours) | add | . * 100 | round / 100)})
     | sort_by(-.hours)
@@ -95,10 +95,10 @@ timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
 
 ```bash
 timr project-times list --start-from 2026-04-14 --start-to 2026-04-20 \
-  | jq '[.items[].user.id] | unique' > /tmp/tracked.json
+  | jq '[.data[].user.id] | unique' > /tmp/tracked.json
 
 timr users list --limit 500 \
-  | jq '[.items[] | select(.resigned == false) | {id, name}]' > /tmp/active.json
+  | jq '[.data[] | select(.resigned == false) | {id, name}]' > /tmp/active.json
 
 jq -n --slurpfile active /tmp/active.json --slurpfile tracked /tmp/tracked.json '
   $active[0] | map(select(.id as $i | ($tracked[0] | index($i)) | not))
@@ -111,7 +111,7 @@ jq -n --slurpfile active /tmp/active.json --slurpfile tracked /tmp/tracked.json 
 timr project-times list --start-from 2026-03-01 --start-to 2026-03-31 --limit 1000 \
   | jq -r '
     (["date","user","task","hours","billable","notes"]),
-    (.items[] | [.start[:10], .user.name, .task.name, (.duration / 3600), .billable, (.notes // "")])
+    (.data[] | [.start[:10], .user.name, .task.name, (.duration / 3600), .billable, (.notes // "")])
     | @csv
   ' > march.csv
 ```
@@ -128,7 +128,7 @@ Example: surface project-times whose notes don't mention a Jira key:
 
 ```bash
 timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
-  | jq '.items[] | select((.notes // "") | test("[A-Z]+-[0-9]+") | not) | {start, task: .task.name, notes}'
+  | jq '.data[] | select((.notes // "") | test("[A-Z]+-[0-9]+") | not) | {start, task: .task.name, notes}'
 ```
 
 ## Pagination

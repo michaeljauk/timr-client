@@ -74,7 +74,7 @@ const { data } = await timr.GET("/project-times", {
   },
 });
 
-for (const pt of data?.items ?? []) {
+for (const pt of data?.data ?? []) {
   console.log(pt.start, pt.task?.name, pt.duration);
 }
 ```
@@ -101,7 +101,7 @@ timr project-times list --start-from 2026-04-01 --start-to 2026-04-30
 
 # Only one team member, piped through jq for a compact summary
 timr project-times list --users alice_user_id --start-from 2026-04-01 \
-  | jq '.items[] | {date: .start[:10], task: .task.name, hours: (.duration / 3600)}'
+  | jq '.data[] | {date: .start[:10], task: .task.name, hours: (.duration / 3600)}'
 
 # Find all bookable tasks that match a name
 timr tasks list --name "NetCero" --bookable
@@ -167,7 +167,7 @@ timr-dev --help
 timr-dev auth login         # stores ~/.config/timr-cli/credentials.json
 timr-dev auth status
 timr-dev users list --limit 5
-timr-dev project-times list --start-from 2026-04-01 --start-to 2026-04-30 | jq '.items | length'
+timr-dev project-times list --start-from 2026-04-01 --start-to 2026-04-30 | jq '.data | length'
 ```
 
 Or symlink it globally:
@@ -219,7 +219,7 @@ timr-dev --base-url https://api.staging.timr.com/v0.2/ users list
 timr-dev auth status                                    # exits 2 until login
 timr-dev auth login && timr-dev auth status             # should succeed
 timr-dev --help                                         # 13 resources + auth
-timr-dev users list --limit 1 | jq '.items[0] | keys'   # proves a real API call
+timr-dev users list --limit 1 | jq '.data[0] | keys'   # proves a real API call
 timr-dev cars list --help                               # proves generated flags
 ```
 
