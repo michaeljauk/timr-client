@@ -95,7 +95,7 @@ timr project-times list \
 
 ```bash
 timr tasks list \
-  [--name "NetCero"] \
+  [--name "Website"] \
   [--parent-task-id task_root] \
   [--bookable] \
   [--billable] \

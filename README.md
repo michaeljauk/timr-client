@@ -101,7 +101,7 @@ timr auth status
 # Every resource in the spec has a matching subcommand
 timr --help
 timr project-times list --start-from 2026-04-01 --start-to 2026-04-30
-timr tasks list --name "NetCero" --bookable
+timr tasks list --name "Website" --bookable
 ```
 
 Every list endpoint returns `{ data: T[], next_page_token: string | null }`. Field names for `T` are documented in the auto-generated [`packages/cli/skills/timr/SCHEMA.md`](./packages/cli/skills/timr/SCHEMA.md) - or inspect live with `jq '.data[0] | keys'`.
