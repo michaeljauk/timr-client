@@ -103,28 +103,29 @@ for await (const pt of allProjectTimes()) {
 }
 ```
 
-### Creating resources
+### Creating and updating resources
+
+Your editor autocompletes every field of every request body. Required fields are enforced at the type level.
 
 ```ts
 await timr.POST("/project-times", {
   body: {
+    // hover `body:` to see the full ProjectTimeCreate shape
     user_id: "user_abc",
     task_id: "task_xyz",
     start: "2026-04-21T09:00:00+02:00",
-    end: "2026-04-21T11:30:00+02:00",
-    notes: "Pairing session",
+    changed: false,
+    status: "changeable",
   },
 });
-```
 
-### Updating a resource
-
-```ts
-await timr.PUT("/project-times/{id}", {
+await timr.PATCH("/project-times/{id}", {
   params: { path: { id: "pt_123" } },
   body: { notes: "Updated notes" },
 });
 ```
+
+For a flat, non-editor reference of every response shape see [`packages/cli/skills/timr/SCHEMA.md`](../cli/skills/timr/SCHEMA.md).
 
 ## Configuration
 

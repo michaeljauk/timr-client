@@ -75,7 +75,8 @@ const { data } = await timr.GET("/project-times", {
 });
 
 for (const pt of data?.data ?? []) {
-  console.log(pt.start, pt.task?.name, pt.duration);
+  // every field is typed - hover in your editor to see the real shape
+  console.log(pt.id, pt.duration);
 }
 ```
 
@@ -92,22 +93,17 @@ pnpm dlx timr-cli --help
 ```bash
 # One-time setup: store OAuth client_id + client_secret
 timr auth login
-
-# Confirm it works
 timr auth status
 
-# All project times for April
+# Every resource in the spec has a matching subcommand
+timr --help
 timr project-times list --start-from 2026-04-01 --start-to 2026-04-30
-
-# Only one team member, piped through jq for a compact summary
-timr project-times list --users alice_user_id --start-from 2026-04-01 \
-  | jq '.data[] | {date: .start[:10], task: .task.name, hours: (.duration / 3600)}'
-
-# Find all bookable tasks that match a name
 timr tasks list --name "NetCero" --bookable
 ```
 
-See the [CLI README](./packages/cli/README.md) for the full command reference.
+Every list endpoint returns `{ data: T[], next_page_token: string | null }`. Field names for `T` are documented in the auto-generated [`packages/cli/skills/timr/SCHEMA.md`](./packages/cli/skills/timr/SCHEMA.md) - or inspect live with `jq '.data[0] | keys'`.
+
+See the [CLI README](./packages/cli/README.md) for commands and the [SDK README](./packages/sdk/README.md) for TypeScript usage.
 
 ### AI agent integration
 
