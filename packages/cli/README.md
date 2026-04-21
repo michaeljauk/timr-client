@@ -26,6 +26,22 @@ bun add -g timr-cli
 
 Requires Node 20+.
 
+### Run from source (contributors)
+
+```bash
+git clone https://github.com/michaeljauk/timr-client.git
+cd timr-client
+pnpm install
+pnpm build
+node packages/cli/dist/index.js --help
+
+# or symlink as `timr` on your PATH
+cd packages/cli && pnpm link --global
+timr --help
+```
+
+See the [root README](../../README.md#testing-the-cli-locally) for the full local-testing guide.
+
 ## Authentication
 
 The timr API uses **OAuth2 `client_credentials`**. Create an OAuth client in timr under `Settings > API Access`, then run:
