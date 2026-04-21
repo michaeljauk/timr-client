@@ -7,7 +7,9 @@ A fully typed TypeScript SDK and CLI for the [timr](https://timr.com) time-track
 [![CI](https://github.com/michaeljauk/timr-client/actions/workflows/ci.yml/badge.svg)](https://github.com/michaeljauk/timr-client/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/michaeljauk/timr-client/actions/workflows/codeql.yml/badge.svg)](https://github.com/michaeljauk/timr-client/actions/workflows/codeql.yml)
 [![timr-sdk](https://img.shields.io/npm/v/timr-sdk.svg?label=timr-sdk)](https://www.npmjs.com/package/timr-sdk)
+[![timr-sdk downloads](https://img.shields.io/npm/dm/timr-sdk.svg?label=sdk%20downloads)](https://www.npmjs.com/package/timr-sdk)
 [![timr-cli](https://img.shields.io/npm/v/timr-cli.svg?label=timr-cli)](https://www.npmjs.com/package/timr-cli)
+[![timr-cli downloads](https://img.shields.io/npm/dm/timr-cli.svg?label=cli%20downloads)](https://www.npmjs.com/package/timr-cli)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ---
