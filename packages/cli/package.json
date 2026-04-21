@@ -16,7 +16,7 @@
   "bin": {
     "timr": "./dist/index.js"
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": ["dist", "skills", "scripts", "README.md", "LICENSE"],
   "engines": {
     "node": ">=20"
   },
@@ -24,6 +24,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest run --passWithNoTests",
+    "postinstall": "node scripts/postinstall.js",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit"
   },

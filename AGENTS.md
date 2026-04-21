@@ -55,8 +55,17 @@ Spec bumps ship as their own PR.
 3. Pull the client via `resolveClient(args)` from `context.ts`.
 4. Output JSON via `printJson(data)`. Do not pretty-print tables - users pipe to `jq`.
 5. Add a recipe to `packages/cli/README.md`.
+6. Mirror the new command in `packages/cli/skills/timr/SKILL.md` so Claude Code agents know about it.
 
 The SDK auto-generates every endpoint already. If `timr.GET("/new/path", ...)` works in a smoke test, you're good.
+
+## Claude Code skill
+
+`packages/cli/skills/timr/SKILL.md` is bundled into the published `timr-cli` tarball and copied to `~/.claude/skills/timr/` by `packages/cli/scripts/postinstall.js` on `npm install -g`.
+
+- Keep the skill focused on *workflows* (questions to answer, recipes with `jq`), not an endpoint-by-endpoint dump.
+- Update the skill whenever you add or rename a CLI command, change flag names, or add env vars.
+- Bump the `version:` field in the frontmatter in lockstep with the CLI's `package.json` version.
 
 ## Extending the SDK
 
