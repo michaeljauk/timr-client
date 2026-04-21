@@ -1,0 +1,41 @@
+{
+  "name": "timr-cli",
+  "version": "0.1.0",
+  "description": "Command-line interface for the timr time-tracking API",
+  "keywords": ["timr", "time-tracking", "cli"],
+  "license": "MIT",
+  "author": "Michael Jauk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michaeljauk/timr-client.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/michaeljauk/timr-client/tree/main/packages/cli",
+  "bugs": "https://github.com/michaeljauk/timr-client/issues",
+  "type": "module",
+  "bin": {
+    "timr": "./dist/index.js"
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run --passWithNoTests",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "citty": "^0.1.6",
+    "consola": "^3.2.3",
+    "timr-sdk": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}
