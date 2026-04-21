@@ -138,13 +138,92 @@ A ready-made reconciliation tool is not part of this repo on purpose - this SDK 
 
 ```bash
 pnpm install
-pnpm generate      # regenerate types from openapi.json
+pnpm generate      # regenerate SDK types + CLI commands from openapi.json
 pnpm build
 pnpm test
 pnpm typecheck
 ```
 
 Requires Node 20+ and pnpm 10+. Turborepo orchestrates workspace tasks.
+
+## Testing the CLI locally
+
+Before publishing to npm you can run the CLI straight from the workspace.
+
+```bash
+# 1. install + build the workspace
+pnpm install
+pnpm build
+
+# 2. run the CLI directly (no global install needed)
+node packages/cli/dist/index.js --help
+```
+
+For convenience, alias it for the session:
+
+```bash
+alias timr-dev="node $(pwd)/packages/cli/dist/index.js"
+timr-dev --help
+timr-dev auth login         # stores ~/.config/timr-cli/credentials.json
+timr-dev auth status
+timr-dev users list --limit 5
+timr-dev project-times list --start-from 2026-04-01 --start-to 2026-04-30 | jq '.items | length'
+```
+
+Or symlink it globally:
+
+```bash
+cd packages/cli && pnpm link --global     # exposes `timr` on your PATH
+timr --help
+pnpm unlink --global timr-cli             # undo when you're done
+```
+
+Hot-reload during development (rebuilds on every file change):
+
+```bash
+pnpm --filter timr-cli dev
+# in another shell
+node packages/cli/dist/index.js --help
+```
+
+Regenerate CLI commands after editing `openapi.json`:
+
+```bash
+pnpm --filter timr-cli generate && pnpm build
+```
+
+### Authentication for local runs
+
+The CLI auth flow is identical to the published version:
+
+1. Create an OAuth client in timr (`Settings > API Access`, grant `client_credentials`, scope `timrclient openid`).
+2. `timr-dev auth login` and paste the `client_id` + `client_secret`. The CLI does a token exchange before saving, so a wrong secret fails fast.
+3. Subsequent commands reuse the stored credentials and cache the access token in memory.
+
+Shortcuts if you don't want to store credentials:
+
+```bash
+# one-shot static bearer
+timr-dev --token "eyJ..." users list
+
+# one-shot OAuth via env
+TIMR_CLIENT_ID=... TIMR_CLIENT_SECRET=... timr-dev users list
+
+# target staging or a self-hosted instance
+timr-dev --base-url https://api.staging.timr.com/v0.2/ users list
+```
+
+### Smoke test checklist
+
+```bash
+timr-dev auth status                                    # exits 2 until login
+timr-dev auth login && timr-dev auth status             # should succeed
+timr-dev --help                                         # 13 resources + auth
+timr-dev users list --limit 1 | jq '.items[0] | keys'   # proves a real API call
+timr-dev cars list --help                               # proves generated flags
+```
+
+If any of those fail, re-run `pnpm build` and check `pnpm -r typecheck`.
 
 ### Updating the spec
 
