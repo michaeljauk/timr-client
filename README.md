@@ -29,7 +29,7 @@ Typical use cases:
 
 | Package | Version | Description |
 |---------|---------|-------------|
-| [`timr-sdk`](./packages/sdk) | [![npm](https://img.shields.io/npm/v/timr-sdk.svg)](https://www.npmjs.com/package/timr-sdk) | Typed SDK, zero config beyond a bearer token |
+| [`timr-sdk`](./packages/sdk) | [![npm](https://img.shields.io/npm/v/timr-sdk.svg)](https://www.npmjs.com/package/timr-sdk) | Typed SDK with built-in OAuth (client_credentials) or static bearer token |
 | [`timr-cli`](./packages/cli) | [![npm](https://img.shields.io/npm/v/timr-cli.svg)](https://www.npmjs.com/package/timr-cli) | Command-line interface built on the SDK |
 
 Both packages track timr API version **0.2.14** (pinned in [`openapi.json`](./openapi.json)).
@@ -55,7 +55,14 @@ pnpm add timr-sdk
 ```ts
 import { createTimrClient } from "timr-sdk";
 
-const timr = createTimrClient({ token: process.env.TIMR_TOKEN! });
+// OAuth2 client_credentials (recommended)
+const timr = createTimrClient({
+  clientId: process.env.TIMR_CLIENT_ID!,
+  clientSecret: process.env.TIMR_CLIENT_SECRET!,
+});
+
+// ...or a static bearer token
+// const timr = createTimrClient({ token: process.env.TIMR_TOKEN! });
 
 const { data } = await timr.GET("/project-times", {
   params: {
@@ -83,7 +90,11 @@ pnpm dlx timr-cli --help
 ```
 
 ```bash
-export TIMR_TOKEN=your-bearer-token
+# One-time setup: store OAuth client_id + client_secret
+timr auth login
+
+# Confirm it works
+timr auth status
 
 # All project times for April
 timr project-times list --start-from 2026-04-01 --start-to 2026-04-30
@@ -152,15 +163,21 @@ timr-client/
 ├── packages/
 │   ├── sdk/                  # timr-sdk
 │   │   ├── src/
-│   │   │   ├── client.ts     # hand-written wrapper
+│   │   │   ├── client.ts     # openapi-fetch wrapper + auth middleware
+│   │   │   ├── oauth.ts      # client_credentials token provider
 │   │   │   ├── generated.ts  # types (generated, do not edit)
 │   │   │   └── index.ts      # public surface
 │   │   └── test/
 │   └── cli/                  # timr-cli
+│       ├── scripts/
+│       │   └── generate-commands.mjs   # emits commands/generated/* from spec
 │       └── src/
 │           ├── index.ts      # citty entry
-│           ├── context.ts    # auth + output helpers
+│           ├── lib/credentials.ts      # ~/.config/timr-cli/credentials.json
 │           └── commands/
+│               ├── _shared.ts          # globalArgs, resolveClient, helpers
+│               ├── auth.ts             # login / logout / status
+│               └── generated/          # one file per resource (do not edit)
 └── .changeset/               # release notes in flight
 ```
 

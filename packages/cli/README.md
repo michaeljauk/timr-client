@@ -28,19 +28,39 @@ Requires Node 20+.
 
 ## Authentication
 
+The timr API uses **OAuth2 `client_credentials`**. Create an OAuth client in timr under `Settings > API Access`, then run:
+
 ```bash
-export TIMR_TOKEN=your-bearer-token
-# optional, defaults to https://api.timr.com/v0.2/
-export TIMR_BASE_URL=https://api.timr.com/v0.2/
+timr auth login       # prompts for client_id + client_secret, verifies, stores
+timr auth status      # checks current credentials
+timr auth logout      # removes stored credentials
 ```
 
-Or pass `--token <token>` on every command.
+Credentials are stored at `~/.config/timr-cli/credentials.json` with mode 600.
 
-> Generate a token in timr under `Settings > API Access`. Treat it like a password.
+Alternative sources, checked in this order on every command:
+
+1. `--token <bearer>` or `$TIMR_TOKEN` - static bearer token, skips OAuth
+2. `--client-id` + `--client-secret` (or `$TIMR_CLIENT_ID` + `$TIMR_CLIENT_SECRET`)
+3. Stored credentials from `timr auth login`
+
+Optional overrides:
+
+- `--token-url <url>` / `$TIMR_TOKEN_URL` - defaults to `https://system.timr.com/id/oauth2/token`
+- `--scope <scope>` / `$TIMR_SCOPE` - defaults to `timrclient openid`
+- `--base-url <url>` / `$TIMR_BASE_URL` - defaults to `https://api.timr.com/v0.2/`
 
 ## Commands
 
 All commands print JSON to stdout. Errors go to stderr with a non-zero exit code.
+
+Run `timr --help` for the full list - every resource in the OpenAPI spec has a matching subcommand (`cars`, `drive-logs`, `holiday-calendars`, `project-times`, `tasks`, `teams`, `users`, `work-schedule-models`, `working-times`, etc.).
+
+Conventions:
+
+- `list` / `get` / `create` / `update` / `delete` map to `GET /x`, `GET /x/{id}`, `POST /x`, `PATCH /x/{id}`, `DELETE /x/{id}`.
+- Sub-resources use `list-<sub>`, `create-<sub>`, `add-<singular>`, `remove-<singular>`, etc.
+- Mutating commands read the body from `--data '<json>'`, `--data @file.json`, `--data -` (stdin), or piped JSON.
 
 ### `timr project-times list`
 
@@ -124,7 +144,11 @@ timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
 
 | Variable | Description |
 |----------|-------------|
-| `TIMR_TOKEN` | Bearer token (required unless passed via `--token`) |
+| `TIMR_TOKEN` | Static bearer token. If set, skips OAuth |
+| `TIMR_CLIENT_ID` | OAuth client id |
+| `TIMR_CLIENT_SECRET` | OAuth client secret |
+| `TIMR_TOKEN_URL` | Override OAuth token endpoint |
+| `TIMR_SCOPE` | Override OAuth scope |
 | `TIMR_BASE_URL` | Override API base URL |
 | `NO_COLOR` | Disable colored output in error messages |
 
@@ -133,7 +157,8 @@ timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
 | Code | Meaning |
 |------|---------|
 | `0` | Success |
-| `1` | Error (network, HTTP non-2xx, or bad arguments) |
+| `1` | Error (network, HTTP non-2xx, token exchange failed, bad arguments) |
+| `2` | Not authenticated - run `timr auth login` |
 
 ## Claude Code skill
 

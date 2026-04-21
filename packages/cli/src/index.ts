@@ -1,7 +1,6 @@
 import { defineCommand, runMain } from "citty";
-import { projectTimesCommand } from "./commands/project-times.js";
-import { tasksCommand } from "./commands/tasks.js";
-import { usersCommand } from "./commands/users.js";
+import { authCommand } from "./commands/auth.js";
+import { generatedSubCommands } from "./commands/generated/_root.js";
 
 const main = defineCommand({
   meta: {
@@ -10,9 +9,8 @@ const main = defineCommand({
     description: "Community CLI for the timr time-tracking API",
   },
   subCommands: {
-    "project-times": projectTimesCommand,
-    tasks: tasksCommand,
-    users: usersCommand,
+    auth: authCommand,
+    ...generatedSubCommands,
   },
 });
 

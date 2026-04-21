@@ -31,13 +31,35 @@ bun add timr-sdk
 
 ## Usage
 
-### Minimal
+### Authentication
+
+The SDK supports three auth modes. Pick whichever fits your deployment.
 
 ```ts
 import { createTimrClient } from "timr-sdk";
 
-const timr = createTimrClient({ token: process.env.TIMR_TOKEN! });
+// 1. OAuth2 client_credentials (recommended for server-to-server)
+const timr = createTimrClient({
+  clientId: process.env.TIMR_CLIENT_ID!,
+  clientSecret: process.env.TIMR_CLIENT_SECRET!,
+  // tokenUrl: "https://system.timr.com/id/oauth2/token", // default
+  // scope: "timrclient openid",                           // default
+});
 
+// 2. Static bearer token (personal scripts, CI)
+const timr2 = createTimrClient({ token: process.env.TIMR_TOKEN! });
+
+// 3. Custom token provider (rotate tokens from your secret store)
+const timr3 = createTimrClient({
+  tokenProvider: async () => await mySecretStore.getTimrToken(),
+});
+```
+
+OAuth tokens are cached in memory and refreshed 60s before expiry. Concurrent requests share a single in-flight token exchange.
+
+### Minimal
+
+```ts
 const { data } = await timr.GET("/users");
 console.log(data?.items);
 ```
@@ -108,10 +130,14 @@ await timr.PUT("/project-times/{id}", {
 
 ```ts
 createTimrClient({
-  token: "...",                        // required, used as Authorization: Bearer ...
+  // pick ONE of the auth modes:
+  token: "...",                         // static bearer
+  // clientId, clientSecret, tokenUrl?, scope?  // OAuth2 client_credentials
+  // tokenProvider: async () => "..."           // custom
+
   baseUrl: "https://api.timr.com/v0.2/", // override for staging or self-hosted
-  fetch: globalThis.fetch,              // inject a custom fetch (undici, msw, ...)
-  headers: { "User-Agent": "my-app" },  // additional default headers
+  fetch: globalThis.fetch,               // inject a custom fetch (undici, msw, ...)
+  headers: { "User-Agent": "my-app" },   // additional default headers
 });
 ```
 

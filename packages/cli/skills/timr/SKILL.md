@@ -11,23 +11,37 @@ Community CLI for the [timr](https://timr.com) time-tracking API. Powered by `ti
 ## Setup check
 
 ```bash
-timr --help          # verify CLI is installed
-echo $TIMR_TOKEN     # verify token is exported
+timr --help             # verify CLI is installed
+timr auth status        # verify credentials are present and valid
 ```
 
-If `TIMR_TOKEN` is missing, tell the user to:
+If `timr auth status` reports "Not authenticated", tell the user to:
 
-1. Open timr, go to `Settings > API Access`, generate a bearer token.
-2. Export it: `export TIMR_TOKEN=<token>` (or add to `~/.zshrc` / `~/.config/fish/config.fish`).
-3. Optionally `export TIMR_BASE_URL=...` for staging or self-hosted.
+1. Open timr, go to `Settings > API Access` and create an **OAuth client** (client_credentials grant). Copy the `client_id` and `client_secret`.
+2. Run `timr auth login` and paste them when prompted. The CLI verifies the credentials and stores them at `~/.config/timr-cli/credentials.json` with mode 600.
+3. Optionally pass `--base-url <url>` for staging/self-hosted or `--scope "timrclient openid"` to override the default scope.
 
-Pass `--token <token>` on any command to override.
+Alternative auth sources (checked in this order on every command):
+
+1. `--token <bearer>` / `$TIMR_TOKEN` - static bearer token (skips OAuth entirely)
+2. `--client-id` + `--client-secret` / `$TIMR_CLIENT_ID` + `$TIMR_CLIENT_SECRET` - OAuth from env/flags
+3. Stored credentials from `timr auth login`
+
+To reset: `timr auth logout`.
 
 ## Output
 
 Every command prints JSON to stdout. Always pipe through `jq` to extract what the user asked for - never present raw JSON unless they ask for it.
 
 ## Commands
+
+The CLI mirrors the OpenAPI spec. Run `timr --help` to see every resource, and `timr <resource> --help` for its verbs.
+
+Conventions:
+
+- `list` / `get` / `create` / `update` / `delete` map to `GET /x`, `GET /x/{id}`, `POST /x`, `PATCH /x/{id}`, `DELETE /x/{id}`.
+- Sub-resources use `list-<sub>`, `create-<sub>`, `add-<singular>`, `remove-<singular>`, etc.
+- Mutating commands take the body via `--data '<json>'`, `--data @file.json`, `--data -` (stdin), or piped JSON.
 
 ### Project times (the main use case)
 
@@ -40,28 +54,21 @@ timr project-times list --users alice_user_id --start-from 2026-04-01 --limit 50
 
 # Only one task
 timr project-times list --task task_xyz --start-from 2026-04-01
-
-# Multiple users (comma-separated)
-timr project-times list --users alice,bob,carol --start-from 2026-04-01
 ```
 
 Response shape: `{ items: ProjectTime[], next_page_token?: string }`. A `ProjectTime` has `start`, `end`, `duration` (seconds), `task.name`, `user.name`, `notes`, `billable`, `status`.
 
-### Tasks
+### Tasks and users
 
 ```bash
-timr tasks list --name "NetCero"            # substring match
-timr tasks list --bookable                  # only bookable
-timr tasks list --parent-task-id task_root  # children of a specific task
-```
-
-### Users
-
-```bash
+timr tasks list --name "NetCero"
+timr tasks list --bookable
 timr users list --limit 500
-timr users list --resigned   # include resigned users
-timr users list --name michael
 ```
+
+### Other resources
+
+`cars`, `drive-logs`, `drive-log-categories`, `holiday-calendars`, `teams`, `work-schedule-models`, `working-times`, `working-time-requests`, `working-time-types`, `working-time-date-spans`. Each follows the same list/get/create/update/delete pattern.
 
 ## Common questions and the queries that answer them
 
@@ -87,15 +94,12 @@ timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
 ### "Who in the team didn't book any time last week?"
 
 ```bash
-# tracked users
 timr project-times list --start-from 2026-04-14 --start-to 2026-04-20 \
   | jq '[.items[].user.id] | unique' > /tmp/tracked.json
 
-# all active users
 timr users list --limit 500 \
   | jq '[.items[] | select(.resigned == false) | {id, name}]' > /tmp/active.json
 
-# diff
 jq -n --slurpfile active /tmp/active.json --slurpfile tracked /tmp/tracked.json '
   $active[0] | map(select(.id as $i | ($tracked[0] | index($i)) | not))
 '
@@ -136,16 +140,17 @@ The API uses opaque page tokens. For queries that need everything, ask the user 
 | Exit | Meaning |
 |------|---------|
 | `0` | Success |
-| `1` | Error - printed to stderr (bad args, network, 4xx/5xx) |
+| `1` | Error - printed to stderr (bad args, network, 4xx/5xx, token exchange failure) |
+| `2` | Not authenticated - run `timr auth login` |
 
-On 401, the token is wrong or expired. On 403, the token lacks scope for that resource. Tell the user which it is and how to fix it rather than retrying.
+On 401, the OAuth token was rejected - credentials may have been rotated; re-run `timr auth login`. On 403, the client lacks scope for that resource. Tell the user which it is and how to fix it rather than retrying.
 
 ## Things to avoid
 
 - Do not hit the timr API in a loop without pagination. Respect rate limits.
-- Do not log the token. Never include `$TIMR_TOKEN` in output the user will paste elsewhere.
+- Do not log the `client_secret` or access token. Never include them in output the user will paste elsewhere.
 - Do not edit or delete project times without explicit user confirmation - those are usually invoice-relevant.
-- Do not invent endpoints. If something is not covered by `timr project-times|tasks|users`, fall back to the SDK or direct `curl` with `Authorization: Bearer $TIMR_TOKEN` against `https://api.timr.com/v0.2/...`.
+- Do not invent endpoints. If something is not covered by a subcommand, fall back to the SDK.
 
 ## Reference
 
