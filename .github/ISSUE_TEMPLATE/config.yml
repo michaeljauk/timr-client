@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: timr API docs (troii)
+    url: https://app.swaggerhub.com/apis-docs/troii/timr
+    about: For questions about the timr API itself (endpoints, field semantics, auth), check the upstream docs first.
+  - name: Security vulnerability
+    url: https://github.com/michaeljauk/timr-client/security/advisories/new
+    about: Please report security issues privately via GitHub security advisories, not as a public issue.

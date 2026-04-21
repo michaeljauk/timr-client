@@ -6,6 +6,8 @@ A fully typed TypeScript SDK for the [timr](https://timr.com) time-tracking API.
 
 [![npm version](https://img.shields.io/npm/v/timr-sdk.svg)](https://www.npmjs.com/package/timr-sdk)
 [![npm downloads](https://img.shields.io/npm/dm/timr-sdk.svg)](https://www.npmjs.com/package/timr-sdk)
+[![install size](https://packagephobia.com/badge?p=timr-sdk)](https://packagephobia.com/result?p=timr-sdk)
+[![provenance](https://img.shields.io/npm/v/timr-sdk.svg?label=provenance&color=2da44e)](https://www.npmjs.com/package/timr-sdk?activeTab=code)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](../../LICENSE)
 
 ---
