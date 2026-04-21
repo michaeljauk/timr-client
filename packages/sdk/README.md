@@ -1,54 +1,129 @@
 # timr-sdk
 
-Fully typed TypeScript SDK for the [timr](https://timr.com) time-tracking API.
+A fully typed TypeScript SDK for the [timr](https://timr.com) time-tracking API. Generated from the official OpenAPI spec.
 
-Unofficial. Not affiliated with troii Software GmbH.
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/michaeljauk)
+
+[![npm version](https://img.shields.io/npm/v/timr-sdk.svg)](https://www.npmjs.com/package/timr-sdk)
+[![npm downloads](https://img.shields.io/npm/dm/timr-sdk.svg)](https://www.npmjs.com/package/timr-sdk)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](../../LICENSE)
+
+---
+
+Unofficial, community-maintained. Not affiliated with [troii Software GmbH](https://www.troii.com).
+
+## Features
+
+- Complete type coverage for every path, request body, query parameter, and response - generated from timr API `0.2.14`
+- One runtime dependency: [`openapi-fetch`](https://openapi-ts.dev/openapi-fetch/) (~5 kB gzipped, zero deps itself)
+- ESM, tree-shakeable, works in Node 20+, Bun, Deno, Cloudflare Workers, and Vercel Edge
+- Throws a typed `TimrError` on any non-2xx response so you never get a surprise `undefined`
 
 ## Install
 
 ```bash
 pnpm add timr-sdk
+# or
+npm install timr-sdk
+# or
+bun add timr-sdk
 ```
 
 ## Usage
+
+### Minimal
 
 ```ts
 import { createTimrClient } from "timr-sdk";
 
 const timr = createTimrClient({ token: process.env.TIMR_TOKEN! });
 
-const { data, error } = await timr.GET("/project-times", {
+const { data } = await timr.GET("/users");
+console.log(data?.items);
+```
+
+### Filtering
+
+Every query parameter is typed. Your editor will autocomplete them.
+
+```ts
+const { data } = await timr.GET("/project-times", {
   params: {
     query: {
       start_from: "2026-04-01",
       start_to: "2026-04-30",
-      limit: 100,
+      users: ["user_abc", "user_def"],
+      billable: true,
+      limit: 500,
     },
   },
 });
-
-if (error) throw error;
-console.log(data);
 ```
 
-## Options
+### Pagination
 
-| Option | Description | Default |
-| --- | --- | --- |
-| `token` | timr API bearer token (required) | — |
-| `baseUrl` | API base URL | `https://api.timr.com/v0.2/` |
-| `fetch` | Custom fetch implementation | `globalThis.fetch` |
-| `headers` | Additional default headers | `{}` |
+timr uses opaque page tokens. Walk pages like this:
 
-## Errors
+```ts
+async function* allProjectTimes() {
+  let pageToken: string | undefined;
+  do {
+    const { data } = await timr.GET("/project-times", {
+      params: { query: { page_token: pageToken, limit: 500 } },
+    });
+    yield* data?.items ?? [];
+    pageToken = data?.next_page_token;
+  } while (pageToken);
+}
 
-Non-2xx responses throw a `TimrError` with `status` and `body` populated.
+for await (const pt of allProjectTimes()) {
+  // ...
+}
+```
+
+### Creating resources
+
+```ts
+await timr.POST("/project-times", {
+  body: {
+    user_id: "user_abc",
+    task_id: "task_xyz",
+    start: "2026-04-21T09:00:00+02:00",
+    end: "2026-04-21T11:30:00+02:00",
+    notes: "Pairing session",
+  },
+});
+```
+
+### Updating a resource
+
+```ts
+await timr.PUT("/project-times/{id}", {
+  params: { path: { id: "pt_123" } },
+  body: { notes: "Updated notes" },
+});
+```
+
+## Configuration
+
+```ts
+createTimrClient({
+  token: "...",                        // required, used as Authorization: Bearer ...
+  baseUrl: "https://api.timr.com/v0.2/", // override for staging or self-hosted
+  fetch: globalThis.fetch,              // inject a custom fetch (undici, msw, ...)
+  headers: { "User-Agent": "my-app" },  // additional default headers
+});
+```
+
+## Error handling
+
+Non-2xx responses throw a `TimrError`:
 
 ```ts
 import { TimrError } from "timr-sdk";
 
 try {
-  await timr.GET("/users");
+  await timr.GET("/users/{id}", { params: { path: { id: "nope" } } });
 } catch (err) {
   if (err instanceof TimrError) {
     console.error(err.status, err.body);
@@ -56,6 +131,47 @@ try {
 }
 ```
 
+Set up retries, logging, or telemetry by adding [middleware](https://openapi-ts.dev/openapi-fetch/middleware-auth) to the returned client:
+
+```ts
+timr.use({
+  async onRequest({ request }) {
+    console.log(">", request.method, request.url);
+  },
+});
+```
+
+## Types
+
+Import the raw OpenAPI types if you need them:
+
+```ts
+import type { paths, components, operations } from "timr-sdk";
+
+type ProjectTime = components["schemas"]["ProjectTime"];
+type ListProjectTimesResponse =
+  paths["/project-times"]["get"]["responses"][200]["content"]["application/json"];
+```
+
+## API reference
+
+The timr API is documented on SwaggerHub:
+
+- Interactive docs: <https://app.swaggerhub.com/apis-docs/troii/timr/0.2.13?view=elementsDocs>
+- Raw spec (pinned): <https://api.swaggerhub.com/apis/troii/timr/0.2.14>
+
+## Compatibility
+
+| SDK version | timr API version |
+|-------------|------------------|
+| `0.1.x` | `0.2.14` |
+
+The SDK stays on `0.x` until the timr API reaches `1.0`. Breaking changes in the API may require a minor bump until then.
+
+## Support
+
+If this SDK saves you time, consider [buying me a coffee](https://buymeacoffee.com/michaeljauk).
+
 ## License
 
-MIT © Michael Jauk
+MIT © [Michael Jauk](https://github.com/michaeljauk)
