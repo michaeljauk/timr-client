@@ -119,16 +119,15 @@ To inspect a shape live:
 timr users list --limit 1 | jq '.data[0] | keys'
 ```
 
-## Recipe
+## Building queries
 
-Total hours tracked in a month (the only field-level aggregation that's safe without consulting the schema - `duration` is a required field in seconds on every `ProjectTime`):
+The only fields you can assume without checking the schema are `data` (array) and `next_page_token` (string or null). Everything else - including `duration`, which is an object `{ type, minutes, minutes_rounded }` rather than a number - must be read from [`SCHEMA.md`](./skills/timr/SCHEMA.md) or the typed SDK first.
 
-```bash
-timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
-  | jq '[.data[].duration] | add / 3600'
-```
+Workflow:
 
-Anything more specific - grouping by task, filtering by user, CSV export - build against `SCHEMA.md` or the typed SDK. Response field names like `user.fullname` (not `user.name`) are easy to guess wrong.
+1. Read the resource's section of `SCHEMA.md`.
+2. Build the `jq` query against real field paths.
+3. Verify with `timr <cmd> --limit 1 | jq '.data[0]'` before running on a full month.
 
 ## Environment variables
 

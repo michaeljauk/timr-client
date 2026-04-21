@@ -58,17 +58,13 @@ Conventions (mechanical, derived from the OpenAPI spec):
 
 ### Stable invariants you can rely on
 
-Every list endpoint returns `{ data: T[], next_page_token: string | null }`. That's it. Anything below `data[]` must be verified against `SCHEMA.md` or a real response before use.
+Every list endpoint returns `{ data: T[], next_page_token: string | null }`. **Everything else below `data[]` must be verified against `SCHEMA.md` or a real response before use.** No exceptions - even `duration` on a `ProjectTime` is an object (`{ type, minutes, minutes_rounded }`), not a number of seconds.
 
-`ProjectTime.duration` is always present (seconds). That's the one field safe to aggregate blind.
+Workflow for any aggregation ("total hours in April", "hours per task", "who booked nothing"):
 
-```bash
-# Total hours tracked in April
-timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
-  | jq '[.data[].duration] | add / 3600'
-```
-
-Anything more specific ("who booked nothing", "CSV export", "group by task") - read `SCHEMA.md` first, then build the `jq` query.
+1. Read the relevant section of [`SCHEMA.md`](./SCHEMA.md) for the resource's response type.
+2. Build the `jq` query against the real field paths.
+3. Sanity-check with `timr <cmd> --limit 1 | jq '.data[0]'` before running on a full month.
 
 ## Pagination
 
