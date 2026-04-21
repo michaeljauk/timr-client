@@ -135,6 +135,19 @@ timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
 | `0` | Success |
 | `1` | Error (network, HTTP non-2xx, or bad arguments) |
 
+## Claude Code skill
+
+A [Claude Code](https://claude.ai/code) skill is bundled and auto-installs to `~/.claude/skills/timr/SKILL.md` on `npm install -g timr-cli`. Once installed, you can ask Claude things like:
+
+- "How many hours did I track last month?"
+- "Break down my April hours by task"
+- "Who in my team didn't book any time last week?"
+- "Export March project times as CSV"
+
+The agent will run the right `timr` commands, pipe the output through `jq`, and return the answer.
+
+Skill source: [`skills/timr/SKILL.md`](./skills/timr/SKILL.md).
+
 ## Support
 
 If this CLI saves you time, consider [buying me a coffee](https://buymeacoffee.com/michaeljauk).

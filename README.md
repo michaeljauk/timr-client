@@ -98,6 +98,12 @@ timr tasks list --name "NetCero" --bookable
 
 See the [CLI README](./packages/cli/README.md) for the full command reference.
 
+### AI agent integration
+
+A [Claude Code](https://claude.ai/code) skill ships inside the CLI package and auto-installs to `~/.claude/skills/timr/` on `npm install -g timr-cli`. No extra setup needed. Use `/timr` (or just ask naturally) in any Claude Code session and the agent will run commands against your tracked data, reconcile hours, answer "how many hours in April?", and similar.
+
+The skill is also usable with other agent runners that honor the same `SKILL.md` format.
+
 ---
 
 ## Reconciling against an issue tracker
