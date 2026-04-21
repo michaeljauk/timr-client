@@ -61,7 +61,7 @@ OAuth tokens are cached in memory and refreshed 60s before expiry. Concurrent re
 
 ```ts
 const { data } = await timr.GET("/users");
-console.log(data?.items);
+console.log(data?.data);
 ```
 
 ### Filtering
@@ -93,7 +93,7 @@ async function* allProjectTimes() {
     const { data } = await timr.GET("/project-times", {
       params: { query: { page_token: pageToken, limit: 500 } },
     });
-    yield* data?.items ?? [];
+    yield* data?.data ?? [];
     pageToken = data?.next_page_token;
   } while (pageToken);
 }

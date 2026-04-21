@@ -115,7 +115,7 @@ timr users list \
 
 ```bash
 timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
-  | jq '[.items[].duration] | add / 3600'
+  | jq '[.data[].duration] | add / 3600'
 ```
 
 ### Hours per task
@@ -123,7 +123,7 @@ timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
 ```bash
 timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
   | jq '
-    [.items[] | {task: .task.name, hours: (.duration / 3600)}]
+    [.data[] | {task: .task.name, hours: (.duration / 3600)}]
     | group_by(.task)
     | map({task: .[0].task, hours: (map(.hours) | add)})
     | sort_by(-.hours)
@@ -135,11 +135,11 @@ timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
 ```bash
 # 1. everyone who tracked something
 timr project-times list --start-from 2026-04-14 --start-to 2026-04-20 \
-  | jq '[.items[].user.id] | unique' > tracked.json
+  | jq '[.data[].user.id] | unique' > tracked.json
 
 # 2. all active users
 timr users list --limit 500 \
-  | jq '[.items[] | select(.resigned == false) | .id]' > all.json
+  | jq '[.data[] | select(.resigned == false) | .id]' > all.json
 
 # 3. the diff
 jq -n --slurpfile a all.json --slurpfile b tracked.json '$a[0] - $b[0]'
@@ -151,7 +151,7 @@ jq -n --slurpfile a all.json --slurpfile b tracked.json '$a[0] - $b[0]'
 timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 \
   | jq -r '
     (["date","user","task","hours","notes"]),
-    (.items[] | [.start[:10], .user.name, .task.name, (.duration / 3600), (.notes // "")])
+    (.data[] | [.start[:10], .user.name, .task.name, (.duration / 3600), (.notes // "")])
     | @csv
   ' > april.csv
 ```
