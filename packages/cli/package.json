@@ -40,7 +40,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "citty": "^0.1.6",
+    "citty": "^0.2.2",
     "consola": "^3.2.3",
     "timr-sdk": "workspace:*"
   },
