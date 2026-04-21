@@ -48,16 +48,31 @@ pnpm changeset
 
 Spec bumps ship as their own PR.
 
-## Adding a command to the CLI
+## CLI commands are generated
 
-1. Create `packages/cli/src/commands/<resource>.ts` exporting a `citty` sub-command tree.
-2. Register it in `packages/cli/src/index.ts` under `subCommands`.
-3. Pull the client via `resolveClient(args)` from `context.ts`.
-4. Output JSON via `printJson(data)`. Do not pretty-print tables - users pipe to `jq`.
-5. Add a recipe to `packages/cli/README.md`.
-6. Mirror the new command in `packages/cli/skills/timr/SKILL.md` so Claude Code agents know about it.
+The CLI's per-resource commands under `packages/cli/src/commands/generated/` are emitted by `packages/cli/scripts/generate-commands.mjs` from `openapi.json`. Do **not** hand-edit those files. The generator maps:
 
-The SDK auto-generates every endpoint already. If `timr.GET("/new/path", ...)` works in a smoke test, you're good.
+- `GET /x` -> `list`, `POST /x` -> `create`
+- `GET /x/{id}` -> `get`, `PATCH` -> `update`, `PUT` -> `replace`, `DELETE` -> `delete`
+- `GET /x:deleted` -> `list-deleted`
+- `GET /x/{id}/sub` -> `list-sub`, `PUT /x/{id}/sub/{sid}` -> `add-<singular>`, etc.
+
+Regenerate after a spec bump:
+
+```bash
+pnpm --filter timr-cli generate
+```
+
+Hand-written commands live next to the generated ones:
+
+- `packages/cli/src/commands/auth.ts` - `login` / `logout` / `status` for stored OAuth credentials
+- `packages/cli/src/commands/_shared.ts` - `globalArgs`, `resolveClient`, `printJson`, `readBody`, `numOrUndef`, `csv`
+
+If you need to change how *every* command handles flags, bodies, or output, change `_shared.ts` or the generator - never patch generated files.
+
+Output is always JSON via `printJson(data)`. Users pipe to `jq`. Don't pretty-print tables.
+
+When you add or change a generated command's shape, update `packages/cli/skills/timr/SKILL.md` and `packages/cli/README.md` so agents and humans learn about it.
 
 ## Claude Code skill
 
@@ -71,8 +86,9 @@ The SDK auto-generates every endpoint already. If `timr.GET("/new/path", ...)` w
 
 The SDK surface is intentionally tiny:
 
-- `createTimrClient(options)` returns an `openapi-fetch` client with types from `paths`.
-- `TimrError` wraps non-2xx responses.
+- `createTimrClient(options)` returns an `openapi-fetch` client with types from `paths`. Accepts one of: `{ token }` (static bearer), `{ clientId, clientSecret, tokenUrl?, scope? }` (OAuth2 `client_credentials`), or `{ tokenProvider }` (async `() => Promise<string>` for custom auth).
+- `createOAuthTokenProvider(credentials)` is the reusable token provider. In-memory cached with a 60s pre-expiry refresh and inflight deduplication.
+- `DEFAULT_TOKEN_URL`, `DEFAULT_SCOPE`, `TimrError` are re-exported.
 
 **Do not add convenience methods that wrap generated endpoints.** They drift, double the maintenance burden, and hide the typed surface. Instead:
 
