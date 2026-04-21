@@ -1,4 +1,4 @@
-import { defineCommand, runMain } from "citty";
+import { defineCommand, runMain, showUsage } from "citty";
 import { authCommand } from "./commands/auth.js";
 import { generatedSubCommands } from "./commands/generated/_root.js";
 
@@ -12,6 +12,7 @@ const main = defineCommand({
     auth: authCommand,
     ...generatedSubCommands,
   },
+  run: ({ cmd }) => showUsage(cmd),
 });
 
 runMain(main);
