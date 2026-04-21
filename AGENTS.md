@@ -26,8 +26,7 @@ Requires Node 20+ and pnpm 10+. The repo is ESM-only.
 ## Core conventions
 
 - **No hand-edits to `packages/sdk/src/generated.ts`.** It is regenerated from `openapi.json`. If you need to change something, change the spec or the hand-written `client.ts` wrapper.
-- **Commit style:** Conventional Commits, lowercase subject (`feat: ...`, `fix: ...`, `chore: ...`, `docs: ...`). No `Co-Authored-By` trailers.
-- **Changesets:** every user-visible change needs a changeset. Run `pnpm changeset` before opening a PR.
+- **Commit style:** Conventional Commits, lowercase subject (`feat: ...`, `fix: ...`, `chore: ...`, `docs: ...`). No `Co-Authored-By` trailers. Commit types drive versioning via Release Please — `feat:` bumps minor, `fix:` bumps patch, `feat!:` or `BREAKING CHANGE:` footer bumps major.
 - **No horizontal rules (`---`) or em dashes in code comments.** Regular hyphens only.
 - **Keep comments minimal.** Names and types should carry the meaning. Only add a comment when the *why* is non-obvious.
 - **No emojis** unless explicitly asked.
@@ -43,7 +42,6 @@ See [`docs/spec.md`](./docs/spec.md) for the full update procedure. Short versio
 curl -s "https://api.swaggerhub.com/apis/troii/timr/<version>" -o openapi.json
 pnpm generate
 pnpm typecheck && pnpm build && pnpm test
-pnpm changeset
 ```
 
 Spec bumps ship as their own PR.
@@ -106,7 +104,7 @@ The SDK surface is intentionally tiny:
 
 ## Release
 
-Releases are automated via the [Changesets GitHub Action](https://github.com/changesets/action). Merging a PR with changesets to `main` opens a "Version Packages" PR. Merging that PR publishes both packages to npm and tags the release.
+Releases are automated via [Release Please](https://github.com/googleapis/release-please) in linked-versions mode — both packages always share a version. Pushing conventional commits to `main` opens or updates a release PR with CHANGELOG diffs and version bumps. Merging that PR triggers the publish job, which ships both packages to npm via **OIDC trusted publishing** (no `NPM_TOKEN` — provenance attestation automatic).
 
 An `NPM_TOKEN` repo secret is required for publishing. `NPM_CONFIG_PROVENANCE=true` is enabled so releases carry an attestation.
 
@@ -122,7 +120,7 @@ If a PR starts building business logic on top of the API (mapping timr tasks to 
 - Adding runtime dependencies to the SDK. Target stays at `openapi-fetch` only.
 - Heavy CLI frameworks (oclif, yargs). `citty` + `consola` is the line.
 - Non-MIT-compatible dependencies.
-- Breaking changes without a major (`0.x` minor) bump and a migration note in the changeset.
+- Breaking changes without a `feat!:` / `BREAKING CHANGE:` commit footer so Release Please bumps the right segment.
 
 ## When in doubt
 

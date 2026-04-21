@@ -227,8 +227,9 @@ If any of those fail, re-run `pnpm build` and check `pnpm -r typecheck`.
 curl -s "https://api.swaggerhub.com/apis/troii/timr/<version>" -o openapi.json
 pnpm generate
 pnpm build
-pnpm changeset     # record the bump
 ```
+
+The release is driven by the commit messages — `feat(sdk): bump spec to 0.2.15` is enough; Release Please picks it up on the next merge to `main`.
 
 ### Project layout
 
@@ -253,14 +254,14 @@ timr-client/
 │               ├── _shared.ts          # globalArgs, resolveClient, helpers
 │               ├── auth.ts             # login / logout / status
 │               └── generated/          # one file per resource (do not edit)
-└── .changeset/               # release notes in flight
+└── release-please-config.json          # release automation
 ```
 
 ## Contributing
 
 Issues and pull requests are welcome. A few ground rules:
 
-- **One changeset per PR** - run `pnpm changeset` before opening
+- **Conventional Commits drive releases** - `feat:` bumps minor, `fix:` patches, `feat!:` majors (via Release Please)
 - **Generated code stays generated** - don't hand-edit `packages/sdk/src/generated.ts`
 - **Spec drift should be a PR on its own** - bump `openapi.json`, regenerate, and ship that alone so downstream consumers see the diff clearly
 - Conventional commits, lowercase subject

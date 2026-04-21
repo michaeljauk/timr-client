@@ -57,8 +57,8 @@ pnpm typecheck && pnpm build && pnpm test
 #    - README.md               (pinned version line, API reference URL)
 #    - docs/spec.md            (this file)
 
-# 6. Record a changeset
-pnpm changeset
+# 6. Commit with a conventional-commit subject so Release Please picks it up
+#    e.g. feat(sdk): bump spec to 0.2.15
 ```
 
 Ship the spec bump as its own PR so downstream consumers can diff it cleanly. Mix unrelated changes into separate PRs.
