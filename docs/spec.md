@@ -17,7 +17,7 @@ The timr API is published by [troii Software GmbH](https://www.troii.com) on Swa
 - **OpenAPI:** `3.0.0`
 - **Base URL:** `https://api.timr.com/v0.2/`
 - **Auth:** Bearer token (`Authorization: Bearer <token>`)
-- **Paths:** 48 across 14 resource groups
+- **Paths:** 48 across 13 resource groups (plus their `...:deleted` read-only variants)
 
 ### Resource groups covered by the spec
 
@@ -25,13 +25,7 @@ The timr API is published by [troii Software GmbH](https://www.troii.com) on Swa
 
 ### CLI coverage
 
-The CLI currently exposes a subset that matches the most common audit workflows:
-
-- `project-times list`
-- `tasks list`
-- `users list`
-
-Every other resource is still fully typed and reachable through the SDK via `timr.GET("/path", ...)` - the CLI just doesn't wrap it yet. PRs welcome.
+Every resource in the spec gets a generated subcommand — `packages/cli/scripts/generate-commands.mjs` walks `openapi.json` and emits one file per resource under `packages/cli/src/commands/generated/`. Run `timr --help` to see the full surface. The SDK additionally exposes every path via `timr.GET("/path", ...)` with full type coverage.
 
 ## Updating the spec
 
