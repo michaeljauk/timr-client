@@ -1,0 +1,23 @@
+name: Spec bump
+description: A new timr OpenAPI spec version was published and this repo should pin it
+labels: ["spec"]
+body:
+  - type: input
+    id: new_version
+    attributes:
+      label: New spec version
+      placeholder: "0.2.15"
+    validations:
+      required: true
+  - type: input
+    id: current_version
+    attributes:
+      label: Currently pinned version
+      placeholder: "0.2.14"
+    validations:
+      required: true
+  - type: textarea
+    id: changes
+    attributes:
+      label: Known changes
+      description: Paste the upstream changelog or note any breaking shifts surfaced by `pnpm typecheck`.

@@ -6,6 +6,8 @@ Command-line interface for the [timr](https://timr.com) time-tracking API. Built
 
 [![npm version](https://img.shields.io/npm/v/timr-cli.svg)](https://www.npmjs.com/package/timr-cli)
 [![npm downloads](https://img.shields.io/npm/dm/timr-cli.svg)](https://www.npmjs.com/package/timr-cli)
+[![install size](https://packagephobia.com/badge?p=timr-cli)](https://packagephobia.com/result?p=timr-cli)
+[![provenance](https://img.shields.io/npm/v/timr-cli.svg?label=provenance&color=2da44e)](https://www.npmjs.com/package/timr-cli?activeTab=code)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](../../LICENSE)
 
 ---

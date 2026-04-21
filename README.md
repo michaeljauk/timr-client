@@ -5,6 +5,7 @@ A fully typed TypeScript SDK and CLI for the [timr](https://timr.com) time-track
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/michaeljauk)
 
 [![CI](https://github.com/michaeljauk/timr-client/actions/workflows/ci.yml/badge.svg)](https://github.com/michaeljauk/timr-client/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/michaeljauk/timr-client/actions/workflows/codeql.yml/badge.svg)](https://github.com/michaeljauk/timr-client/actions/workflows/codeql.yml)
 [![timr-sdk](https://img.shields.io/npm/v/timr-sdk.svg?label=timr-sdk)](https://www.npmjs.com/package/timr-sdk)
 [![timr-cli](https://img.shields.io/npm/v/timr-cli.svg?label=timr-cli)](https://www.npmjs.com/package/timr-cli)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
