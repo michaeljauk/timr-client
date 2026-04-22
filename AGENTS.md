@@ -4,10 +4,11 @@ Instructions for AI coding agents (Claude Code, Codex, Cursor, Aider, etc.) work
 
 ## What this repo is
 
-A pnpm + Turborepo monorepo publishing two npm packages:
+A pnpm + Turborepo monorepo publishing three npm packages:
 
 - **`timr-sdk`** (`packages/sdk/`) - TypeScript SDK for the [timr](https://timr.com) time-tracking API. Types are **generated** from [`openapi.json`](./openapi.json) using `openapi-typescript`, runtime uses `openapi-fetch`.
 - **`timr-cli`** (`packages/cli/`) - Command-line interface built on `citty`, consumes the SDK as a workspace dependency.
+- **`timr-mcp`** (`packages/mcp/`) - Model Context Protocol (stdio) server using Cloudflare-style Code Mode — two meta-tools (`search`, `execute`) instead of per-endpoint tools. Consumes the SDK as a workspace dependency.
 
 Unofficial, MIT, under [github.com/michaeljauk/timr-client](https://github.com/michaeljauk/timr-client).
 
@@ -27,6 +28,7 @@ Requires Node 20+ and pnpm 10+. The repo is ESM-only.
 
 - **No hand-edits to `packages/sdk/src/generated.ts`.** It is regenerated from `openapi.json`. If you need to change something, change the spec or the hand-written `client.ts` wrapper.
 - **Commit style:** Conventional Commits, lowercase subject (`feat: ...`, `fix: ...`, `chore: ...`, `docs: ...`). Enforced by a husky `commit-msg` hook running commitlint (`@commitlint/config-conventional`) — a non-conforming subject is rejected locally. No `Co-Authored-By` trailers. Commit types drive versioning via Release Please — `feat:` bumps minor, `fix:` bumps patch, `feat!:` or `BREAKING CHANGE:` footer bumps major.
+- **One package per commit.** Scope every commit that touches a single package with `sdk:`, `cli:`, or `mcp:` (e.g. `feat(cli): ...`, `fix(mcp): ...`) and keep its diff inside that package's directory. Release Please routes commits to changelogs by **file path**, not scope — a commit that edits `packages/sdk/**` AND `packages/cli/**` appears in both changelogs regardless of how it's scoped. Cross-cutting changes (root tooling, CI, openapi.json bumps) go in their own commit scoped `chore:` or `feat:` without a package scope.
 - **No horizontal rules (`---`) or em dashes in code comments.** Regular hyphens only.
 - **Keep comments minimal.** Names and types should carry the meaning. Only add a comment when the *why* is non-obvious.
 - **No emojis** unless explicitly asked.
@@ -104,9 +106,9 @@ The SDK surface is intentionally tiny:
 
 ## Release
 
-Releases are automated via [Release Please](https://github.com/googleapis/release-please) in linked-versions mode — both packages always share a version. Pushing conventional commits to `main` opens or updates a release PR with CHANGELOG diffs and version bumps. Merging that PR triggers the publish job, which ships both packages to npm via **OIDC trusted publishing** (no `NPM_TOKEN` — provenance attestation automatic).
+Releases are automated via [Release Please](https://github.com/googleapis/release-please) in linked-versions mode — all three packages always share a version. Pushing conventional commits to `main` opens or updates a release PR with CHANGELOG diffs and version bumps. Merging that PR triggers the publish job, which ships all packages to npm via **OIDC trusted publishing** (no `NPM_TOKEN` — provenance attestation automatic).
 
-An `NPM_TOKEN` repo secret is required for publishing. `NPM_CONFIG_PROVENANCE=true` is enabled so releases carry an attestation.
+Note: release-please opens the release PR with `GITHUB_TOKEN`, which suppresses downstream workflow runs (CI, CodeQL) on that PR. If you need checks to run, close and reopen the PR to re-trigger `pull_request` events as your user.
 
 ## Scope discipline
 
