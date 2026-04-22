@@ -34,8 +34,9 @@ Typical use cases:
 |---------|---------|-------------|
 | [`timr-sdk`](./packages/sdk) | [![npm](https://img.shields.io/npm/v/timr-sdk.svg)](https://www.npmjs.com/package/timr-sdk) | Typed SDK with built-in OAuth (client_credentials) or static bearer token |
 | [`timr-cli`](./packages/cli) | [![npm](https://img.shields.io/npm/v/timr-cli.svg)](https://www.npmjs.com/package/timr-cli) | Command-line interface built on the SDK |
+| [`timr-mcp`](./packages/mcp) | [![npm](https://img.shields.io/npm/v/timr-mcp.svg)](https://www.npmjs.com/package/timr-mcp) | MCP (stdio) server using Cloudflare-style Code Mode — two tools (`search`, `execute`) instead of 80+ per-endpoint tools |
 
-Both packages track timr API version **0.2.14** (pinned in [`openapi.json`](./openapi.json)).
+All packages track timr API version **0.2.14** (pinned in [`openapi.json`](./openapi.json)).
 
 ## API reference
 

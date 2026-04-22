@@ -8,7 +8,7 @@
     {
       "type": "linked-versions",
       "groupName": "timr-client",
-      "components": ["timr-sdk", "timr-cli"]
+      "components": ["timr-sdk", "timr-cli", "timr-mcp"]
     }
   ],
   "packages": {
@@ -20,6 +20,11 @@
     "packages/cli": {
       "package-name": "timr-cli",
       "component": "timr-cli",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "packages/mcp": {
+      "package-name": "timr-mcp",
+      "component": "timr-mcp",
       "changelog-path": "CHANGELOG.md"
     }
   }

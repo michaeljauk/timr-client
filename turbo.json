@@ -7,7 +7,7 @@
     },
     "generate": {
       "inputs": ["../../openapi.json", "scripts/**"],
-      "outputs": ["src/generated.ts", "src/commands/generated/**"]
+      "outputs": ["src/generated.ts", "src/commands/generated/**", "src/spec.json"]
     },
     "dev": {
       "cache": false,
