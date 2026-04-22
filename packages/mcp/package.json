@@ -1,32 +1,25 @@
 {
-  "name": "timr-sdk",
+  "name": "timr-mcp",
   "version": "0.2.0",
-  "description": "Community TypeScript SDK for the timr time-tracking API",
+  "description": "Model Context Protocol server for the timr time-tracking API",
   "keywords": [
     "timr",
     "time-tracking",
-    "sdk",
-    "openapi",
-    "client"
+    "mcp",
+    "model-context-protocol"
   ],
   "license": "MIT",
   "author": "Michael Jauk",
   "repository": {
     "type": "git",
     "url": "https://github.com/michaeljauk/timr-client.git",
-    "directory": "packages/sdk"
+    "directory": "packages/mcp"
   },
-  "homepage": "https://github.com/michaeljauk/timr-client/tree/main/packages/sdk",
+  "homepage": "https://github.com/michaeljauk/timr-client/tree/main/packages/mcp",
   "bugs": "https://github.com/michaeljauk/timr-client/issues",
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
+  "bin": {
+    "timr-mcp": "./dist/index.js"
   },
   "files": [
     "dist",
@@ -36,21 +29,22 @@
   "engines": {
     "node": ">=20"
   },
-  "sideEffects": false,
   "scripts": {
-    "generate": "openapi-typescript ../../openapi.json -o src/generated.ts",
     "build": "tsup",
     "dev": "tsup --watch",
-    "test": "vitest run",
+    "generate": "node scripts/copy-spec.mjs",
+    "test": "vitest run --passWithNoTests",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "openapi-fetch": "^0.17.0"
+    "@cloudflare/codemode": "^0.3.4",
+    "@modelcontextprotocol/sdk": "^1.25.0",
+    "timr-sdk": "workspace:*",
+    "zod": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
-    "openapi-typescript": "^7.4.4",
     "tsup": "^8.3.5",
     "typescript": "^5.6.3",
     "vitest": "^2.1.8"

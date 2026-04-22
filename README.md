@@ -1,13 +1,17 @@
 # timr-client
 
-A fully typed TypeScript SDK and CLI for the [timr](https://timr.com) time-tracking API. Unofficial, community-maintained.
+A fully typed TypeScript SDK, CLI, and MCP server for the [timr](https://timr.com) time-tracking API. Unofficial, community-maintained.
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/michaeljauk)
 
 [![CI](https://github.com/michaeljauk/timr-client/actions/workflows/ci.yml/badge.svg)](https://github.com/michaeljauk/timr-client/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/michaeljauk/timr-client/actions/workflows/codeql.yml/badge.svg)](https://github.com/michaeljauk/timr-client/actions/workflows/codeql.yml)
 [![timr-sdk](https://img.shields.io/npm/v/timr-sdk.svg?label=timr-sdk)](https://www.npmjs.com/package/timr-sdk)
+[![timr-sdk downloads](https://img.shields.io/npm/dm/timr-sdk.svg?label=sdk%20downloads)](https://www.npmjs.com/package/timr-sdk)
 [![timr-cli](https://img.shields.io/npm/v/timr-cli.svg?label=timr-cli)](https://www.npmjs.com/package/timr-cli)
+[![timr-cli downloads](https://img.shields.io/npm/dm/timr-cli.svg?label=cli%20downloads)](https://www.npmjs.com/package/timr-cli)
+[![timr-mcp](https://img.shields.io/npm/v/timr-mcp.svg?label=timr-mcp)](https://www.npmjs.com/package/timr-mcp)
+[![timr-mcp downloads](https://img.shields.io/npm/dm/timr-mcp.svg?label=mcp%20downloads)](https://www.npmjs.com/package/timr-mcp)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ---
@@ -18,6 +22,7 @@ The [timr API](https://app.swaggerhub.com/apis-docs/troii/timr) ships a clean Op
 
 - **`timr-sdk`** - fully typed client generated from the spec. One runtime dependency ([`openapi-fetch`](https://openapi-ts.dev/openapi-fetch/)). Tree-shakeable, ESM, works in Node and edge runtimes.
 - **`timr-cli`** - scriptable wrapper for common workflows. Prints JSON so you can pipe through `jq`.
+- **`timr-mcp`** - Model Context Protocol (stdio) server for AI agents. Uses Cloudflare-style [Code Mode](https://blog.cloudflare.com/dynamic-workers/) — agents write JavaScript against the spec instead of calling one tool per endpoint.
 
 Typical use cases:
 
@@ -32,8 +37,9 @@ Typical use cases:
 |---------|---------|-------------|
 | [`timr-sdk`](./packages/sdk) | [![npm](https://img.shields.io/npm/v/timr-sdk.svg)](https://www.npmjs.com/package/timr-sdk) | Typed SDK with built-in OAuth (client_credentials) or static bearer token |
 | [`timr-cli`](./packages/cli) | [![npm](https://img.shields.io/npm/v/timr-cli.svg)](https://www.npmjs.com/package/timr-cli) | Command-line interface built on the SDK |
+| [`timr-mcp`](./packages/mcp) | [![npm](https://img.shields.io/npm/v/timr-mcp.svg)](https://www.npmjs.com/package/timr-mcp) | MCP (stdio) server using Cloudflare-style Code Mode — two tools (`search`, `execute`) instead of 80+ per-endpoint tools |
 
-Both packages track timr API version **0.2.14** (pinned in [`openapi.json`](./openapi.json)).
+All packages track timr API version **0.2.14** (pinned in [`openapi.json`](./openapi.json)).
 
 ## API reference
 
@@ -99,7 +105,7 @@ timr auth status
 # Every resource in the spec has a matching subcommand
 timr --help
 timr project-times list --start-from 2026-04-01 --start-to 2026-04-30
-timr tasks list --name "NetCero" --bookable
+timr tasks list --name "Website" --bookable
 ```
 
 Every list endpoint returns `{ data: T[], next_page_token: string | null }`. Field names for `T` are documented in the auto-generated [`packages/cli/skills/timr/SCHEMA.md`](./packages/cli/skills/timr/SCHEMA.md) - or inspect live with `jq '.data[0] | keys'`.
@@ -108,9 +114,10 @@ See the [CLI README](./packages/cli/README.md) for commands and the [SDK README]
 
 ### AI agent integration
 
-A [Claude Code](https://claude.ai/code) skill ships inside the CLI package and auto-installs to `~/.claude/skills/timr/` on `npm install -g timr-cli`. No extra setup needed. Use `/timr` (or just ask naturally) in any Claude Code session and the agent will run commands against your tracked data, reconcile hours, answer "how many hours in April?", and similar.
+Two options, pick whichever your agent supports:
 
-The skill is also usable with other agent runners that honor the same `SKILL.md` format.
+- **Claude Code skill** — ships inside `timr-cli` and auto-installs to `~/.claude/skills/timr/` on `npm install -g timr-cli`. Use `/timr` (or just ask naturally) in any Claude Code session. Also usable with other runners that honor the same `SKILL.md` format.
+- **MCP server** — `timr-mcp` exposes the full API via two Code-Mode tools (`search`, `execute`) over stdio. Add with `claude mcp add --scope user timr npx -- -y timr-mcp`, or point any MCP client at `npx -y timr-mcp`. See the [MCP README](./packages/mcp/README.md) for auth and examples.
 
 ---
 
@@ -245,16 +252,23 @@ timr-client/
 │   │   │   ├── generated.ts  # types (generated, do not edit)
 │   │   │   └── index.ts      # public surface
 │   │   └── test/
-│   └── cli/                  # timr-cli
+│   ├── cli/                  # timr-cli
+│   │   ├── scripts/
+│   │   │   └── generate-commands.mjs   # emits commands/generated/* from spec
+│   │   └── src/
+│   │       ├── index.ts      # citty entry
+│   │       ├── lib/credentials.ts      # ~/.config/timr-cli/credentials.json
+│   │       └── commands/
+│   │           ├── _shared.ts          # globalArgs, resolveClient, helpers
+│   │           ├── auth.ts             # login / logout / status
+│   │           └── generated/          # one file per resource (do not edit)
+│   └── mcp/                  # timr-mcp
 │       ├── scripts/
-│       │   └── generate-commands.mjs   # emits commands/generated/* from spec
+│       │   └── copy-spec.mjs           # bundles openapi.json for runtime search
 │       └── src/
-│           ├── index.ts      # citty entry
-│           ├── lib/credentials.ts      # ~/.config/timr-cli/credentials.json
-│           └── commands/
-│               ├── _shared.ts          # globalArgs, resolveClient, helpers
-│               ├── auth.ts             # login / logout / status
-│               └── generated/          # one file per resource (do not edit)
+│           ├── index.ts      # stdio MCP server (openApiMcpServer)
+│           ├── executor.ts   # AsyncFunction-based Code Mode executor
+│           └── lib/request.ts          # bridges codemode.request → timr-sdk
 └── release-please-config.json          # release automation
 ```
 
