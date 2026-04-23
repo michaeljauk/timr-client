@@ -67,7 +67,7 @@ function slug(name) {
 }
 
 function escapePipe(s) {
-  return s.replace(/\|/g, "\\|");
+  return s.replace(/([\\|])/g, "\\$1");
 }
 
 function renderFields(schema) {
