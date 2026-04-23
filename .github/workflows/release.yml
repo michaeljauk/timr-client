@@ -3,6 +3,7 @@ name: Release
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -26,7 +27,7 @@ jobs:
 
   publish:
     needs: release-please
-    if: ${{ needs.release-please.outputs.releases_created == 'true' }}
+    if: ${{ needs.release-please.outputs.releases_created == 'true' || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
