@@ -3,14 +3,12 @@ name: Release
 on:
   push:
     branches: [main]
-  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 permissions:
   contents: write
   pull-requests: write
-  id-token: write
 
 jobs:
   release-please:
@@ -21,13 +19,12 @@ jobs:
       - uses: googleapis/release-please-action@v4
         id: release
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
 
   publish:
     needs: release-please
-    if: ${{ needs.release-please.outputs.releases_created == 'true' || github.event_name == 'workflow_dispatch' }}
+    if: needs.release-please.outputs.releases_created == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -42,11 +39,11 @@ jobs:
           node-version: 22
           cache: pnpm
           registry-url: https://registry.npmjs.org
+      # Pin npm to a version with OIDC trusted-publishing (added in 11.5.1)
+      # and avoid the broken npm@latest self-upgrade on hosted runners.
       - run: npm install -g npm@11.5.2
       - run: pnpm install --frozen-lockfile
       - run: pnpm generate
       - run: pnpm build
       - run: pnpm test
       - run: pnpm -r publish --access public --provenance --no-git-checks
-        env:
-          NPM_CONFIG_PROVENANCE: "true"
