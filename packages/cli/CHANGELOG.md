@@ -1,5 +1,12 @@
 # timr-cli
 
+## [0.3.1](https://github.com/michaeljauk/timr-client/compare/timr-cli-v0.3.0...timr-cli-v0.3.1) (2026-04-23)
+
+
+### Bug Fixes
+
+* **cli:** escape backslashes alongside pipes in markdown table cells ([2fe2f9b](https://github.com/michaeljauk/timr-client/commit/2fe2f9b17320f0a15374f4ea293c582da14dc296))
+
 ## [0.3.0](https://github.com/michaeljauk/timr-client/compare/timr-cli-v0.2.0...timr-cli-v0.3.0) (2026-04-22)
 
 
