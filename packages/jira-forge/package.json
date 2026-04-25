@@ -1,0 +1,43 @@
+{
+  "name": "jira-forge",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Jira Cloud Forge app that syncs developer time from Jira issues to timr",
+  "license": "MIT",
+  "author": "Michael Jauk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michaeljauk/timr-client.git",
+    "directory": "packages/jira-forge"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "tsc --noEmit",
+    "forge:register": "forge register",
+    "forge:deploy": "forge deploy --environment development",
+    "forge:install": "forge install --environment development",
+    "forge:tunnel": "forge tunnel",
+    "forge:variables": "forge variables list --environment development",
+    "qa": "bash scripts/qa.sh"
+  },
+  "dependencies": {
+    "@forge/bridge": "^5.15.1",
+    "@forge/react": "^11.14.1",
+    "@forge/resolver": "^1.7.1",
+    "react": "^18.3.1",
+    "timr-sdk": "^0.3.0"
+  },
+  "devDependencies": {
+    "@forge/cli": "^12.0.0",
+    "@types/node": "^25.6.0",
+    "@types/react": "^18.3.12",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}
