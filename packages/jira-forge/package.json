@@ -27,9 +27,9 @@
     "qa": "bash scripts/qa.sh"
   },
   "dependencies": {
-    "@forge/bridge": "^5.15.1",
-    "@forge/react": "^11.14.1",
-    "@forge/resolver": "^1.7.1",
+    "@forge/bridge": "^5.16.0",
+    "@forge/react": "^11.15.0",
+    "@forge/resolver": "^1.8.0",
     "react": "^18.3.1",
     "timr-sdk": "^0.3.0"
   },
