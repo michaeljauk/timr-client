@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@commitlint/cli':
-        specifier: ^20.5.0
-        version: 20.5.0(@types/node@25.6.0)(conventional-commits-parser@6.4.0)(typescript@5.9.3)
+        specifier: ^20.5.2
+        version: 20.5.2(@types/node@25.6.0)(conventional-commits-parser@6.4.0)(typescript@5.9.3)
       '@commitlint/config-conventional':
         specifier: ^20.5.0
         version: 20.5.0
@@ -68,8 +68,8 @@ importers:
         version: 0.3.1
     devDependencies:
       '@forge/cli':
-        specifier: ^12.0.0
-        version: 12.18.0(@types/express@4.17.25)(@types/node@25.6.0)(typescript@5.9.3)(webpack@5.106.2)
+        specifier: ^12.19.0
+        version: 12.19.0(@types/express@4.17.25)(@types/node@25.6.0)(typescript@5.9.3)(webpack@5.106.2)
       '@types/node':
         specifier: ^25.6.0
         version: 25.6.0
@@ -704,8 +704,8 @@ packages:
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
     engines: {node: '>=0.1.90'}
 
-  '@commitlint/cli@20.5.0':
-    resolution: {integrity: sha512-yNkyN/tuKTJS3wdVfsZ2tXDM4G4Gi7z+jW54Cki8N8tZqwKBltbIvUUrSbT4hz1bhW/h0CdR+5sCSpXD+wMKaQ==}
+  '@commitlint/cli@20.5.2':
+    resolution: {integrity: sha512-IXr5xd3IX8SEG936P8gcpozRplkDeDSwJlt8UvoY1winwIy2udTbQ/cOCgbaaxcjdDqVoS29VUcz/wkwnSozbA==}
     engines: {node: '>=v18'}
     hasBin: true
 
@@ -737,8 +737,8 @@ packages:
     resolution: {integrity: sha512-jiM3hNUdu04jFBf1VgPdjtIPvbuVfDTBAc6L98AWcoLjF5sYqkulBHBzlVWll4rMF1T5zeQFB6r//a+s+BBKlA==}
     engines: {node: '>=v18'}
 
-  '@commitlint/load@20.5.0':
-    resolution: {integrity: sha512-sLhhYTL/KxeOTZjjabKDhwidGZan84XKK1+XFkwDYL/4883kIajcz/dZFAhBJmZPtL8+nBx6bnkzA95YxPeDPw==}
+  '@commitlint/load@20.5.2':
+    resolution: {integrity: sha512-zmr0RGDz7vThxW1I8ohb9yBjnGuH9mqwJpn21hInjGla+IlLOkS9ey0+dD5HlkzFlY0lX2NYdA2lDW6/0rO7Gw==}
     engines: {node: '>=v18'}
 
   '@commitlint/message@20.4.3':
@@ -753,8 +753,8 @@ packages:
     resolution: {integrity: sha512-JDEIJ2+GnWpK8QqwfmW7O42h0aycJEWNqcdkJnyzLD11nf9dW2dWLTVEa8Wtlo4IZFGLPATjR5neA5QlOvIH1w==}
     engines: {node: '>=v18'}
 
-  '@commitlint/resolve-extends@20.5.0':
-    resolution: {integrity: sha512-3SHPWUW2v0tyspCTcfSsYml0gses92l6TlogwzvM2cbxDgmhSRc+fldDjvGkCXJrjSM87BBaWYTPWwwyASZRrg==}
+  '@commitlint/resolve-extends@20.5.2':
+    resolution: {integrity: sha512-8EhSCU9eNos/5cI1yg64GW79UH1c64O69AfStCsj4zqy6An/qIphVEXj4/+2M6056T8coz00f+UXFn4WUUP1HQ==}
     engines: {node: '>=v18'}
 
   '@commitlint/rules@20.5.0':
@@ -1146,20 +1146,20 @@ packages:
   '@forge/bridge@5.15.1':
     resolution: {integrity: sha512-004++Q1sgFh6K/YCo1s/yNrKBK3SpaKOUDiqFgIMqRDWz22EgWkiN99vggvmnW8hp6LoK8Tay0PRGPCJhQ50BA==}
 
-  '@forge/bundler@6.1.23':
-    resolution: {integrity: sha512-pUh/aHtHKfM1vn8+RH6yztaSL7x1SddtKO8cdshmUlMB05YP6tnQIkbll2HLYGTyU32dKNqK0JYIg8N0LT23NQ==}
+  '@forge/bundler@6.1.24':
+    resolution: {integrity: sha512-tzLbhkzloR/kc+4FZnXa3fhKu9MIDrVPguH0UCkrPjsATxju4XvfZ7Hn+78LApdb3LuAnatSTRtpRgvt9piT6g==}
     engines: {node: '>=12.13.1'}
 
-  '@forge/cli-shared@8.19.0':
-    resolution: {integrity: sha512-kiAIZtrXWSrhrfyWdhIBgJUGhYDJJEFLvJMxvaPDW5hbTXlRTs1L64z5IDniBWrJfk8hKcLsKMlQcr7OwCjB7g==}
+  '@forge/cli-shared@8.20.0':
+    resolution: {integrity: sha512-adzVjinNLozvA5wIiYGqpMJ3ND50NNZfrU4YaBC/KVmeChjb80VBAQRl7Y8Lt/bmHAJD/ck3b5IGgzfA4+C0Bg==}
 
-  '@forge/cli@12.18.0':
-    resolution: {integrity: sha512-WTOUDGM+5D/Qyl+/Uoypjs2R9+hOOyBMvZaCKfnJILyKttI+AQiwfT5XSpqDUZwueTXd3LMOcZpKJNVkhSpLjQ==}
+  '@forge/cli@12.19.0':
+    resolution: {integrity: sha512-CdKxcD4F1VF1lvrnUNJds5Pf0VbrlLmER07nQMaEIST6kEMv3A4P1ZkhVflFKs2yVXZuOdyqdjc0iYGt5TSo7w==}
     engines: {node: '>=20.0.0'}
     hasBin: true
 
-  '@forge/csp@5.6.1':
-    resolution: {integrity: sha512-o9fRxB7PRY+5ukWWGNW+WhCAxTJ0hs+7LB2DTNtuKEo0k/BtWbf9QE8qeQfBQZqNijGe572hW3UAWx1ngkdimA==}
+  '@forge/csp@5.7.0':
+    resolution: {integrity: sha512-SNwgLtQnbV4ziYNCzZu2ZUJVas0iAZSrNdjFy2e2ZJKpuk+OOsa1h82KjOBYKPlsVbfSkwTPYW0xRQcel+NZnw==}
     peerDependencies:
       cheerio: ^1.1.0
     peerDependenciesMeta:
@@ -1172,11 +1172,14 @@ packages:
   '@forge/i18n@0.0.7':
     resolution: {integrity: sha512-EKrQApcuI4k4AkUSeERkZv1dQaGjWsmB8i7ciDPtpDARPRH1sOrU+FSEOoA7b9FQ15++7Q144m94w/aMLCg5Gg==}
 
-  '@forge/lint@5.17.0':
-    resolution: {integrity: sha512-P4X9UaREi3HYrX3KiwFlVETjrL8bqS9vvP6w7DDTY+z8IIJ2/PQPaBAtWPWbvIJkXS7ZadGHKeEy8NgQH9Ojsg==}
+  '@forge/lint@5.18.0':
+    resolution: {integrity: sha512-fCMNDIDlJrOPP55eJnViyb5YrIbrKprUSDMBbQxp5wM/hYfzs2SDMC62KBiTx/js53r+uMgaCbg2HhKT6WKvlA==}
 
   '@forge/manifest@12.5.0':
     resolution: {integrity: sha512-CZUeCkAN356jJf49atoy13sila++FKNI4j0gGuR7fKJROg3Fv+MCRXC3siIE7eB1bRd6YPu7u5KC7Z1vQRxd+A==}
+
+  '@forge/manifest@12.6.0':
+    resolution: {integrity: sha512-htEjbrwgtXSrPQRDbzclNltY1JU435o4CdwxUoEin1MnmQo6Rxm6jaa/23h6jyW+FH1ViXTDwl0b8qxj8UsC8w==}
 
   '@forge/react@11.14.1':
     resolution: {integrity: sha512-3ZVNuVjsjC9WU+SMxERJQGJImVlJzsuOmP19nmmoCeeFjMdGranBsH2RIQPRC+Av/H8j7+O20pL4JJseDuXwHQ==}
@@ -1187,8 +1190,8 @@ packages:
   '@forge/runtime@6.1.2':
     resolution: {integrity: sha512-c18iHovJO4pqGf1PR/P2zNo2F6iajLMIrzSOLbui2Uw7KSPUAjddEsTMDhEj+DdNdXyQBYQJeiGXuxFyBkIUHA==}
 
-  '@forge/tunnel@6.3.14':
-    resolution: {integrity: sha512-220KShMQgqqQ6xToi8WuNfHv4C2uvYd7QiT7uO0NptHhbcVfNZwSI1gMs83NGXuXyJQ4TEqcg0iCJXOgQSECHQ==}
+  '@forge/tunnel@6.3.15':
+    resolution: {integrity: sha512-4/JnBiZ2du6hB7D9nCN5lkN2REkLjLPxLRo2HvJBxkX8qr0fHTmxy5YX8wafcNfbWAoVNPdKrtjBhWvC3B1wDQ==}
 
   '@forge/util@2.0.1':
     resolution: {integrity: sha512-fYRpxdlGoB/r+E81s8/FVzjijs85mWgJPpEiqa5uG7qLz22EeaMBrpcu6to+NyKX2gfGR1hxjfiSnXOLzxYRfg==}
@@ -1933,6 +1936,9 @@ packages:
   ajv@8.18.0:
     resolution: {integrity: sha512-PlXPeEWMXMZ7sPYOHqmDyCJzcfNrUr3fGNKtezX14ykXOEIvyK81d+qydx89KY5O71FKMPaQ2vBfBFI5NHR63A==}
 
+  ajv@8.20.0:
+    resolution: {integrity: sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==}
+
   ansi-colors@4.1.3:
     resolution: {integrity: sha512-/6w/C21Pm1A7aZitlI5Ni/2J6FFQN8i1Cvz3kHABAAbw93v/NlvKdVOqz7CCWz/3iv/JplRSEEZ83XION15ovw==}
     engines: {node: '>=6'}
@@ -2081,8 +2087,8 @@ packages:
   bare-path@3.0.0:
     resolution: {integrity: sha512-tyfW2cQcB5NN8Saijrhqn0Zh7AnFNsnczRcuWODH0eYAXBsJ5gVxAUuNr7tsHSC6IZ77cA0SitzT+s47kot8Mw==}
 
-  bare-stream@2.13.0:
-    resolution: {integrity: sha512-3zAJRZMDFGjdn+RVnNpF9kuELw+0Fl3lpndM4NcEOhb9zwtSo/deETfuIwMSE5BXanA0FrN1qVjffGwAg2Y7EA==}
+  bare-stream@2.13.1:
+    resolution: {integrity: sha512-Vp0cnjYyrEC4whYTymQ+YZi6pBpfiICZO3cfRG8sy67ZNWe951urv1x4eW1BKNngw3U+3fPYb5JQvHbCtxH7Ow==}
     peerDependencies:
       bare-abort-controller: '*'
       bare-buffer: '*'
@@ -2101,8 +2107,8 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  baseline-browser-mapping@2.10.21:
-    resolution: {integrity: sha512-Q+rUQ7Uz8AHM7DEaNdwvfFCTq7a43lNTzuS94eiWqwyxfV/wJv+oUivef51T91mmRY4d4A1u9rcSvkeufCVXlA==}
+  baseline-browser-mapping@2.10.24:
+    resolution: {integrity: sha512-I2NkZOOrj2XuguvWCK6OVh9GavsNjZjK908Rq3mIBK25+GD8vPX5w2WdxVqnQ7xx3SrZJiCiZFu+/Oz50oSYSA==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -2220,8 +2226,8 @@ packages:
   camel-case@4.1.2:
     resolution: {integrity: sha512-gxGWBrTT1JuMx6R+o5PTXMmUnhnVzLQ9SNutD4YqKtI6ap897t3tKECYla6gCWEkplXnlNybEkZg9GEGxKFCgw==}
 
-  caniuse-lite@1.0.30001790:
-    resolution: {integrity: sha512-bOoxfJPyYo+ds6W0YfptaCWbFnJYjh2Y1Eow5lRv+vI2u8ganPZqNm1JwNh0t2ELQCqIWg4B3dWEusgAmsoyOw==}
+  caniuse-lite@1.0.30001791:
+    resolution: {integrity: sha512-yk0l/YSrOnFZk3UROpDLQD9+kC1l4meK/wed583AXrzoarMGJcbRi2Q4RaUYbKxYAsZ8sWmaSa/DsLmdBeI1vQ==}
 
   case@1.6.3:
     resolution: {integrity: sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==}
@@ -2734,8 +2740,8 @@ packages:
   es-module-lexer@1.7.0:
     resolution: {integrity: sha512-jEQoCwk8hyb2AZziIOLhDqpm5+2ww5uIE6lkO/6jcOCusfk6LhMHpXXfBLXTZ7Ydyt0j4VoUQv6uGNYbdW+kBA==}
 
-  es-module-lexer@2.0.0:
-    resolution: {integrity: sha512-5POEcUuZybH7IdmGsD8wlf0AI55wMecM9rVBTI/qEAy2c1kTOm3DjFYjrBdI2K3BaJjJYfYFeRtM0t9ssnRuxw==}
+  es-module-lexer@2.1.0:
+    resolution: {integrity: sha512-n27zTYMjYu1aj4MjCWzSP7G9r75utsaoc8m61weK+W8JMBGGQybd43GstCXZ3WNmSFtGT9wi59qQTW6mhTR5LQ==}
 
   es-object-atoms@1.1.1:
     resolution: {integrity: sha512-FGgH2h8zKNim9ljj7dankFPcICIK9Cp5bm+c2gQSYePhpaG5+esrLODihIorn+Pe6FGJzWhXQotPv73jTaldXA==}
@@ -3072,9 +3078,9 @@ packages:
     resolution: {integrity: sha512-Wjlyrolmm8uDpm/ogGyXZXb1Z+Ca2B8NbJwqBVg0axK9GbBeoS7yGV6vjXnYdGm6X53iehEuxxbyiKp8QmN4Vw==}
     engines: {node: 18 || 20 || >=22}
 
-  global-directory@4.0.1:
-    resolution: {integrity: sha512-wHTUcDUoZ1H5/0iVqEudYW4/kAlN5cZ3j/bXn0Dpbizl9iaUVeWSHqiOjsgk6OW2bkLclbBjzewBz6weQ1zA2Q==}
-    engines: {node: '>=18'}
+  global-directory@5.0.0:
+    resolution: {integrity: sha512-1pgFdhK3J2LeM+dVf2Pd424yHx2ou338lC0ErNP2hPx4j8eW1Sp0XqSjNxtk6Tc4Kr5wlWtSvz8cn2yb7/SG/w==}
+    engines: {node: '>=20'}
 
   globalthis@1.0.4:
     resolution: {integrity: sha512-DpLKbNU4WylpxJykQujfCcwYWiV/Jhm50Goo0wrVILAv5jOr9d+H+UR3PhSCD2rCCEIg0uc+G+muBTwD54JhDQ==}
@@ -3276,9 +3282,9 @@ packages:
   ini@1.3.8:
     resolution: {integrity: sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==}
 
-  ini@4.1.1:
-    resolution: {integrity: sha512-QQnnxNyfvmHFIsj7gkPcYymR8Jdw/o7mp5ZFihxn6h8Ci6fh3Dx4E1gPjpQEpIuPo9XVNY/ZUwh4BPMjGyL01g==}
-    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
+  ini@6.0.0:
+    resolution: {integrity: sha512-IBTdIkzZNOpqm7q3dRqJvMaldXjDHWkEDfrwGEQTs5eaQMWV+djAhR+wahyNNMAa+qpbDUhBMVt4ZKNwpPm7xQ==}
+    engines: {node: ^20.17.0 || >=22.9.0}
 
   inquirer@8.2.7:
     resolution: {integrity: sha512-UjOaSel/iddGZJ5xP/Eixh6dY1XghiBw4XK13rCCIJcJfyhhoul/7KhLLUGtebEj6GDYM6Vnx/mVsjx2L/mFIA==}
@@ -6623,11 +6629,11 @@ snapshots:
   '@colors/colors@1.5.0':
     optional: true
 
-  '@commitlint/cli@20.5.0(@types/node@25.6.0)(conventional-commits-parser@6.4.0)(typescript@5.9.3)':
+  '@commitlint/cli@20.5.2(@types/node@25.6.0)(conventional-commits-parser@6.4.0)(typescript@5.9.3)':
     dependencies:
       '@commitlint/format': 20.5.0
       '@commitlint/lint': 20.5.0
-      '@commitlint/load': 20.5.0(@types/node@25.6.0)(typescript@5.9.3)
+      '@commitlint/load': 20.5.2(@types/node@25.6.0)(typescript@5.9.3)
       '@commitlint/read': 20.5.0(conventional-commits-parser@6.4.0)
       '@commitlint/types': 20.5.0
       tinyexec: 1.1.1
@@ -6646,7 +6652,7 @@ snapshots:
   '@commitlint/config-validator@20.5.0':
     dependencies:
       '@commitlint/types': 20.5.0
-      ajv: 8.18.0
+      ajv: 8.20.0
 
   '@commitlint/ensure@20.5.0':
     dependencies:
@@ -6676,11 +6682,11 @@ snapshots:
       '@commitlint/rules': 20.5.0
       '@commitlint/types': 20.5.0
 
-  '@commitlint/load@20.5.0(@types/node@25.6.0)(typescript@5.9.3)':
+  '@commitlint/load@20.5.2(@types/node@25.6.0)(typescript@5.9.3)':
     dependencies:
       '@commitlint/config-validator': 20.5.0
       '@commitlint/execute-rule': 20.0.0
-      '@commitlint/resolve-extends': 20.5.0
+      '@commitlint/resolve-extends': 20.5.2
       '@commitlint/types': 20.5.0
       cosmiconfig: 9.0.1(typescript@5.9.3)
       cosmiconfig-typescript-loader: 6.3.0(@types/node@25.6.0)(cosmiconfig@9.0.1(typescript@5.9.3))(typescript@5.9.3)
@@ -6710,11 +6716,11 @@ snapshots:
       - conventional-commits-filter
       - conventional-commits-parser
 
-  '@commitlint/resolve-extends@20.5.0':
+  '@commitlint/resolve-extends@20.5.2':
     dependencies:
       '@commitlint/config-validator': 20.5.0
       '@commitlint/types': 20.5.0
-      global-directory: 4.0.1
+      global-directory: 5.0.0
       import-meta-resolve: 4.2.0
       lodash.mergewith: 4.6.2
       resolve-from: 5.0.0
@@ -6996,7 +7002,7 @@ snapshots:
       - react
       - supports-color
 
-  '@forge/bundler@6.1.23(@types/node@25.6.0)':
+  '@forge/bundler@6.1.24(@types/node@25.6.0)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/parser': 7.28.0
@@ -7007,10 +7013,10 @@ snapshots:
       '@babel/plugin-transform-react-jsx': 7.28.6(@babel/core@7.29.0)
       '@babel/traverse': 7.29.0
       '@babel/types': 7.29.0
-      '@forge/cli-shared': 8.19.0(@types/node@25.6.0)
+      '@forge/cli-shared': 8.20.0(@types/node@25.6.0)
       '@forge/i18n': 0.0.7
-      '@forge/lint': 5.17.0(@types/node@25.6.0)(cheerio@1.2.0)(typescript@4.8.4)
-      '@forge/manifest': 12.5.0
+      '@forge/lint': 5.18.0(@types/node@25.6.0)(cheerio@1.2.0)(typescript@4.8.4)
+      '@forge/manifest': 12.6.0
       babel-loader: 8.4.1(@babel/core@7.29.0)(webpack@5.106.2)
       cheerio: 1.2.0
       cross-spawn: 7.0.6
@@ -7036,10 +7042,10 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@forge/cli-shared@8.19.0(@types/node@25.6.0)':
+  '@forge/cli-shared@8.20.0(@types/node@25.6.0)':
     dependencies:
       '@forge/i18n': 0.0.7
-      '@forge/manifest': 12.5.0
+      '@forge/manifest': 12.6.0
       '@forge/util': 2.0.1
       '@sentry/node': 7.106.0
       adm-zip: 0.5.17
@@ -7074,19 +7080,19 @@ snapshots:
       - '@types/node'
       - encoding
 
-  '@forge/cli@12.18.0(@types/express@4.17.25)(@types/node@25.6.0)(typescript@5.9.3)(webpack@5.106.2)':
+  '@forge/cli@12.19.0(@types/express@4.17.25)(@types/node@25.6.0)(typescript@5.9.3)(webpack@5.106.2)':
     dependencies:
-      '@forge/bundler': 6.1.23(@types/node@25.6.0)
-      '@forge/cli-shared': 8.19.0(@types/node@25.6.0)
+      '@forge/bundler': 6.1.24(@types/node@25.6.0)
+      '@forge/cli-shared': 8.20.0(@types/node@25.6.0)
       '@forge/egress': 2.3.2
       '@forge/i18n': 0.0.7
-      '@forge/lint': 5.17.0(@types/node@25.6.0)(cheerio@1.2.0)(typescript@5.9.3)
-      '@forge/manifest': 12.5.0
+      '@forge/lint': 5.18.0(@types/node@25.6.0)(cheerio@1.2.0)(typescript@5.9.3)
+      '@forge/manifest': 12.6.0
       '@forge/runtime': 6.1.2
-      '@forge/tunnel': 6.3.14(@types/express@4.17.25)(@types/node@25.6.0)(webpack@5.106.2)
+      '@forge/tunnel': 6.3.15(@types/express@4.17.25)(@types/node@25.6.0)(webpack@5.106.2)
       '@forge/util': 2.0.1
       '@sentry/node': 7.106.0
-      ajv: 8.18.0
+      ajv: 8.20.0
       archiver: 7.0.1
       case: 1.6.3
       chalk: 4.1.2
@@ -7137,7 +7143,7 @@ snapshots:
       - webpack
       - webpack-cli
 
-  '@forge/csp@5.6.1(cheerio@1.2.0)':
+  '@forge/csp@5.7.0(cheerio@1.2.0)':
     dependencies:
       content-security-policy-parser: 0.6.0
     optionalDependencies:
@@ -7149,13 +7155,13 @@ snapshots:
     dependencies:
       lodash: 4.18.1
 
-  '@forge/lint@5.17.0(@types/node@25.6.0)(cheerio@1.2.0)(typescript@4.8.4)':
+  '@forge/lint@5.18.0(@types/node@25.6.0)(cheerio@1.2.0)(typescript@4.8.4)':
     dependencies:
       '@atlassian/atlassian-openapi': 1.0.6
-      '@forge/cli-shared': 8.19.0(@types/node@25.6.0)
-      '@forge/csp': 5.6.1(cheerio@1.2.0)
+      '@forge/cli-shared': 8.20.0(@types/node@25.6.0)
+      '@forge/csp': 5.7.0(cheerio@1.2.0)
       '@forge/egress': 2.3.2
-      '@forge/manifest': 12.5.0
+      '@forge/manifest': 12.6.0
       '@typescript-eslint/typescript-estree': 5.62.0(typescript@4.8.4)
       array.prototype.flatmap: 1.3.3
       cross-spawn: 7.0.6
@@ -7167,13 +7173,13 @@ snapshots:
       - supports-color
       - typescript
 
-  '@forge/lint@5.17.0(@types/node@25.6.0)(cheerio@1.2.0)(typescript@5.9.3)':
+  '@forge/lint@5.18.0(@types/node@25.6.0)(cheerio@1.2.0)(typescript@5.9.3)':
     dependencies:
       '@atlassian/atlassian-openapi': 1.0.6
-      '@forge/cli-shared': 8.19.0(@types/node@25.6.0)
-      '@forge/csp': 5.6.1(cheerio@1.2.0)
+      '@forge/cli-shared': 8.20.0(@types/node@25.6.0)
+      '@forge/csp': 5.7.0(cheerio@1.2.0)
       '@forge/egress': 2.3.2
-      '@forge/manifest': 12.5.0
+      '@forge/manifest': 12.6.0
       '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.9.3)
       array.prototype.flatmap: 1.3.3
       cross-spawn: 7.0.6
@@ -7189,8 +7195,20 @@ snapshots:
     dependencies:
       '@forge/i18n': 0.0.7
       '@sentry/node': 7.106.0
-      ajv: 8.18.0
-      ajv-formats: 2.1.1(ajv@8.18.0)
+      ajv: 8.20.0
+      ajv-formats: 2.1.1(ajv@8.20.0)
+      cheerio: 1.2.0
+      glob: 13.0.6
+      lodash: 4.18.1
+      mime-types: 2.1.35
+      yaml: 2.8.3
+
+  '@forge/manifest@12.6.0':
+    dependencies:
+      '@forge/i18n': 0.0.7
+      '@sentry/node': 7.106.0
+      ajv: 8.20.0
+      ajv-formats: 2.1.1(ajv@8.20.0)
       cheerio: 1.2.0
       glob: 13.0.6
       lodash: 4.18.1
@@ -7223,11 +7241,11 @@ snapshots:
 
   '@forge/runtime@6.1.2': {}
 
-  '@forge/tunnel@6.3.14(@types/express@4.17.25)(@types/node@25.6.0)(webpack@5.106.2)':
+  '@forge/tunnel@6.3.15(@types/express@4.17.25)(@types/node@25.6.0)(webpack@5.106.2)':
     dependencies:
-      '@forge/bundler': 6.1.23(@types/node@25.6.0)
-      '@forge/cli-shared': 8.19.0(@types/node@25.6.0)
-      '@forge/csp': 5.6.1(cheerio@1.2.0)
+      '@forge/bundler': 6.1.24(@types/node@25.6.0)
+      '@forge/cli-shared': 8.20.0(@types/node@25.6.0)
+      '@forge/csp': 5.7.0(cheerio@1.2.0)
       '@forge/runtime': 6.1.2
       '@forge/util': 2.0.1
       cheerio: 1.2.0
@@ -8047,9 +8065,9 @@ snapshots:
 
   agent-base@7.1.4: {}
 
-  ajv-formats@2.1.1(ajv@8.18.0):
+  ajv-formats@2.1.1(ajv@8.20.0):
     optionalDependencies:
-      ajv: 8.18.0
+      ajv: 8.20.0
 
   ajv-formats@3.0.1(ajv@8.18.0):
     optionalDependencies:
@@ -8059,9 +8077,9 @@ snapshots:
     dependencies:
       ajv: 6.15.0
 
-  ajv-keywords@5.1.0(ajv@8.18.0):
+  ajv-keywords@5.1.0(ajv@8.20.0):
     dependencies:
-      ajv: 8.18.0
+      ajv: 8.20.0
       fast-deep-equal: 3.1.3
 
   ajv@6.15.0:
@@ -8072,6 +8090,13 @@ snapshots:
       uri-js: 4.4.1
 
   ajv@8.18.0:
+    dependencies:
+      fast-deep-equal: 3.1.3
+      fast-uri: 3.1.0
+      json-schema-traverse: 1.0.0
+      require-from-string: 2.0.2
+
+  ajv@8.20.0:
     dependencies:
       fast-deep-equal: 3.1.3
       fast-uri: 3.1.0
@@ -8206,7 +8231,7 @@ snapshots:
     dependencies:
       bare-events: 2.8.2
       bare-path: 3.0.0
-      bare-stream: 2.13.0(bare-events@2.8.2)
+      bare-stream: 2.13.1(bare-events@2.8.2)
       bare-url: 2.4.2
       fast-fifo: 1.3.2
     transitivePeerDependencies:
@@ -8219,7 +8244,7 @@ snapshots:
     dependencies:
       bare-os: 3.9.0
 
-  bare-stream@2.13.0(bare-events@2.8.2):
+  bare-stream@2.13.1(bare-events@2.8.2):
     dependencies:
       streamx: 2.25.0
       teex: 1.0.1
@@ -8234,7 +8259,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  baseline-browser-mapping@2.10.21: {}
+  baseline-browser-mapping@2.10.24: {}
 
   batch@0.6.1: {}
 
@@ -8309,8 +8334,8 @@ snapshots:
 
   browserslist@4.28.2:
     dependencies:
-      baseline-browser-mapping: 2.10.21
-      caniuse-lite: 1.0.30001790
+      baseline-browser-mapping: 2.10.24
+      caniuse-lite: 1.0.30001791
       electron-to-chromium: 1.5.344
       node-releases: 2.0.38
       update-browserslist-db: 1.2.3(browserslist@4.28.2)
@@ -8380,7 +8405,7 @@ snapshots:
       pascal-case: 3.1.2
       tslib: 2.8.1
 
-  caniuse-lite@1.0.30001790: {}
+  caniuse-lite@1.0.30001791: {}
 
   case@1.6.3: {}
 
@@ -8539,8 +8564,8 @@ snapshots:
 
   conf@10.2.0:
     dependencies:
-      ajv: 8.18.0
-      ajv-formats: 2.1.1(ajv@8.18.0)
+      ajv: 8.20.0
+      ajv-formats: 2.1.1(ajv@8.20.0)
       atomically: 1.7.0
       debounce-fn: 4.0.0
       dot-prop: 6.0.1
@@ -8939,7 +8964,7 @@ snapshots:
 
   es-module-lexer@1.7.0: {}
 
-  es-module-lexer@2.0.0: {}
+  es-module-lexer@2.1.0: {}
 
   es-object-atoms@1.1.1:
     dependencies:
@@ -9374,9 +9399,9 @@ snapshots:
       minipass: 7.1.3
       path-scurry: 2.0.2
 
-  global-directory@4.0.1:
+  global-directory@5.0.0:
     dependencies:
-      ini: 4.1.1
+      ini: 6.0.0
 
   globalthis@1.0.4:
     dependencies:
@@ -9601,7 +9626,7 @@ snapshots:
 
   ini@1.3.8: {}
 
-  ini@4.1.1: {}
+  ini@6.0.0: {}
 
   inquirer@8.2.7(@types/node@25.6.0):
     dependencies:
@@ -10792,9 +10817,9 @@ snapshots:
   schema-utils@4.3.3:
     dependencies:
       '@types/json-schema': 7.0.15
-      ajv: 8.18.0
-      ajv-formats: 2.1.1(ajv@8.18.0)
-      ajv-keywords: 5.1.0(ajv@8.18.0)
+      ajv: 8.20.0
+      ajv-formats: 2.1.1(ajv@8.20.0)
+      ajv-keywords: 5.1.0(ajv@8.20.0)
 
   select-hose@2.0.0: {}
 
@@ -11595,7 +11620,7 @@ snapshots:
       browserslist: 4.28.2
       chrome-trace-event: 1.0.4
       enhanced-resolve: 5.21.0
-      es-module-lexer: 2.0.0
+      es-module-lexer: 2.1.0
       eslint-scope: 5.1.1
       events: 3.3.0
       glob-to-regexp: 0.4.1
