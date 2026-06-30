@@ -27,7 +27,7 @@
     "qa": "bash scripts/qa.sh"
   },
   "dependencies": {
-    "@forge/bridge": "^5.15.1",
+    "@forge/bridge": "^6.0.0",
     "@forge/react": "^11.14.1",
     "@forge/resolver": "^1.7.1",
     "react": "^18.3.1",
