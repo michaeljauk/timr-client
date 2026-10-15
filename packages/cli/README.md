@@ -66,7 +66,7 @@ Optional overrides:
 
 - `--token-url <url>` / `$TIMR_TOKEN_URL` - defaults to `https://system.timr.com/id/oauth2/token`
 - `--scope <scope>` / `$TIMR_SCOPE` - defaults to `timrclient openid`
-- `--base-url <url>` / `$TIMR_BASE_URL` - defaults to `https://api.timr.com/v0.2/`
+- `--base-url <url>` / `$TIMR_BASE_URL` - defaults to `https://api.timr.com/v1/`
 
 ## Commands
 
