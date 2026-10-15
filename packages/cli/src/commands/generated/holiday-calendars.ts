@@ -4,7 +4,7 @@ import type { TimrClient } from "timr-sdk";
 import { globalArgs, printJson, readBody, resolveClient, numOrUndef, csv } from "../_shared.js";
 
 const cmd_get = defineCommand({
-  meta: { name: "get", description: "gets a single Holiday Calendar" },
+  meta: { name: "get", description: "Get a Holiday Calendar" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "holiday-calendar id", required: true },
@@ -17,13 +17,13 @@ const cmd_get = defineCommand({
 });
 
 const cmd_list = defineCommand({
-  meta: { name: "list", description: "fetches Holiday Calendars" },
+  meta: { name: "list", description: "List Holiday Calendars" },
   args: {
     ...globalArgs,
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * Description * Id" },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
@@ -33,14 +33,14 @@ const cmd_list = defineCommand({
 });
 
 const cmd_list_holidays = defineCommand({
-  meta: { name: "list-holidays", description: "fetches all Holidays of a specific Holiday Calendar" },
+  meta: { name: "list-holidays", description: "List Holidays" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "holiday-calendar id", required: true },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * Description * Id" },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);

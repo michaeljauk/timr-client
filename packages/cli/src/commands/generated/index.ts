@@ -9,6 +9,5 @@ export { teamsCommand } from "./teams.js";
 export { usersCommand } from "./users.js";
 export { workScheduleModelsCommand } from "./work-schedule-models.js";
 export { workingTimeDateSpansCommand } from "./working-time-date-spans.js";
-export { workingTimeRequestsCommand } from "./working-time-requests.js";
 export { workingTimeTypesCommand } from "./working-time-types.js";
 export { workingTimesCommand } from "./working-times.js";

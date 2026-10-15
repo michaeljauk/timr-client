@@ -3,8 +3,21 @@ import { defineCommand } from "citty";
 import type { TimrClient } from "timr-sdk";
 import { globalArgs, printJson, readBody, resolveClient, numOrUndef, csv } from "../_shared.js";
 
+const cmd_create = defineCommand({
+  meta: { name: "create", description: "Create a Car" },
+  args: {
+    ...globalArgs,
+    data: { type: "string", description: "Request body as JSON string, @file.json, or '-' for stdin" },
+  },
+  async run({ args }) {
+    const client = await resolveClient(args);
+    const { data } = await (client as TimrClient).POST("/cars" as never, { body: (await readBody(args.data)) as never } as never);
+    printJson(data);
+  },
+});
+
 const cmd_get = defineCommand({
-  meta: { name: "get", description: "gets a single Car" },
+  meta: { name: "get", description: "Get a Car" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "car id", required: true },
@@ -17,15 +30,15 @@ const cmd_get = defineCommand({
 });
 
 const cmd_list = defineCommand({
-  meta: { name: "list", description: "fetches Cars" },
+  meta: { name: "list", description: "List Cars" },
   args: {
     ...globalArgs,
-    "name-or-plate": { type: "string", description: "pass a String based on which the entries are filtered if it is contained in the properties name or plate" },
-    "usable": { type: "boolean", description: "pass a boolean to filter entries based on whether the car is usable or not" },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * name * id" },
+    "name-or-plate": { type: "string", description: "Only return Cars whose name or plate contains this text." },
+    "usable": { type: "boolean", description: "Only return Cars that are usable (true) or not usable (false)." },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
@@ -34,10 +47,26 @@ const cmd_list = defineCommand({
   },
 });
 
+const cmd_update = defineCommand({
+  meta: { name: "update", description: "Update a Car" },
+  args: {
+    ...globalArgs,
+    "id": { type: "positional", description: "car id", required: true },
+    data: { type: "string", description: "Request body as JSON string, @file.json, or '-' for stdin" },
+  },
+  async run({ args }) {
+    const client = await resolveClient(args);
+    const { data } = await (client as TimrClient).PATCH("/cars/{id}" as never, { params: { path: { "id": args["id"] as string } }, body: (await readBody(args.data)) as never } as never);
+    printJson(data);
+  },
+});
+
 export const carsCommand = defineCommand({
   meta: { name: "cars", description: "Manage cars" },
   subCommands: {
+    "create": cmd_create,
     "get": cmd_get,
     "list": cmd_list,
+    "update": cmd_update,
   },
 });
