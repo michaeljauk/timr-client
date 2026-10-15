@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.3](https://github.com/michaeljauk/timr-client/compare/timr-mcp-v0.3.2...timr-mcp-v0.3.3) (2026-10-15)
+
+
+### Bug Fixes
+
+* **mcp:** add @cfworker/json-schema so fresh installs start ([8169e60](https://github.com/michaeljauk/timr-client/commit/8169e6043bab27f1ea03ff4d29dd73b0c020ba3b))
+
 ## [0.3.2](https://github.com/michaeljauk/timr-client/compare/timr-mcp-v0.3.1...timr-mcp-v0.3.2) (2026-10-15)
 
 
