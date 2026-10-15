@@ -4,7 +4,7 @@ import type { TimrClient } from "timr-sdk";
 import { globalArgs, printJson, readBody, resolveClient, numOrUndef, csv } from "../_shared.js";
 
 const cmd_add_leader = defineCommand({
-  meta: { name: "add-leader", description: "adds a Team Leader" },
+  meta: { name: "add-leader", description: "Add a Team Leader" },
   args: {
     ...globalArgs,
     "team-id": { type: "positional", description: "team team_id", required: true },
@@ -18,7 +18,7 @@ const cmd_add_leader = defineCommand({
 });
 
 const cmd_add_member = defineCommand({
-  meta: { name: "add-member", description: "adds a Team Member" },
+  meta: { name: "add-member", description: "Add a Team Member" },
   args: {
     ...globalArgs,
     "team-id": { type: "positional", description: "team team_id", required: true },
@@ -32,7 +32,7 @@ const cmd_add_member = defineCommand({
 });
 
 const cmd_create = defineCommand({
-  meta: { name: "create", description: "create a Team" },
+  meta: { name: "create", description: "Create a Team" },
   args: {
     ...globalArgs,
     data: { type: "string", description: "Request body as JSON string, @file.json, or '-' for stdin" },
@@ -45,7 +45,7 @@ const cmd_create = defineCommand({
 });
 
 const cmd_delete = defineCommand({
-  meta: { name: "delete", description: "deletes a single Team" },
+  meta: { name: "delete", description: "Delete a Team" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "team id", required: true },
@@ -58,7 +58,7 @@ const cmd_delete = defineCommand({
 });
 
 const cmd_get = defineCommand({
-  meta: { name: "get", description: "get a single team" },
+  meta: { name: "get", description: "Get a Team" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "team id", required: true },
@@ -71,7 +71,7 @@ const cmd_get = defineCommand({
 });
 
 const cmd_get_leader = defineCommand({
-  meta: { name: "get-leader", description: "gets a single Team Leader" },
+  meta: { name: "get-leader", description: "Get a Team Leader" },
   args: {
     ...globalArgs,
     "team-id": { type: "positional", description: "team team_id", required: true },
@@ -85,7 +85,7 @@ const cmd_get_leader = defineCommand({
 });
 
 const cmd_get_member = defineCommand({
-  meta: { name: "get-member", description: "gets a single Team Member" },
+  meta: { name: "get-member", description: "Get a Team Member" },
   args: {
     ...globalArgs,
     "team-id": { type: "positional", description: "team team_id", required: true },
@@ -99,14 +99,14 @@ const cmd_get_member = defineCommand({
 });
 
 const cmd_list = defineCommand({
-  meta: { name: "list", description: "fetches Teams" },
+  meta: { name: "list", description: "List Teams" },
   args: {
     ...globalArgs,
-    "name": { type: "string", description: "pass a group name to filter entries by the group name, matching any segment in the breadcrumbs path" },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in (based on the Group's name)" },
-    "sort-by": { type: "string", description: "By default sorted by: * name * id pass a property by which the returned entries will be sorted if you want a different order" },
+    "name": { type: "string", description: "Only return Teams whose name matches this value in any segment of the breadcrumbs path." },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
@@ -116,14 +116,14 @@ const cmd_list = defineCommand({
 });
 
 const cmd_list_leaders = defineCommand({
-  meta: { name: "list-leaders", description: "fetches Team Leaders" },
+  meta: { name: "list-leaders", description: "List Team Leaders" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "team id", required: true },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * Lastname * Firstname * Id of the assigned user" },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
@@ -133,14 +133,14 @@ const cmd_list_leaders = defineCommand({
 });
 
 const cmd_list_members = defineCommand({
-  meta: { name: "list-members", description: "fetches Team Members" },
+  meta: { name: "list-members", description: "List Team Members" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "team id", required: true },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * Lastname * Firstname * Id of the assigned user" },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
@@ -150,7 +150,7 @@ const cmd_list_members = defineCommand({
 });
 
 const cmd_remove_leader = defineCommand({
-  meta: { name: "remove-leader", description: "removes a Team Leader" },
+  meta: { name: "remove-leader", description: "Remove a Team Leader" },
   args: {
     ...globalArgs,
     "team-id": { type: "positional", description: "team team_id", required: true },
@@ -164,7 +164,7 @@ const cmd_remove_leader = defineCommand({
 });
 
 const cmd_remove_member = defineCommand({
-  meta: { name: "remove-member", description: "removes a Team Member" },
+  meta: { name: "remove-member", description: "Remove a Team Member" },
   args: {
     ...globalArgs,
     "team-id": { type: "positional", description: "team team_id", required: true },
@@ -178,7 +178,7 @@ const cmd_remove_member = defineCommand({
 });
 
 const cmd_update = defineCommand({
-  meta: { name: "update", description: "updates a single Team" },
+  meta: { name: "update", description: "Update a Team" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "team id", required: true },

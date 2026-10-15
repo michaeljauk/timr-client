@@ -4,7 +4,7 @@ import type { TimrClient } from "timr-sdk";
 import { globalArgs, printJson, readBody, resolveClient, numOrUndef, csv } from "../_shared.js";
 
 const cmd_create = defineCommand({
-  meta: { name: "create", description: "create an User" },
+  meta: { name: "create", description: "Create a User" },
   args: {
     ...globalArgs,
     data: { type: "string", description: "Request body as JSON string, @file.json, or '-' for stdin" },
@@ -17,7 +17,7 @@ const cmd_create = defineCommand({
 });
 
 const cmd_get = defineCommand({
-  meta: { name: "get", description: "get a single user" },
+  meta: { name: "get", description: "Get a User" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "user id", required: true },
@@ -29,8 +29,22 @@ const cmd_get = defineCommand({
   },
 });
 
+const cmd_get_account = defineCommand({
+  meta: { name: "get-account", description: "Get a User's accounts" },
+  args: {
+    ...globalArgs,
+    "id": { type: "positional", description: "user id", required: true },
+    "date": { type: "positional", description: "account date", required: true },
+  },
+  async run({ args }) {
+    const client = await resolveClient(args);
+    const { data } = await (client as TimrClient).GET("/users/{id}/accounts/{date}" as never, { params: { path: { "id": args["id"] as string, "date": args["date"] as string } } } as never);
+    printJson(data);
+  },
+});
+
 const cmd_get_working_time_account = defineCommand({
-  meta: { name: "get-working-time-account", description: "get a user's working time accounts" },
+  meta: { name: "get-working-time-account", description: "Get a User's working time accounts" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "user id", required: true },
@@ -44,20 +58,20 @@ const cmd_get_working_time_account = defineCommand({
 });
 
 const cmd_list = defineCommand({
-  meta: { name: "list", description: "fetches Users" },
+  meta: { name: "list", description: "List Users" },
   args: {
     ...globalArgs,
-    "name": { type: "string", description: "pass a user name to filter entries by the user name" },
-    "entry-date-from": { type: "string", description: "pass entry_date_from to show all users entered on or after defined day" },
-    "entry-date-to": { type: "string", description: "pass entry_date_from to show all users entered on or before defined day" },
-    "resign-date-from": { type: "string", description: "pass resign_date_from to show all users resigned on or after defined day" },
-    "resign-date-to": { type: "string", description: "pass resign_date_to to show all users resigned on or before defined day" },
-    "resigned": { type: "boolean", description: "pass parameter resigned true/false to show all users who are resigned/not resigned" },
-    "employee-number": { type: "string", description: "pass an employee_number to show users with the corresponding employee number" },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * Lastname * Firstname * Id pass a property by which the returned entries will be sorted if you want a different order" },
+    "name": { type: "string", description: "Only return Users whose name contains this text." },
+    "entry-date-from": { type: "string", description: "Only return Users whose entry date is on or after this day." },
+    "entry-date-to": { type: "string", description: "Only return Users whose entry date is on or before this day." },
+    "resign-date-from": { type: "string", description: "Only return Users whose resignation date is on or after this day." },
+    "resign-date-to": { type: "string", description: "Only return Users whose resignation date is on or before this day." },
+    "resigned": { type: "boolean", description: "Only return Users who have resigned (true) or have not resigned (false)." },
+    "employee-number": { type: "string", description: "Only return Users with this employee number." },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
@@ -67,36 +81,37 @@ const cmd_list = defineCommand({
 });
 
 const cmd_list_tasks = defineCommand({
-  meta: { name: "list-tasks", description: "Fetches all tasks the user is assigned to" },
+  meta: { name: "list-tasks", description: "List a User's Tasks" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "user id", required: true },
-    "parent-task-id": { type: "string", description: "pass task's id to restrict entries having this task as a parent task" },
-    "traverse-task-tree": { type: "boolean", description: "pass this parameter with value true/false to traverse the whole task tree" },
-    "name": { type: "string", description: "pass a user name to filter entries by the user name" },
-    "bookable": { type: "boolean", description: "pass this parameter with value true/false to show just entries/no entries which are billable" },
-    "billable": { type: "boolean", description: "pass this parameter with value true/false to show just entries/no entries which are billable" },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * breadcrumbs * id pass a property by which the returned entries will be sorted if you want a different order" },
+    "parent-task-id": { type: "string", description: "Only return Tasks whose parent is the Task with this ID." },
+    "traverse-task-tree": { type: "boolean", description: "Include Tasks from the whole subtree (true) or only direct children (false)." },
+    "name": { type: "string", description: "Only return Users whose name contains this text." },
+    "bookable": { type: "boolean", description: "Only return entries that are billable (true) or not billable (false)." },
+    "billable": { type: "boolean", description: "Only return entries that are billable (true) or not billable (false)." },
+    "active-at": { type: "string", description: "Only return Tasks that are active on this day." },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
-    const { data } = await (client as TimrClient).GET("/users/{id}/tasks" as never, { params: { path: { "id": args["id"] as string }, query: { "parent_task_id": args["parent-task-id"] as string | undefined, "traverse_task_tree": args["traverse-task-tree"] as boolean | undefined, "name": args["name"] as string | undefined, "bookable": args["bookable"] as boolean | undefined, "billable": args["billable"] as boolean | undefined, "page_token": args["page-token"] as string | undefined, "limit": numOrUndef(args["limit"]), "sort_direction": args["sort-direction"] as string | undefined, "sort_by": args["sort-by"] as string | undefined } } } as never);
+    const { data } = await (client as TimrClient).GET("/users/{id}/tasks" as never, { params: { path: { "id": args["id"] as string }, query: { "parent_task_id": args["parent-task-id"] as string | undefined, "traverse_task_tree": args["traverse-task-tree"] as boolean | undefined, "name": args["name"] as string | undefined, "bookable": args["bookable"] as boolean | undefined, "billable": args["billable"] as boolean | undefined, "active_at": args["active-at"] as string | undefined, "page_token": args["page-token"] as string | undefined, "limit": numOrUndef(args["limit"]), "sort_direction": args["sort-direction"] as string | undefined, "sort_by": args["sort-by"] as string | undefined } } } as never);
     printJson(data);
   },
 });
 
 const cmd_list_team_leaderships = defineCommand({
-  meta: { name: "list-team-leaderships", description: "fetches User's Team Leaderships" },
+  meta: { name: "list-team-leaderships", description: "List a User's Team leaderships" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "user id", required: true },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in (based on the Team's name)" },
-    "sort-by": { type: "string", description: "By default sorted by: * name * id pass a property by which the returned entries will be sorted if you want a different order" },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
@@ -106,14 +121,14 @@ const cmd_list_team_leaderships = defineCommand({
 });
 
 const cmd_list_team_memberships = defineCommand({
-  meta: { name: "list-team-memberships", description: "fetches User's Team Memberships" },
+  meta: { name: "list-team-memberships", description: "List a User's Team memberships" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "user id", required: true },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in (based on the Team's name)" },
-    "sort-by": { type: "string", description: "By default sorted by: * name * id pass a property by which the returned entries will be sorted if you want a different order" },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
@@ -123,7 +138,7 @@ const cmd_list_team_memberships = defineCommand({
 });
 
 const cmd_list_work_schedule_model = defineCommand({
-  meta: { name: "list-work-schedule-model", description: "get a User's Work-Schedule-Model" },
+  meta: { name: "list-work-schedule-model", description: "Get a User's Work Schedule Model" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "user id", required: true },
@@ -136,7 +151,7 @@ const cmd_list_work_schedule_model = defineCommand({
 });
 
 const cmd_update = defineCommand({
-  meta: { name: "update", description: "updates a single User" },
+  meta: { name: "update", description: "Update a User" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "user id", required: true },
@@ -154,6 +169,7 @@ export const usersCommand = defineCommand({
   subCommands: {
     "create": cmd_create,
     "get": cmd_get,
+    "get-account": cmd_get_account,
     "get-working-time-account": cmd_get_working_time_account,
     "list": cmd_list,
     "list-tasks": cmd_list_tasks,

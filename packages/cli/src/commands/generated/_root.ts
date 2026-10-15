@@ -10,7 +10,6 @@ import { teamsCommand } from "./teams.js";
 import { usersCommand } from "./users.js";
 import { workScheduleModelsCommand } from "./work-schedule-models.js";
 import { workingTimeDateSpansCommand } from "./working-time-date-spans.js";
-import { workingTimeRequestsCommand } from "./working-time-requests.js";
 import { workingTimeTypesCommand } from "./working-time-types.js";
 import { workingTimesCommand } from "./working-times.js";
 
@@ -25,7 +24,6 @@ export const generatedSubCommands: Record<string, CommandDef> = {
   "users": usersCommand,
   "work-schedule-models": workScheduleModelsCommand,
   "working-time-date-spans": workingTimeDateSpansCommand,
-  "working-time-requests": workingTimeRequestsCommand,
   "working-time-types": workingTimeTypesCommand,
   "working-times": workingTimesCommand,
 };

@@ -4,7 +4,7 @@ import type { TimrClient } from "timr-sdk";
 import { globalArgs, printJson, readBody, resolveClient, numOrUndef, csv } from "../_shared.js";
 
 const cmd_create = defineCommand({
-  meta: { name: "create", description: "create a Working Time Date Span" },
+  meta: { name: "create", description: "Create a Working Time Date Span" },
   args: {
     ...globalArgs,
     data: { type: "string", description: "Request body as JSON string, @file.json, or '-' for stdin" },
@@ -17,7 +17,7 @@ const cmd_create = defineCommand({
 });
 
 const cmd_delete = defineCommand({
-  meta: { name: "delete", description: "deletes a single Working Time Date Span" },
+  meta: { name: "delete", description: "Delete a Working Time Date Span" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "working-time-date-span id", required: true },
@@ -30,7 +30,7 @@ const cmd_delete = defineCommand({
 });
 
 const cmd_get = defineCommand({
-  meta: { name: "get", description: "gets a single Working Time Date Span" },
+  meta: { name: "get", description: "Get a Working Time Date Span" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "working-time-date-span id", required: true },
@@ -43,18 +43,18 @@ const cmd_get = defineCommand({
 });
 
 const cmd_list = defineCommand({
-  meta: { name: "list", description: "fetches Working Time Date Spans" },
+  meta: { name: "list", description: "List Working Time Date Spans" },
   args: {
     ...globalArgs,
-    "from": { type: "string", description: "pass a date to filter entries started from this day on" },
-    "to": { type: "string", description: "pass a date to filter entries started up to (including) this day" },
-    "last-modified-after": { type: "string", description: "pass a datetime to filter entries modified after this instant" },
-    "working-time-types": { type: "string", description: "pass one or more ids of Working Time Types to restrict entries based on these types" },
-    "users": { type: "string", description: "pass one or more user ids to restrict entries based on the user they are associated to" },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * start * Id" },
+    "from": { type: "string", description: "Only return Working Time Date Spans that end on or after this day." },
+    "to": { type: "string", description: "Only return entries starting on or before this day." },
+    "last-modified-after": { type: "string", description: "Only return entries modified after this instant." },
+    "working-time-types": { type: "string", description: "Only return entries of these Working Time Types." },
+    "users": { type: "string", description: "Only return entries belonging to these users." },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
@@ -64,24 +64,24 @@ const cmd_list = defineCommand({
 });
 
 const cmd_list_deleted = defineCommand({
-  meta: { name: "list-deleted", description: "Get deleted working time requests" },
+  meta: { name: "list-deleted", description: "List deleted Working Time Date Spans" },
   args: {
     ...globalArgs,
-    "last-modified": { type: "string", description: "optionally, pass a datetime to filter entries modified after this instant" },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "optionally, pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "optionally, pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * last_modified * Id optionally, pass a property by which the returned entries will be sorted if you want a different order" },
+    "last-modified-after": { type: "string", description: "Only return entries modified after this instant." },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
-    const { data } = await (client as TimrClient).GET("/working-time-date-spans:deleted" as never, { params: { query: { "last_modified": args["last-modified"] as string | undefined, "page_token": args["page-token"] as string | undefined, "limit": numOrUndef(args["limit"]), "sort_direction": args["sort-direction"] as string | undefined, "sort_by": args["sort-by"] as string | undefined } } } as never);
+    const { data } = await (client as TimrClient).GET("/working-time-date-spans:deleted" as never, { params: { query: { "last_modified_after": args["last-modified-after"] as string | undefined, "page_token": args["page-token"] as string | undefined, "limit": numOrUndef(args["limit"]), "sort_direction": args["sort-direction"] as string | undefined, "sort_by": args["sort-by"] as string | undefined } } } as never);
     printJson(data);
   },
 });
 
 const cmd_update = defineCommand({
-  meta: { name: "update", description: "updates a single Working Time Date Span" },
+  meta: { name: "update", description: "Update a Working Time Date Span" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "working-time-date-span id", required: true },

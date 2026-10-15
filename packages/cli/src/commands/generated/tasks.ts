@@ -4,7 +4,7 @@ import type { TimrClient } from "timr-sdk";
 import { globalArgs, printJson, readBody, resolveClient, numOrUndef, csv } from "../_shared.js";
 
 const cmd_add_leader = defineCommand({
-  meta: { name: "add-leader", description: "create a Task to Leader Assignment" },
+  meta: { name: "add-leader", description: "Create a Task to Leader Assignment" },
   args: {
     ...globalArgs,
     "task-id": { type: "positional", description: "task task_id", required: true },
@@ -18,7 +18,7 @@ const cmd_add_leader = defineCommand({
 });
 
 const cmd_add_team = defineCommand({
-  meta: { name: "add-team", description: "create a Task to Team Assignment" },
+  meta: { name: "add-team", description: "Create a Task to Team Assignment" },
   args: {
     ...globalArgs,
     "task-id": { type: "positional", description: "task task_id", required: true },
@@ -32,7 +32,7 @@ const cmd_add_team = defineCommand({
 });
 
 const cmd_add_user = defineCommand({
-  meta: { name: "add-user", description: "create a Task to User Assignment" },
+  meta: { name: "add-user", description: "Create or update a Task to User Assignment" },
   args: {
     ...globalArgs,
     "task-id": { type: "positional", description: "task task_id", required: true },
@@ -46,7 +46,7 @@ const cmd_add_user = defineCommand({
 });
 
 const cmd_create = defineCommand({
-  meta: { name: "create", description: "create a Task" },
+  meta: { name: "create", description: "Create a Task" },
   args: {
     ...globalArgs,
     data: { type: "string", description: "Request body as JSON string, @file.json, or '-' for stdin" },
@@ -59,7 +59,7 @@ const cmd_create = defineCommand({
 });
 
 const cmd_get = defineCommand({
-  meta: { name: "get", description: "get a single task" },
+  meta: { name: "get", description: "Get a Task" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "task id", required: true },
@@ -72,7 +72,7 @@ const cmd_get = defineCommand({
 });
 
 const cmd_get_leader = defineCommand({
-  meta: { name: "get-leader", description: "get a single task to leader assignment" },
+  meta: { name: "get-leader", description: "Get a Task to Leader Assignment" },
   args: {
     ...globalArgs,
     "task-id": { type: "positional", description: "task task_id", required: true },
@@ -86,7 +86,7 @@ const cmd_get_leader = defineCommand({
 });
 
 const cmd_get_team = defineCommand({
-  meta: { name: "get-team", description: "get a single task to team assignment" },
+  meta: { name: "get-team", description: "Get a Task to Team Assignment" },
   args: {
     ...globalArgs,
     "task-id": { type: "positional", description: "task task_id", required: true },
@@ -100,7 +100,7 @@ const cmd_get_team = defineCommand({
 });
 
 const cmd_get_user = defineCommand({
-  meta: { name: "get-user", description: "get a single task to user assignment" },
+  meta: { name: "get-user", description: "Get a Task to User Assignment" },
   args: {
     ...globalArgs,
     "task-id": { type: "positional", description: "task task_id", required: true },
@@ -114,35 +114,36 @@ const cmd_get_user = defineCommand({
 });
 
 const cmd_list = defineCommand({
-  meta: { name: "list", description: "fetches Tasks" },
+  meta: { name: "list", description: "List Tasks" },
   args: {
     ...globalArgs,
-    "parent-task-id": { type: "string", description: "pass task's id to restrict entries having this task as a parent task" },
-    "traverse-task-tree": { type: "boolean", description: "pass this parameter with value true/false to traverse the whole task tree" },
-    "name": { type: "string", description: "pass a user name to filter entries by the user name" },
-    "bookable": { type: "boolean", description: "pass this parameter with value true/false to show just entries/no entries which are billable" },
-    "billable": { type: "boolean", description: "pass this parameter with value true/false to show just entries/no entries which are billable" },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * breadcrumbs * id pass a property by which the returned entries will be sorted if you want a different order" },
+    "parent-task-id": { type: "string", description: "Only return Tasks whose parent is the Task with this ID." },
+    "traverse-task-tree": { type: "boolean", description: "Include Tasks from the whole subtree (true) or only direct children (false)." },
+    "name": { type: "string", description: "Only return Users whose name contains this text." },
+    "bookable": { type: "boolean", description: "Only return entries that are billable (true) or not billable (false)." },
+    "billable": { type: "boolean", description: "Only return entries that are billable (true) or not billable (false)." },
+    "active-at": { type: "string", description: "Only return Tasks that are active on this day." },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
-    const { data } = await (client as TimrClient).GET("/tasks" as never, { params: { query: { "parent_task_id": args["parent-task-id"] as string | undefined, "traverse_task_tree": args["traverse-task-tree"] as boolean | undefined, "name": args["name"] as string | undefined, "bookable": args["bookable"] as boolean | undefined, "billable": args["billable"] as boolean | undefined, "page_token": args["page-token"] as string | undefined, "limit": numOrUndef(args["limit"]), "sort_direction": args["sort-direction"] as string | undefined, "sort_by": args["sort-by"] as string | undefined } } } as never);
+    const { data } = await (client as TimrClient).GET("/tasks" as never, { params: { query: { "parent_task_id": args["parent-task-id"] as string | undefined, "traverse_task_tree": args["traverse-task-tree"] as boolean | undefined, "name": args["name"] as string | undefined, "bookable": args["bookable"] as boolean | undefined, "billable": args["billable"] as boolean | undefined, "active_at": args["active-at"] as string | undefined, "page_token": args["page-token"] as string | undefined, "limit": numOrUndef(args["limit"]), "sort_direction": args["sort-direction"] as string | undefined, "sort_by": args["sort-by"] as string | undefined } } } as never);
     printJson(data);
   },
 });
 
 const cmd_list_leaders = defineCommand({
-  meta: { name: "list-leaders", description: "fetches Task to Leader Assignments" },
+  meta: { name: "list-leaders", description: "List Task to Leader Assignments" },
   args: {
     ...globalArgs,
     "task-id": { type: "positional", description: "task task_id", required: true },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * Lastname * Firstname * Id of the assigned leader" },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
@@ -152,14 +153,14 @@ const cmd_list_leaders = defineCommand({
 });
 
 const cmd_list_teams = defineCommand({
-  meta: { name: "list-teams", description: "fetches Task to Team Assignments" },
+  meta: { name: "list-teams", description: "List Task to Team Assignments" },
   args: {
     ...globalArgs,
     "task-id": { type: "positional", description: "task task_id", required: true },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * Name * Id of the assigned team" },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
@@ -169,14 +170,14 @@ const cmd_list_teams = defineCommand({
 });
 
 const cmd_list_users = defineCommand({
-  meta: { name: "list-users", description: "fetches Task to User Assignments" },
+  meta: { name: "list-users", description: "List Task to User Assignments" },
   args: {
     ...globalArgs,
     "task-id": { type: "positional", description: "task task_id", required: true },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * Lastname * Firstname * Id of the assigned user" },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
@@ -186,7 +187,7 @@ const cmd_list_users = defineCommand({
 });
 
 const cmd_remove_leader = defineCommand({
-  meta: { name: "remove-leader", description: "deletes a Task to Leader Assignment" },
+  meta: { name: "remove-leader", description: "Delete a Task to Leader Assignment" },
   args: {
     ...globalArgs,
     "task-id": { type: "positional", description: "task task_id", required: true },
@@ -200,7 +201,7 @@ const cmd_remove_leader = defineCommand({
 });
 
 const cmd_remove_team = defineCommand({
-  meta: { name: "remove-team", description: "deletes a Task to Team Assignment" },
+  meta: { name: "remove-team", description: "Delete a Task to Team Assignment" },
   args: {
     ...globalArgs,
     "task-id": { type: "positional", description: "task task_id", required: true },
@@ -214,7 +215,7 @@ const cmd_remove_team = defineCommand({
 });
 
 const cmd_remove_user = defineCommand({
-  meta: { name: "remove-user", description: "deletes a Task to User Assignment" },
+  meta: { name: "remove-user", description: "Delete a Task to User Assignment" },
   args: {
     ...globalArgs,
     "task-id": { type: "positional", description: "task task_id", required: true },
@@ -228,7 +229,7 @@ const cmd_remove_user = defineCommand({
 });
 
 const cmd_update = defineCommand({
-  meta: { name: "update", description: "updates a single Task" },
+  meta: { name: "update", description: "Update a Task" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "task id", required: true },
@@ -237,21 +238,6 @@ const cmd_update = defineCommand({
   async run({ args }) {
     const client = await resolveClient(args);
     const { data } = await (client as TimrClient).PATCH("/tasks/{id}" as never, { params: { path: { "id": args["id"] as string } }, body: (await readBody(args.data)) as never } as never);
-    printJson(data);
-  },
-});
-
-const cmd_update_user = defineCommand({
-  meta: { name: "update-user", description: "update a Task to User Assignment" },
-  args: {
-    ...globalArgs,
-    "task-id": { type: "positional", description: "task task_id", required: true },
-    "user-id": { type: "positional", description: "user user_id", required: true },
-    data: { type: "string", description: "Request body as JSON string, @file.json, or '-' for stdin" },
-  },
-  async run({ args }) {
-    const client = await resolveClient(args);
-    const { data } = await (client as TimrClient).PATCH("/tasks/{task_id}/users/{user_id}" as never, { params: { path: { "task_id": args["task-id"] as string, "user_id": args["user-id"] as string } }, body: (await readBody(args.data)) as never } as never);
     printJson(data);
   },
 });
@@ -275,6 +261,5 @@ export const tasksCommand = defineCommand({
     "remove-team": cmd_remove_team,
     "remove-user": cmd_remove_user,
     "update": cmd_update,
-    "update-user": cmd_update_user,
   },
 });

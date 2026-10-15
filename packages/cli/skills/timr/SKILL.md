@@ -109,5 +109,5 @@ On 401 the OAuth token was rejected (credentials may have been rotated) - re-run
 ## Reference
 
 - Field reference: [`SCHEMA.md`](./SCHEMA.md) (auto-generated)
-- API docs: <https://app.swaggerhub.com/apis-docs/troii/timr/0.2.13?view=elementsDocs>
+- API docs: <https://developer.timr.com/>
 - CLI repo: <https://github.com/michaeljauk/timr-client>
