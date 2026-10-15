@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://github.com/michaeljauk/timr-client/compare/timr-mcp-v0.3.3...timr-mcp-v1.0.0) (2026-10-15)
+
+
+### Bug Fixes
+
+* **mcp:** report the package version in serverInfo ([11a17cb](https://github.com/michaeljauk/timr-client/commit/11a17cbcacb21bf4f95db4622d77056ef8d49517))
+
 ## [0.3.3](https://github.com/michaeljauk/timr-client/compare/timr-mcp-v0.3.2...timr-mcp-v0.3.3) (2026-10-15)
 
 
