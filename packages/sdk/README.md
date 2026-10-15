@@ -16,7 +16,7 @@ Unofficial, community-maintained. Not affiliated with [troii Software GmbH](http
 
 ## Features
 
-- Complete type coverage for every path, request body, query parameter, and response - generated from timr API `0.2.14`
+- Complete type coverage for every path, request body, query parameter, and response - generated from timr REST API `1.0.0`
 - One runtime dependency: [`openapi-fetch`](https://openapi-ts.dev/openapi-fetch/) (~5 kB gzipped, zero deps itself)
 - ESM, tree-shakeable, works in Node 20+, Bun, Deno, Cloudflare Workers, and Vercel Edge
 - Throws a typed `TimrError` on any non-2xx response so you never get a surprise `undefined`
@@ -184,18 +184,20 @@ type ListProjectTimesResponse =
 
 ## API reference
 
-The timr API is documented on SwaggerHub:
+The timr API is documented in the timr Developer Portal:
 
-- Interactive docs: <https://app.swaggerhub.com/apis-docs/troii/timr/0.2.13?view=elementsDocs>
-- Raw spec (pinned): <https://api.swaggerhub.com/apis/troii/timr/0.2.14>
+- Interactive docs: <https://developer.timr.com/>
+- Raw spec (YAML): <https://developer.timr.com/openapi.yaml>
 
 ## Compatibility
 
 | SDK version | timr API version |
 |-------------|------------------|
-| `0.1.x` | `0.2.14` |
+| `0.1.x` - `0.3.1` | `0.2.14` (`/v0.2/`) |
+| `0.3.2` - `0.3.x` | `0.2.14` types, `/v1/` base URL |
+| `1.x` | `1.0.0` |
 
-The SDK stays on `0.x` until the timr API reaches `1.0`. Breaking changes in the API may require a minor bump until then.
+The SDK left `0.x` when the timr REST API reached `1.0`. Breaking changes in the API lead to a major bump.
 
 ## Support
 
