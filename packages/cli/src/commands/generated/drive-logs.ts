@@ -4,7 +4,7 @@ import type { TimrClient } from "timr-sdk";
 import { globalArgs, printJson, readBody, resolveClient, numOrUndef, csv } from "../_shared.js";
 
 const cmd_create = defineCommand({
-  meta: { name: "create", description: "create a Drive Log" },
+  meta: { name: "create", description: "Create a Drive Log" },
   args: {
     ...globalArgs,
     data: { type: "string", description: "Request body as JSON string, @file.json, or '-' for stdin" },
@@ -17,7 +17,7 @@ const cmd_create = defineCommand({
 });
 
 const cmd_create_track = defineCommand({
-  meta: { name: "create-track", description: "create a Track for a Drive Log" },
+  meta: { name: "create-track", description: "Create a Drive Log's Track" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "drive-log id", required: true },
@@ -30,8 +30,21 @@ const cmd_create_track = defineCommand({
   },
 });
 
+const cmd_delete = defineCommand({
+  meta: { name: "delete", description: "Delete a Drive Log" },
+  args: {
+    ...globalArgs,
+    "id": { type: "positional", description: "drive-log id", required: true },
+  },
+  async run({ args }) {
+    const client = await resolveClient(args);
+    const { data } = await (client as TimrClient).DELETE("/drive-logs/{id}" as never, { params: { path: { "id": args["id"] as string } } } as never);
+    printJson(data);
+  },
+});
+
 const cmd_delete_track = defineCommand({
-  meta: { name: "delete-track", description: "deletes a Drive Log's Track" },
+  meta: { name: "delete-track", description: "Delete a Drive Log's Track" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "drive-log id", required: true },
@@ -44,7 +57,7 @@ const cmd_delete_track = defineCommand({
 });
 
 const cmd_get = defineCommand({
-  meta: { name: "get", description: "gets a single Drive Log" },
+  meta: { name: "get", description: "Get a Drive Log" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "drive-log id", required: true },
@@ -57,23 +70,23 @@ const cmd_get = defineCommand({
 });
 
 const cmd_list = defineCommand({
-  meta: { name: "list", description: "fetches Drive Logs" },
+  meta: { name: "list", description: "List Drive Logs" },
   args: {
     ...globalArgs,
-    "start-from": { type: "string", description: "pass a date to filter entries started from this day on" },
-    "start-to": { type: "string", description: "pass a date to filter entries started up to (including) this day" },
-    "last-modified-after": { type: "string", description: "pass a datetime to filter entries modified after this instant" },
-    "cars": { type: "string", description: "pass one or more ids of cars to restrict entries based on these cars" },
-    "drive-log-categories": { type: "string", description: "pass one or more ids of drive log categories to restrict entries based on these categories" },
-    "statuses": { type: "string", description: "pass one or more statuses to filter entries based on their status" },
-    "users": { type: "string", description: "pass one or more user ids to restrict entries based on the user they are associated to" },
-    "details": { type: "string", description: "pass a String based on which the entries are filtered if it is contained in the properties route, purpose or visited" },
-    "changed": { type: "boolean", description: "pass a boolean to filter entries based on whether they have been changed by the user or not" },
-    "has-track": { type: "boolean", description: "pass a boolean to filter entries based on whether they have a track or not" },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * start * las_modified_after * id" },
+    "start-from": { type: "string", description: "Only return entries starting on or after this day." },
+    "start-to": { type: "string", description: "Only return entries starting on or before this day." },
+    "last-modified-after": { type: "string", description: "Only return entries modified after this instant." },
+    "cars": { type: "string", description: "Only return entries recorded for these Cars." },
+    "drive-log-categories": { type: "string", description: "Only return entries in these Drive Log Categories." },
+    "statuses": { type: "string", description: "Only return entries in one of these statuses." },
+    "users": { type: "string", description: "Only return entries belonging to these users." },
+    "details": { type: "string", description: "Only return Drive Logs whose route, purpose or visited contains this text." },
+    "changed": { type: "boolean", description: "Only return entries that were changed by the user (true) or left unchanged (false)." },
+    "has-track": { type: "boolean", description: "Only return Drive Logs that have a Track (true) or have none (false)." },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
@@ -83,24 +96,24 @@ const cmd_list = defineCommand({
 });
 
 const cmd_list_deleted = defineCommand({
-  meta: { name: "list-deleted", description: "Get deleted drive logs" },
+  meta: { name: "list-deleted", description: "List deleted Drive Logs" },
   args: {
     ...globalArgs,
-    "last-modified": { type: "string", description: "optionally, pass a datetime to filter entries modified after this instant" },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "optionally, pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "optionally, pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * last_modified * Id optionally, pass a property by which the returned entries will be sorted if you want a different order" },
+    "last-modified-after": { type: "string", description: "Only return entries modified after this instant." },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
-    const { data } = await (client as TimrClient).GET("/drive-logs:deleted" as never, { params: { query: { "last_modified": args["last-modified"] as string | undefined, "page_token": args["page-token"] as string | undefined, "limit": numOrUndef(args["limit"]), "sort_direction": args["sort-direction"] as string | undefined, "sort_by": args["sort-by"] as string | undefined } } } as never);
+    const { data } = await (client as TimrClient).GET("/drive-logs:deleted" as never, { params: { query: { "last_modified_after": args["last-modified-after"] as string | undefined, "page_token": args["page-token"] as string | undefined, "limit": numOrUndef(args["limit"]), "sort_direction": args["sort-direction"] as string | undefined, "sort_by": args["sort-by"] as string | undefined } } } as never);
     printJson(data);
   },
 });
 
 const cmd_list_track = defineCommand({
-  meta: { name: "list-track", description: "gets the Track of a Drive Log if present" },
+  meta: { name: "list-track", description: "Get a Drive Log's Track" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "drive-log id", required: true },
@@ -113,7 +126,7 @@ const cmd_list_track = defineCommand({
 });
 
 const cmd_replace_track = defineCommand({
-  meta: { name: "replace-track", description: "updates a Drive Log's Track" },
+  meta: { name: "replace-track", description: "Replace a Drive Log's Track" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "drive-log id", required: true },
@@ -127,7 +140,7 @@ const cmd_replace_track = defineCommand({
 });
 
 const cmd_update = defineCommand({
-  meta: { name: "update", description: "updates a single Drive Log" },
+  meta: { name: "update", description: "Update a Drive Log" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "drive-log id", required: true },
@@ -145,6 +158,7 @@ export const driveLogsCommand = defineCommand({
   subCommands: {
     "create": cmd_create,
     "create-track": cmd_create_track,
+    "delete": cmd_delete,
     "delete-track": cmd_delete_track,
     "get": cmd_get,
     "list": cmd_list,

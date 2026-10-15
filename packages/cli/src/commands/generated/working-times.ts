@@ -4,7 +4,7 @@ import type { TimrClient } from "timr-sdk";
 import { globalArgs, printJson, readBody, resolveClient, numOrUndef, csv } from "../_shared.js";
 
 const cmd_create = defineCommand({
-  meta: { name: "create", description: "create a Working Time" },
+  meta: { name: "create", description: "Create a Working Time" },
   args: {
     ...globalArgs,
     data: { type: "string", description: "Request body as JSON string, @file.json, or '-' for stdin" },
@@ -17,7 +17,7 @@ const cmd_create = defineCommand({
 });
 
 const cmd_delete = defineCommand({
-  meta: { name: "delete", description: "deletes a single Working Time" },
+  meta: { name: "delete", description: "Delete a Working Time" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "working-time id", required: true },
@@ -30,7 +30,7 @@ const cmd_delete = defineCommand({
 });
 
 const cmd_get = defineCommand({
-  meta: { name: "get", description: "gets a single Working Time" },
+  meta: { name: "get", description: "Get a Working Time" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "working-time id", required: true },
@@ -43,22 +43,22 @@ const cmd_get = defineCommand({
 });
 
 const cmd_list = defineCommand({
-  meta: { name: "list", description: "fetches Working Times" },
+  meta: { name: "list", description: "List Working Times" },
   args: {
     ...globalArgs,
-    "notes": { type: "string", description: "pass a search string to filter entries containing this string in their notes" },
-    "start-from": { type: "string", description: "pass a date to filter entries started from this day on" },
-    "start-to": { type: "string", description: "pass a date to filter entries started up to (including) this day" },
-    "last-modified-after": { type: "string", description: "pass a datetime to filter entries modified after this instant" },
-    "working-time-types": { type: "string", description: "pass one or more ids of WorkingTimeTypes to restrict entries based on these types" },
-    "working-time-type-categories": { type: "string", description: "optionally, pass one or more WorkingTimeTypeCategories to restrict entries based on these categories" },
-    "statuses": { type: "string", description: "pass one or more statuses to filter entries based on their status" },
-    "users": { type: "string", description: "pass one or more user ids to restrict entries based on the user they are associated to" },
-    "changed": { type: "boolean", description: "pass a boolean to filter entries based on whether they have been changed by the user or not" },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * start * Id pass a property by which the returned entries will be sorted" },
+    "notes": { type: "string", description: "Only return entries whose notes contain this text." },
+    "start-from": { type: "string", description: "Only return entries starting on or after this day." },
+    "start-to": { type: "string", description: "Only return entries starting on or before this day." },
+    "last-modified-after": { type: "string", description: "Only return entries modified after this instant." },
+    "working-time-types": { type: "string", description: "Only return entries of these Working Time Types." },
+    "working-time-type-categories": { type: "string", description: "Only return entries whose Working Time Type is in one of these categories." },
+    "statuses": { type: "string", description: "Only return entries in one of these statuses." },
+    "users": { type: "string", description: "Only return entries belonging to these users." },
+    "changed": { type: "boolean", description: "Only return entries that were changed by the user (true) or left unchanged (false)." },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
@@ -68,24 +68,24 @@ const cmd_list = defineCommand({
 });
 
 const cmd_list_deleted = defineCommand({
-  meta: { name: "list-deleted", description: "Get deleted working times" },
+  meta: { name: "list-deleted", description: "List deleted Working Times" },
   args: {
     ...globalArgs,
-    "last-modified": { type: "string", description: "optionally, pass a datetime to filter entries modified after this instant" },
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "optionally, pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "optionally, pass a direction in which the entries returned will be sorted in" },
-    "sort-by": { type: "string", description: "By default sorted by: * last_modified * Id optionally, pass a property by which the returned entries will be sorted if you want a different order" },
+    "last-modified-after": { type: "string", description: "Only return entries modified after this instant." },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
-    const { data } = await (client as TimrClient).GET("/working-times:deleted" as never, { params: { query: { "last_modified": args["last-modified"] as string | undefined, "page_token": args["page-token"] as string | undefined, "limit": numOrUndef(args["limit"]), "sort_direction": args["sort-direction"] as string | undefined, "sort_by": args["sort-by"] as string | undefined } } } as never);
+    const { data } = await (client as TimrClient).GET("/working-times:deleted" as never, { params: { query: { "last_modified_after": args["last-modified-after"] as string | undefined, "page_token": args["page-token"] as string | undefined, "limit": numOrUndef(args["limit"]), "sort_direction": args["sort-direction"] as string | undefined, "sort_by": args["sort-by"] as string | undefined } } } as never);
     printJson(data);
   },
 });
 
 const cmd_update = defineCommand({
-  meta: { name: "update", description: "updates a single Working Time" },
+  meta: { name: "update", description: "Update a Working Time" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "working-time id", required: true },

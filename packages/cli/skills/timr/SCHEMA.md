@@ -1,6 +1,6 @@
 # timr API — field reference
 
-Auto-generated from `openapi.json` (timr API **0.2.14**). Do not hand-edit.
+Auto-generated from `openapi.json` (timr API **1.0.0**). Do not hand-edit.
 
 Every list endpoint returns `{ data: T[], next_page_token: string | null }`. The tables below document `T` for each resource, plus all nested schemas referenced from responses.
 
@@ -17,24 +17,20 @@ Every list endpoint returns `{ data: T[], next_page_token: string | null }`. The
 | `timr drive-logs list` | `GET /drive-logs` | [DriveLog](#drivelog) |
 | `timr cars list` | `GET /cars` | [Car](#car) |
 | `timr drive-log-categories list` | `GET /drive-log-categories` | [DriveLogCategory](#drivelogcategory) |
-| `timr working-time-requests list` | `GET /working-time-requests` | [WorkingTimeRequest](#workingtimerequest) |
 | `timr working-time-date-spans list` | `GET /working-time-date-spans` | [WorkingTimeDateSpan](#workingtimedatespan) |
 | `timr working-time-types list` | `GET /working-time-types` | [WorkingTimeType](#workingtimetype) |
 | `timr holiday-calendars list` | `GET /holiday-calendars` | [HolidayCalendarPartial](#holidaycalendarpartial) |
 
 ## Schemas
 
-### Allowances
+### Accounts
 
 | field | type | required |
 |---|---|---|
-| `balance_last_period_minutes` | integer \| null | yes |
-| `balance_current_period_minutes` | integer \| null | yes |
-| `balance_total_minutes` | integer \| null | yes |
-
-### AutomaticBreakDeductionPolicy
-
-_no documented fields_
+| `last_balance_date` | string \| null | yes |
+| `time_account` | [TimeAccount](#timeaccount) \| null |  |
+| `overtime_surcharge_accounts` | [OvertimeSurchargeAccounts](#overtimesurchargeaccounts)[] |  |
+| `vacation_account` | [VacationAccount](#vacationaccount) \| null |  |
 
 ### BreakTime
 
@@ -44,16 +40,22 @@ One of: [BreakTimeManual](#breaktimemanual) or [BreakTimeOngoing](#breaktimeongo
 
 | field | type | required |
 |---|---|---|
-| `type` | string | yes |
+| `type` | [BreakTimeType](#breaktimetype) | yes |
 | `duration_minutes` | integer | yes |
 | `start` | [DateTime](#datetime) \| null | yes |
 | `end` | [DateTime](#datetime) \| null | yes |
+
+### BreakTimeBase
+
+| field | type | required |
+|---|---|---|
+| `type` | [BreakTimeType](#breaktimetype) | yes |
 
 ### BreakTimeManual
 
 | field | type | required |
 |---|---|---|
-| `type` | string | yes |
+| `type` | [BreakTimeType](#breaktimetype) | yes |
 | `duration_minutes` | integer | yes |
 | `start` | [DateTime](#datetime) \| null |  |
 | `end` | [DateTime](#datetime) \| null |  |
@@ -62,7 +64,7 @@ One of: [BreakTimeManual](#breaktimemanual) or [BreakTimeOngoing](#breaktimeongo
 
 | field | type | required |
 |---|---|---|
-| `type` | string | yes |
+| `type` | [BreakTimeType](#breaktimetype) | yes |
 | `start` | [DateTime](#datetime) | yes |
 
 ### BreakTimeType
@@ -77,6 +79,10 @@ One of: [BreakTimeManual](#breaktimemanual) or [BreakTimeOngoing](#breaktimeongo
 
 _no documented fields_
 
+### BudgetPlanningTypeRequest
+
+_no documented fields_
+
 ### Car
 
 | field | type | required |
@@ -86,6 +92,17 @@ _no documented fields_
 | `plate` | string | yes |
 | `external_id` | string \| null | yes |
 | `usable` | boolean |  |
+| `metadata` | object \| null |  |
+
+### CarCreate
+
+| field | type | required |
+|---|---|---|
+| `name` | string | yes |
+| `plate` | string | yes |
+| `external_id` | string \| null |  |
+| `usable` | boolean |  |
+| `metadata` | object \| null |  |
 
 ### CarPartial
 
@@ -95,6 +112,16 @@ _no documented fields_
 | `name` | string | yes |
 | `plate` | string | yes |
 | `external_id` | string \| null | yes |
+
+### CarUpdate
+
+| field | type | required |
+|---|---|---|
+| `name` | string |  |
+| `plate` | string |  |
+| `external_id` | string \| null |  |
+| `usable` | boolean |  |
+| `metadata` | object \| null |  |
 
 ### CarsPage
 
@@ -153,10 +180,6 @@ _no documented fields_
 | `next_page_token` | string \| null | yes |
 | `data` | [DeletedEntryWithMetadata](#deletedentrywithmetadata)[] | yes |
 
-### DeletedEntryWithMetadataSortColumn
-
-_no documented fields_
-
 ### DriveLog
 
 | field | type | required |
@@ -180,11 +203,12 @@ _no documented fields_
 | `has_track` | boolean | yes |
 | `start_location` | [Location](#location) \| null | yes |
 | `end_location` | [Location](#location) \| null | yes |
-| `start_platform` | [Platform](#platform) | yes |
+| `start_platform` | [Platform](#platform) \| null | yes |
 | `end_platform` | [Platform](#platform) \| null | yes |
 | `last_modified` | [DateTime](#datetime) | yes |
 | `last_modified_by` | [UserPartial](#userpartial) \| null | yes |
 | `status` | [DriveLogStatus](#drivelogstatus) | yes |
+| `metadata` | object \| null |  |
 
 ### DriveLogCategoriesPage
 
@@ -230,11 +254,12 @@ _no documented fields_
 | `purpose` | string \| null |  |
 | `visited` | string \| null |  |
 | `drive_log_category_id` | string | yes |
-| `start_location` | [Location](#location) \| null |  |
-| `end_location` | [Location](#location) \| null |  |
 | `status` | [DriveLogStatus](#drivelogstatus) | yes |
+| `metadata` | object \| null |  |
 | `user_id` | string | yes |
 | `car_id` | string | yes |
+| `start_location` | [LocationCreate](#locationcreate) \| null |  |
+| `end_location` | [LocationCreate](#locationcreate) \| null |  |
 
 ### DriveLogStatus
 
@@ -253,9 +278,26 @@ _no documented fields_
 | `purpose` | string \| null |  |
 | `visited` | string \| null |  |
 | `drive_log_category_id` | string |  |
-| `start_location` | [Location](#location) \| null |  |
-| `end_location` | [Location](#location) \| null |  |
 | `status` | [DriveLogStatus](#drivelogstatus) |  |
+| `metadata` | object \| null |  |
+| `start_location` | [LocationUpdate](#locationupdate) \| null |  |
+| `end_location` | [LocationUpdate](#locationupdate) \| null |  |
+
+### DriveLogUpsert
+
+| field | type | required |
+|---|---|---|
+| `start` | [DateTime](#datetime) |  |
+| `end` | [DateTime](#datetime) \| null |  |
+| `changed` | boolean |  |
+| `start_mileage` | integer |  |
+| `end_mileage` | integer \| null |  |
+| `route` | string \| null |  |
+| `purpose` | string \| null |  |
+| `visited` | string \| null |  |
+| `drive_log_category_id` | string |  |
+| `status` | [DriveLogStatus](#drivelogstatus) |  |
+| `metadata` | object \| null |  |
 
 ### DriveLogsPage
 
@@ -288,8 +330,22 @@ _no documented fields_
 
 | field | type | required |
 |---|---|---|
-| `code` | string \| null | yes |
-| `message` | string \| null | yes |
+| `type` | string | yes |
+| `title` | string | yes |
+| `status` | integer | yes |
+| `detail` | string |  |
+| `instance` | string |  |
+| `timestamp` | string | yes |
+| `trace_id` | string \| null |  |
+| `errors` | [ErrorEntry](#errorentry)[] |  |
+
+### ErrorEntry
+
+| field | type | required |
+|---|---|---|
+| `type` | string | yes |
+| `field` | string \| null |  |
+| `detail` | string | yes |
 
 ### FlexTimeIndicator
 
@@ -344,10 +400,35 @@ _no documented fields_
 
 | field | type | required |
 |---|---|---|
+| `lat` | number \| null | yes |
+| `lon` | number \| null | yes |
+| `timestamp` | [DateTime](#datetime) \| null |  |
+| `formatted_address` | string \| null |  |
+| `accuracy` | number \| null | yes |
+
+### LocationCreate
+
+| field | type | required |
+|---|---|---|
 | `lat` | number | yes |
 | `lon` | number | yes |
 | `timestamp` | [DateTime](#datetime) \| null |  |
 | `formatted_address` | string \| null |  |
+| `accuracy` | number \| null |  |
+
+### LocationUpdate
+
+| field | type | required |
+|---|---|---|
+| `lat` | number |  |
+| `lon` | number |  |
+| `timestamp` | [DateTime](#datetime) \| null |  |
+| `formatted_address` | string \| null |  |
+| `accuracy` | number \| null |  |
+
+### MonthDay
+
+_no documented fields_
 
 ### NormalWorkingTimes
 
@@ -356,13 +437,30 @@ _no documented fields_
 | `start` | string \| null |  |
 | `end` | string \| null |  |
 
-### Overtime
+### OvertimeSurchargeAccount
 
 | field | type | required |
 |---|---|---|
 | `balance_last_period_minutes` | integer \| null | yes |
-| `balance_current_period_minutes` | integer \| null | yes |
+| `new_minutes` | integer \| null | yes |
 | `balance_total_minutes` | integer \| null | yes |
+
+### OvertimeSurchargeAccounts
+
+| field | type | required |
+|---|---|---|
+| `rule` | [OvertimeSurchargeRule](#overtimesurchargerule) | yes |
+| `percentage` | number \| null | yes |
+| `overtime` | [OvertimeSurchargeAccount](#overtimesurchargeaccount) | yes |
+| `surcharge` | [OvertimeSurchargeAccount](#overtimesurchargeaccount) | yes |
+
+### OvertimeSurchargeRule
+
+| field | type | required |
+|---|---|---|
+| `id` | string | yes |
+| `name` | string | yes |
+| `short_name` | string | yes |
 
 ### PagingInformation
 
@@ -373,6 +471,16 @@ _no documented fields_
 ### Platform
 
 _no documented fields_
+
+### ProblemDetail
+
+| field | type | required |
+|---|---|---|
+| `type` | string | yes |
+| `title` | string | yes |
+| `status` | integer | yes |
+| `detail` | string |  |
+| `instance` | string |  |
 
 ### ProjectTime
 
@@ -391,7 +499,7 @@ _no documented fields_
 | `billable` | boolean | yes |
 | `start_location` | [Location](#location) \| null | yes |
 | `end_location` | [Location](#location) \| null | yes |
-| `start_platform` | [Platform](#platform) | yes |
+| `start_platform` | [Platform](#platform) \| null | yes |
 | `end_platform` | [Platform](#platform) \| null | yes |
 | `last_modified` | [DateTime](#datetime) | yes |
 | `last_modified_by` | [UserPartial](#userpartial) \| null | yes |
@@ -402,7 +510,6 @@ _no documented fields_
 
 | field | type | required |
 |---|---|---|
-| `user_id` | string | yes |
 | `start` | [DateTime](#datetime) | yes |
 | `end` | [DateTime](#datetime) \| null |  |
 | `break_times` | [BreakTimeUpdate](#breaktimeupdate)[] |  |
@@ -410,10 +517,11 @@ _no documented fields_
 | `notes` | string \| null |  |
 | `task_id` | string | yes |
 | `billable` | boolean |  |
-| `start_location` | [Location](#location) \| null |  |
-| `end_location` | [Location](#location) \| null |  |
 | `status` | [ProjectTimeStatus](#projecttimestatus) | yes |
 | `metadata` | object \| null |  |
+| `user_id` | string | yes |
+| `start_location` | [LocationCreate](#locationcreate) \| null |  |
+| `end_location` | [LocationCreate](#locationcreate) \| null |  |
 
 ### ProjectTimeStatus
 
@@ -430,8 +538,22 @@ _no documented fields_
 | `notes` | string \| null |  |
 | `task_id` | string |  |
 | `billable` | boolean |  |
-| `start_location` | [Location](#location) \| null |  |
-| `end_location` | [Location](#location) \| null |  |
+| `status` | [ProjectTimeStatus](#projecttimestatus) |  |
+| `metadata` | object \| null |  |
+| `start_location` | [LocationUpdate](#locationupdate) \| null |  |
+| `end_location` | [LocationUpdate](#locationupdate) \| null |  |
+
+### ProjectTimeUpsert
+
+| field | type | required |
+|---|---|---|
+| `start` | [DateTime](#datetime) |  |
+| `end` | [DateTime](#datetime) \| null |  |
+| `break_times` | [BreakTimeUpdate](#breaktimeupdate)[] |  |
+| `changed` | boolean |  |
+| `notes` | string \| null |  |
+| `task_id` | string |  |
+| `billable` | boolean |  |
 | `status` | [ProjectTimeStatus](#projecttimestatus) |  |
 | `metadata` | object \| null |  |
 
@@ -475,8 +597,8 @@ _no documented fields_
 | `start_date` | [LocalDate](#localdate) \| null | yes |
 | `end_date` | [LocalDate](#localdate) \| null | yes |
 | `lock_date` | [LocalDate](#localdate) \| null |  |
-| `earliest_start_time` | [LocalTime](#localtime) \| null | yes |
-| `latest_end_time` | [LocalTime](#localtime) \| null | yes |
+| `earliest_start_time` | [LocalTime](#localtime) \| null |  |
+| `latest_end_time` | [LocalTime](#localtime) \| null |  |
 | `active_from` | [LocalDate](#localdate) \| null | yes |
 | `active_to` | [LocalDate](#localdate) \| null | yes |
 | `budget_inherited` | boolean |  |
@@ -510,8 +632,7 @@ _no documented fields_
 | `lock_date` | [LocalDate](#localdate) \| null |  |
 | `earliest_start_time` | [LocalTime](#localtime) \| null |  |
 | `latest_end_time` | [LocalTime](#localtime) \| null |  |
-| `budget_inherited` | boolean |  |
-| `budget_planning_type` | [BudgetPlanningType](#budgetplanningtype) |  |
+| `budget_planning_type` | [BudgetPlanningTypeRequest](#budgetplanningtyperequest) |  |
 | `budget_hours_planned` | number \| null |  |
 | `budget_hourly_rate` | number \| null |  |
 | `budget_planned` | number \| null |  |
@@ -541,8 +662,7 @@ _no documented fields_
 | `lock_date` | [LocalDate](#localdate) \| null |  |
 | `earliest_start_time` | [LocalTime](#localtime) \| null |  |
 | `latest_end_time` | [LocalTime](#localtime) \| null |  |
-| `budget_inherited` | boolean |  |
-| `budget_planning_type` | [BudgetPlanningType](#budgetplanningtype) |  |
+| `budget_planning_type` | [BudgetPlanningTypeRequest](#budgetplanningtyperequest) |  |
 | `budget_hours_planned` | number \| null |  |
 | `budget_hourly_rate` | number \| null |  |
 | `budget_planned` | number \| null |  |
@@ -590,8 +710,8 @@ _no documented fields_
 | `billable` | boolean | yes |
 | `project_time_notes_required` | boolean | yes |
 | `lock_date` | [LocalDate](#localdate) \| null |  |
-| `earliest_start_time` | [LocalTime](#localtime) \| null | yes |
-| `latest_end_time` | [LocalTime](#localtime) \| null | yes |
+| `earliest_start_time` | [LocalTime](#localtime) \| null |  |
+| `latest_end_time` | [LocalTime](#localtime) \| null |  |
 | `active_from` | [LocalDate](#localdate) \| null | yes |
 | `active_to` | [LocalDate](#localdate) \| null | yes |
 | `budget_planning_type` | [BudgetPlanningType](#budgetplanningtype) |  |
@@ -647,7 +767,7 @@ _no documented fields_
 | `recording_lock` | [RecordingLockType](#recordinglocktype) | yes |
 | `automatically_assigned` | boolean | yes |
 
-### TaskToUserAssignmentCreateAndUpdate
+### TaskToUserAssignmentUpsert
 
 | field | type | required |
 |---|---|---|
@@ -682,8 +802,7 @@ _no documented fields_
 | `lock_date` | [LocalDate](#localdate) \| null |  |
 | `earliest_start_time` | [LocalTime](#localtime) \| null |  |
 | `latest_end_time` | [LocalTime](#localtime) \| null |  |
-| `budget_inherited` | boolean |  |
-| `budget_planning_type` | [BudgetPlanningType](#budgetplanningtype) |  |
+| `budget_planning_type` | [BudgetPlanningTypeRequest](#budgetplanningtyperequest) |  |
 | `budget_hours_planned` | number \| null |  |
 | `budget_hourly_rate` | number \| null |  |
 | `budget_planned` | number \| null |  |
@@ -804,6 +923,7 @@ _no documented fields_
 | `resign_date` | [LocalDate](#localdate) \| null |  |
 | `work_schedule_model` | [WorkScheduleModelPartial](#workschedulemodelpartial) \| null |  |
 | `holiday_calendar` | [HolidayCalendarPartial](#holidaycalendarpartial) |  |
+| `vacation_year_start` | [MonthDay](#monthday) \| null |  |
 | `metadata` | object \| null |  |
 
 ### UserCreate
@@ -866,6 +986,40 @@ _no documented fields_
 
 _no documented fields_
 
+### VacationAccount
+
+One of: [VacationAccountDays](#vacationaccountdays) or [VacationAccountMinutes](#vacationaccountminutes)
+
+### VacationAccountBase
+
+| field | type | required |
+|---|---|---|
+| `unit` | [VacationUnit](#vacationunit) | yes |
+
+### VacationAccountDays
+
+| field | type | required |
+|---|---|---|
+| `unit` | [VacationUnit](#vacationunit) | yes |
+| `balance_last_period_days` | number \| null |  |
+| `consumed_days` | number \| null |  |
+| `new_days` | number \| null |  |
+| `balance_total_days` | number \| null |  |
+
+### VacationAccountMinutes
+
+| field | type | required |
+|---|---|---|
+| `unit` | [VacationUnit](#vacationunit) | yes |
+| `balance_last_period_minutes` | number \| null |  |
+| `consumed_minutes` | number \| null |  |
+| `new_minutes` | number \| null |  |
+| `balance_total_minutes` | number \| null |  |
+
+### VacationUnit
+
+_no documented fields_
+
 ### VenuePartial
 
 | field | type | required |
@@ -894,14 +1048,7 @@ _no documented fields_
 | `id` | string | yes |
 | `name` | string | yes |
 | `type` | [WorkScheduleModelType](#workschedulemodeltype) | yes |
-| `target_duration_weekly_minutes` | integer | yes |
-| `monday` | [DailyWorkSchedule](#dailyworkschedule) | yes |
-| `tuesday` | [DailyWorkSchedule](#dailyworkschedule) | yes |
-| `wednesday` | [DailyWorkSchedule](#dailyworkschedule) | yes |
-| `thursday` | [DailyWorkSchedule](#dailyworkschedule) | yes |
-| `friday` | [DailyWorkSchedule](#dailyworkschedule) | yes |
-| `saturday` | [DailyWorkSchedule](#dailyworkschedule) | yes |
-| `sunday` | [DailyWorkSchedule](#dailyworkschedule) | yes |
+| `weeks` | [WorkScheduleModelWeek](#workschedulemodelweek)[] | yes |
 | `working_time_rules` | [WorkingTimeRules](#workingtimerules) \| null | yes |
 
 ### WorkScheduleModelPartial
@@ -918,6 +1065,21 @@ _no documented fields_
 ### WorkScheduleModelType
 
 _no documented fields_
+
+### WorkScheduleModelWeek
+
+| field | type | required |
+|---|---|---|
+| `week_number` | integer \| null |  |
+| `name` | string \| null |  |
+| `target_duration_weekly_minutes` | integer | yes |
+| `monday` | [DailyWorkSchedule](#dailyworkschedule) | yes |
+| `tuesday` | [DailyWorkSchedule](#dailyworkschedule) | yes |
+| `wednesday` | [DailyWorkSchedule](#dailyworkschedule) | yes |
+| `thursday` | [DailyWorkSchedule](#dailyworkschedule) | yes |
+| `friday` | [DailyWorkSchedule](#dailyworkschedule) | yes |
+| `saturday` | [DailyWorkSchedule](#dailyworkschedule) | yes |
+| `sunday` | [DailyWorkSchedule](#dailyworkschedule) | yes |
 
 ### WorkScheduleModelsPage
 
@@ -941,7 +1103,6 @@ _no documented fields_
 | `user` | [UserPartial](#userpartial) | yes |
 | `working_time_type` | [WorkingTimeTypePartial](#workingtimetypepartial) | yes |
 | `working_time_date_span` | [WorkingTimeDateSpanPartial](#workingtimedatespanpartial) \| null | yes |
-| `working_time_request` | [WorkingTimeRequestPartial](#workingtimerequestpartial) \| null | yes |
 | `start_location` | [Location](#location) \| null | yes |
 | `end_location` | [Location](#location) \| null | yes |
 | `start_platform` | [Platform](#platform) \| null | yes |
@@ -951,20 +1112,10 @@ _no documented fields_
 | `status` | [WorkingTimeStatus](#workingtimestatus) | yes |
 | `metadata` | object \| null |  |
 
-### WorkingTimeAccounts
-
-| field | type | required |
-|---|---|---|
-| `last_balance_date` | string \| null | yes |
-| `time_account` | [TimeAccount](#timeaccount) \| null |  |
-| `overtime` | [Overtime](#overtime) \| null |  |
-| `allowances` | [Allowances](#allowances) \| null |  |
-
 ### WorkingTimeCreate
 
 | field | type | required |
 |---|---|---|
-| `user_id` | string | yes |
 | `start` | [DateTime](#datetime) | yes |
 | `end` | [DateTime](#datetime) \| null |  |
 | `break_times` | [BreakTimeUpdate](#breaktimeupdate)[] |  |
@@ -972,10 +1123,11 @@ _no documented fields_
 | `changed` | boolean | yes |
 | `notes` | string \| null |  |
 | `working_time_type_id` | string | yes |
-| `start_location` | [Location](#location) \| null |  |
-| `end_location` | [Location](#location) \| null |  |
 | `status` | [WorkingTimeStatus](#workingtimestatus) | yes |
 | `metadata` | object \| null |  |
+| `user_id` | string | yes |
+| `start_location` | [LocationCreate](#locationcreate) \| null |  |
+| `end_location` | [LocationCreate](#locationcreate) \| null |  |
 
 ### WorkingTimeDateSpan
 
@@ -1038,46 +1190,6 @@ _no documented fields_
 
 _no documented fields_
 
-### WorkingTimeRequest
-
-| field | type | required |
-|---|---|---|
-| `id` | string | yes |
-| `start` | [LocalDate](#localdate) | yes |
-| `start_half_day` | boolean | yes |
-| `end` | [LocalDate](#localdate) | yes |
-| `end_half_day` | boolean | yes |
-| `notes` | string \| null | yes |
-| `user` | [UserPartial](#userpartial) | yes |
-| `working_time_type` | [WorkingTimeTypePartial](#workingtimetypepartial) | yes |
-| `substitute` | [UserPartial](#userpartial) \| null |  |
-| `created` | [DateTime](#datetime) | yes |
-| `last_modified` | [DateTime](#datetime) | yes |
-| `last_modified_by` | [UserPartial](#userpartial) \| null | yes |
-| `status_comment` | string | yes |
-| `status` | [WorkingTimeRequestStatus](#workingtimerequeststatus) | yes |
-
-### WorkingTimeRequestPartial
-
-| field | type | required |
-|---|---|---|
-| `id` | string | yes |
-
-### WorkingTimeRequestStatus
-
-_no documented fields_
-
-### WorkingTimeRequestsPage
-
-| field | type | required |
-|---|---|---|
-| `next_page_token` | string \| null | yes |
-| `data` | [WorkingTimeRequest](#workingtimerequest)[] | yes |
-
-### WorkingTimeRequestsSortColumn
-
-_no documented fields_
-
 ### WorkingTimeRules
 
 | field | type | required |
@@ -1101,12 +1213,9 @@ _no documented fields_
 | `edit_unit` | [DurationUnit](#durationunit) | yes |
 | `category` | [WorkingTimeTypeCategory](#workingtimetypecategory) | yes |
 | `sub_category` | [WorkingTimeTypeSubCategory](#workingtimetypesubcategory) \| null | yes |
-| `recording_mode_user` | [RecordingModeUser](#recordingmodeuser) \| null | yes |
-| `non_creditable_deductible` | number \| null | yes |
-| `compensation_deductible` | number \| null | yes |
+| `recording_mode_user` | [RecordingModeUser](#recordingmodeuser) | yes |
 | `archived` | boolean | yes |
 | `requires_substitute` | boolean |  |
-| `automatic_break_deduction_policy` | [AutomaticBreakDeductionPolicy](#automaticbreakdeductionpolicy) | yes |
 
 ### WorkingTimeTypeCategory
 
@@ -1146,8 +1255,22 @@ _no documented fields_
 | `changed` | boolean |  |
 | `notes` | string \| null |  |
 | `working_time_type_id` | string |  |
-| `start_location` | [Location](#location) \| null |  |
-| `end_location` | [Location](#location) \| null |  |
+| `status` | [WorkingTimeStatus](#workingtimestatus) |  |
+| `metadata` | object \| null |  |
+| `start_location` | [LocationUpdate](#locationupdate) \| null |  |
+| `end_location` | [LocationUpdate](#locationupdate) \| null |  |
+
+### WorkingTimeUpsert
+
+| field | type | required |
+|---|---|---|
+| `start` | [DateTime](#datetime) |  |
+| `end` | [DateTime](#datetime) \| null |  |
+| `break_times` | [BreakTimeUpdate](#breaktimeupdate)[] |  |
+| `duration_type` | [DurationType](#durationtype) \| null |  |
+| `changed` | boolean |  |
+| `notes` | string \| null |  |
+| `working_time_type_id` | string |  |
 | `status` | [WorkingTimeStatus](#workingtimestatus) |  |
 | `metadata` | object \| null |  |
 

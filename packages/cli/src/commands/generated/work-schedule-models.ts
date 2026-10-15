@@ -4,7 +4,7 @@ import type { TimrClient } from "timr-sdk";
 import { globalArgs, printJson, readBody, resolveClient, numOrUndef, csv } from "../_shared.js";
 
 const cmd_delete = defineCommand({
-  meta: { name: "delete", description: "deletes a single Work Schedule Model" },
+  meta: { name: "delete", description: "Delete a Work Schedule Model" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "work-schedule-model id", required: true },
@@ -17,7 +17,7 @@ const cmd_delete = defineCommand({
 });
 
 const cmd_get = defineCommand({
-  meta: { name: "get", description: "gets a single Work Schedule Model" },
+  meta: { name: "get", description: "Get a Work Schedule Model" },
   args: {
     ...globalArgs,
     "id": { type: "positional", description: "work-schedule-model id", required: true },
@@ -30,13 +30,13 @@ const cmd_get = defineCommand({
 });
 
 const cmd_list = defineCommand({
-  meta: { name: "list", description: "fetches Work Schedule Models" },
+  meta: { name: "list", description: "List Work Schedule Models" },
   args: {
     ...globalArgs,
-    "page-token": { type: "string", description: "Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token" },
-    "limit": { type: "string", description: "optionally, pass a value to change the maximum number of entries returned in a single page (at max 500)." },
-    "sort-direction": { type: "string", description: "optionally, pass a direction in which the entries returned will be sorted in (based on the WorkScheduleModel's name)" },
-    "sort-by": { type: "string", description: "sort_by" },
+    "page-token": { type: "string", description: "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response." },
+    "limit": { type: "string", description: "Maximum number of entries per page. Values above 500 are capped at 500." },
+    "sort-direction": { type: "string", description: "Direction to sort the entries in." },
+    "sort-by": { type: "string", description: "Property to sort the entries by." },
   },
   async run({ args }) {
     const client = await resolveClient(args);
