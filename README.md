@@ -18,7 +18,7 @@ A fully typed TypeScript SDK, CLI, and MCP server for the [timr](https://timr.co
 
 ## Why
 
-The [timr API](https://app.swaggerhub.com/apis-docs/troii/timr) ships a clean OpenAPI spec but no first-party TypeScript client. This repo fills that gap:
+The [timr API](https://developer.timr.com/) ships a clean OpenAPI spec but no first-party TypeScript client. This repo fills that gap:
 
 - **`timr-sdk`** - fully typed client generated from the spec. One runtime dependency ([`openapi-fetch`](https://openapi-ts.dev/openapi-fetch/)). Tree-shakeable, ESM, works in Node and edge runtimes.
 - **`timr-cli`** - scriptable wrapper for common workflows. Prints JSON so you can pipe through `jq`.
@@ -40,15 +40,16 @@ Typical use cases:
 | [`timr-mcp`](./packages/mcp) | [![npm](https://img.shields.io/npm/v/timr-mcp.svg)](https://www.npmjs.com/package/timr-mcp) | MCP (stdio) server using Cloudflare-style Code Mode — two tools (`search`, `execute`) instead of 80+ per-endpoint tools |
 | [`jira-forge`](./packages/jira-forge) | _private_ | Atlassian Forge app that syncs developer time from Jira issues to timr. Private install only, not on npm or the Atlassian Marketplace. |
 
-All published packages track timr API version **0.2.14** (pinned in [`openapi.json`](./openapi.json)).
+All published packages track timr REST API version **1.0.0** (pinned in [`openapi.json`](./openapi.json)).
 
 ## API reference
 
-The timr API is documented by troii on SwaggerHub. Use it as the authoritative reference for endpoints, field semantics, and error codes:
+The timr API is documented by troii in the timr Developer Portal. Use it as the authoritative reference for endpoints, field semantics, and error codes:
 
-- **Interactive docs:** <https://app.swaggerhub.com/apis-docs/troii/timr/0.2.13?view=elementsDocs>
-- **Raw OpenAPI spec (current pinned version):** <https://api.swaggerhub.com/apis/troii/timr/0.2.14>
-- **All published versions:** <https://app.swaggerhub.com/apis/troii/timr>
+- **Interactive docs:** <https://developer.timr.com/>
+- **Raw OpenAPI spec (YAML):** <https://developer.timr.com/openapi.yaml>
+
+The SwaggerHub entry `troii/timr` stops at the legacy `0.2.x` API and is no longer the source.
 
 See [`docs/spec.md`](./docs/spec.md) for how the spec is sourced, pinned, and bumped in this repo.
 
@@ -233,12 +234,13 @@ If any of those fail, re-run `pnpm build` and check `pnpm -r typecheck`.
 ### Updating the spec
 
 ```bash
-curl -s "https://api.swaggerhub.com/apis/troii/timr/<version>" -o openapi.json
+curl -s https://developer.timr.com/openapi.yaml -o openapi.yaml
+npx -y js-yaml@4.1.1 openapi.yaml > openapi.json && rm openapi.yaml
 pnpm generate
 pnpm build
 ```
 
-The release is driven by the commit messages — `feat(sdk): bump spec to 0.2.15` is enough; Release Please picks it up on the next merge to `main`.
+The release is driven by the commit messages — `feat(sdk): bump spec to 1.1.0` is enough; Release Please picks it up on the next merge to `main`.
 
 ### Project layout
 
