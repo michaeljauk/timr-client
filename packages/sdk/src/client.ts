@@ -6,7 +6,7 @@ import {
   type TokenProvider,
 } from "./oauth.js";
 
-export const DEFAULT_BASE_URL = "https://api.timr.com/v0.2/";
+export const DEFAULT_BASE_URL = "https://api.timr.com/v1/";
 
 export interface TimrClientStaticTokenOptions {
   token: string;

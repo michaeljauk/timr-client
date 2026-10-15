@@ -138,7 +138,7 @@ createTimrClient({
   // clientId, clientSecret, tokenUrl?, scope?  // OAuth2 client_credentials
   // tokenProvider: async () => "..."           // custom
 
-  baseUrl: "https://api.timr.com/v0.2/", // override for staging or self-hosted
+  baseUrl: "https://api.timr.com/v1/", // override for staging or self-hosted
   fetch: globalThis.fetch,               // inject a custom fetch (undici, msw, ...)
   headers: { "User-Agent": "my-app" },   // additional default headers
 });
