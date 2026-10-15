@@ -12,14 +12,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Users
-         * @description List all Users the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Users
+         * @description Lists the Users the authenticated user or API token can access.
          */
         get: operations["fetchUsers"];
         put?: never;
         /**
-         * create an User
-         * @description Creates a new User based on the data provided in the request body.
+         * Create a User
+         * @description Creates a User from the data in the request body.
          */
         post: operations["createUser"];
         delete?: never;
@@ -36,8 +36,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * get a single user
-         * @description Retrieves a single User based on its User ID.
+         * Get a User
+         * @description Returns a single User by its ID.
          */
         get: operations["getUser"];
         put?: never;
@@ -46,8 +46,8 @@ export interface paths {
         options?: never;
         head?: never;
         /**
-         * updates a single User
-         * @description Updates the User specified by the id with the fields provided in the request body.
+         * Update a User
+         * @description Updates the User with the fields present in the request body. Fields that are omitted stay unchanged.
          */
         patch: operations["updateUser"];
         trace?: never;
@@ -60,10 +60,30 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * get a user's working time accounts
-         * @description Retrieves a User's working time accounts balance to a given day.
+         * Get a User's working time accounts
+         * @description Returns the User's working time account balances as of the given day.
          */
         get: operations["getUserWorkingTimeAccounts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{id}/accounts/{date}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a User's accounts
+         * @description Returns all of the User's account balances as of the given day, including overtime and surcharge accounts.
+         */
+        get: operations["getUserAccounts"];
         put?: never;
         post?: never;
         delete?: never;
@@ -80,8 +100,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * get a User's Work-Schedule-Model
-         * @description Retrieves the corresponding Work-Schedule-Model with durations in minutes based on a User's ID
+         * Get a User's Work Schedule Model
+         * @description Returns the Work Schedule Model assigned to the User, with all durations expressed in minutes.
          */
         get: operations["getUserWorkScheduleModel"];
         put?: never;
@@ -100,12 +120,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Fetches all tasks the user is assigned to
-         * @description Lists all tasks the authenticated user/authtoken is permitted to see.
-         *
-         *     The response includes tasks regardless of whether the tasks are currently active or locked, since the API does not filter tasks based on the request time. If only active tasks should be displayed (as in the timr UI), this filtering must be implemented on the client side.
-         *
-         *     The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List a User's Tasks
+         * @description Lists the Tasks the User is assigned to and may record on.
          */
         get: operations["fetchUserTasks"];
         put?: never;
@@ -124,8 +140,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches User's Team Memberships
-         * @description List all Team Memberships of a User that the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List a User's Team memberships
+         * @description Lists the Teams the User is a member of.
          */
         get: operations["fetchUserTeamMemberships"];
         put?: never;
@@ -144,8 +160,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches User's Team Leaderships
-         * @description List all Team Leaderships of a User that the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List a User's Team leaderships
+         * @description Lists the Teams the User leads.
          */
         get: operations["fetchUserTeamLeaderships"];
         put?: never;
@@ -164,14 +180,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Teams
-         * @description List all Teams the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Teams
+         * @description Lists the Teams the authenticated user or API token can access.
          */
         get: operations["fetchTeams"];
         put?: never;
         /**
-         * create a Team
-         * @description Creates a new Team based on the data provided in the request body.
+         * Create a Team
+         * @description Creates a Team from the data in the request body.
          */
         post: operations["createTeam"];
         delete?: never;
@@ -188,22 +204,22 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * get a single team
-         * @description Retrieves a single team based on its team id.
+         * Get a Team
+         * @description Returns a single Team by its ID.
          */
         get: operations["getTeam"];
         put?: never;
         post?: never;
         /**
-         * deletes a single Team
-         * @description Deletes a single Team based on its id.
+         * Delete a Team
+         * @description Deletes the Team. Members and leaders are unassigned, the Users themselves are not deleted.
          */
         delete: operations["deleteTeam"];
         options?: never;
         head?: never;
         /**
-         * updates a single Team
-         * @description Updates the Team specified by the id with the fields provided in the request body.
+         * Update a Team
+         * @description Updates the Team with the fields present in the request body. Fields that are omitted stay unchanged.
          */
         patch: operations["updateTeam"];
         trace?: never;
@@ -216,8 +232,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Team Members
-         * @description List all Team Members the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Team Members
+         * @description Lists the Users who are members of the Team.
          */
         get: operations["fetchTeamMembers"];
         put?: never;
@@ -236,19 +252,19 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * gets a single Team Member
-         * @description Retrieves a single Team Member based on the team id and user id.
+         * Get a Team Member
+         * @description Returns the membership of a single User in the Team.
          */
         get: operations["getTeamMember"];
         /**
-         * adds a Team Member
-         * @description Adds a Team Member to a Team based on the team id and user id.
+         * Add a Team Member
+         * @description Adds the User to the Team as a member. Returns 201 when the membership is created and 200 when it already existed.
          */
         put: operations["addTeamMember"];
         post?: never;
         /**
-         * removes a Team Member
-         * @description Removes a Team Member from a Team based on the team id and user id.
+         * Remove a Team Member
+         * @description Removes the User's membership in the Team. The User itself is not deleted.
          */
         delete: operations["removeTeamMember"];
         options?: never;
@@ -264,8 +280,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Team Leaders
-         * @description List all Team Leaders the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Team Leaders
+         * @description Lists the Users who lead the Team.
          */
         get: operations["fetchTeamLeaders"];
         put?: never;
@@ -284,19 +300,19 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * gets a single Team Leader
-         * @description Retrieves a single Team Leader based on the team id and user id.
+         * Get a Team Leader
+         * @description Returns the leadership of a single User in the Team.
          */
         get: operations["getTeamLeader"];
         /**
-         * adds a Team Leader
-         * @description Adds a Team Leader to a Team based on the team id and user id.
+         * Add a Team Leader
+         * @description Adds the User to the Team as a leader. Returns 201 when the leadership is created and 200 when it already existed.
          */
         put: operations["addTeamLeader"];
         post?: never;
         /**
-         * removes a Team Leader
-         * @description Removes a Team Leader from a Team based on the team id and user id.
+         * Remove a Team Leader
+         * @description Removes the User's leadership of the Team. The User itself is not deleted.
          */
         delete: operations["removeTeamLeader"];
         options?: never;
@@ -312,8 +328,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Work Schedule Models
-         * @description List all Work Schedule Models the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Work Schedule Models
+         * @description Lists the Work Schedule Models the authenticated user or API token can access.
          */
         get: operations["fetchWorkScheduleModels"];
         put?: never;
@@ -332,15 +348,15 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * gets a single Work Schedule Model
-         * @description Retrieves a single Working Schedule Model based on its id.
+         * Get a Work Schedule Model
+         * @description Returns a single Work Schedule Model by its ID.
          */
         get: operations["getWorkScheduleModel"];
         put?: never;
         post?: never;
         /**
-         * deletes a single Work Schedule Model
-         * @description Deletes a single Work Schedule Model based on its id.
+         * Delete a Work Schedule Model
+         * @description Deletes the Work Schedule Model. It cannot be deleted while it is still assigned to a User.
          */
         delete: operations["deleteWorkScheduleModel"];
         options?: never;
@@ -356,14 +372,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Working Times
-         * @description List all Working Times the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Working Times
+         * @description Lists the Working Times the authenticated user or API token can access.
          */
         get: operations["fetchWorkingTimes"];
         put?: never;
         /**
-         * create a Working Time
-         * @description Creates a new Working Time based on the data provided in the request body.
+         * Create a Working Time
+         * @description Creates a Working Time from the data in the request body.
          */
         post: operations["createWorkingTime"];
         delete?: never;
@@ -380,22 +396,22 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * gets a single Working Time
-         * @description Retrieves a single Working Time based on its id.
+         * Get a Working Time
+         * @description Returns a single Working Time by its ID.
          */
         get: operations["getWorkingTime"];
         put?: never;
         post?: never;
         /**
-         * deletes a single Working Time
-         * @description Deletes a single Working Time based on its id.
+         * Delete a Working Time
+         * @description Deletes the Working Time.
          */
         delete: operations["deleteWorkingTime"];
         options?: never;
         head?: never;
         /**
-         * updates a single Working Time
-         * @description Updates the Working Time specified by the id with the fields provided in the request body.
+         * Update a Working Time
+         * @description Updates the Working Time with the fields present in the request body. Fields that are omitted stay unchanged.
          */
         patch: operations["updateWorkingTime"];
         trace?: never;
@@ -408,8 +424,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get deleted working times
-         * @description List all deleted Working Times the authenticated user/authtoken has access to, optionally filtered by last_modified. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List deleted Working Times
+         * @description Lists Working Times that were deleted, so a client holding a local copy can reconcile.
          */
         get: operations["fetchDeletedWorkingTimes"];
         put?: never;
@@ -428,14 +444,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Project Times
-         * @description List all Project Times the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Project Times
+         * @description Lists the Project Times the authenticated user or API token can access.
          */
         get: operations["fetchProjectTimes"];
         put?: never;
         /**
-         * create a Project Time
-         * @description Creates a new Project Time based on the data provided in the request body.
+         * Create a Project Time
+         * @description Creates a Project Time from the data in the request body.
          */
         post: operations["createProjectTime"];
         delete?: never;
@@ -452,22 +468,22 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * gets a single Project Time
-         * @description Retrieves a single Project Time based on its id.
+         * Get a Project Time
+         * @description Returns a single Project Time by its ID.
          */
         get: operations["getProjectTime"];
         put?: never;
         post?: never;
         /**
-         * deletes a single Project Time
-         * @description Deletes a single Project Time based on its id.
+         * Delete a Project Time
+         * @description Deletes the Project Time.
          */
         delete: operations["deleteProjectTime"];
         options?: never;
         head?: never;
         /**
-         * updates a single Project Time
-         * @description Updates the Project Time specified by the id with the fields provided in the request body.
+         * Update a Project Time
+         * @description Updates the Project Time with the fields present in the request body. Fields that are omitted stay unchanged.
          */
         patch: operations["updateProjectTime"];
         trace?: never;
@@ -480,8 +496,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get deleted project times
-         * @description List all deleted Project Times the authenticated user/authtoken has access to, optionally filtered by last_modified. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List deleted Project Times
+         * @description Lists Project Times that were deleted, so a client holding a local copy can reconcile.
          */
         get: operations["fetchDeletedProjectTimes"];
         put?: never;
@@ -500,14 +516,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Tasks
-         * @description List all Tasks the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Tasks
+         * @description Lists the Tasks the authenticated user or API token can access.
          */
         get: operations["fetchTasks"];
         put?: never;
         /**
-         * create a Task
-         * @description Creates a new Task based on the data provided in the request body.
+         * Create a Task
+         * @description Creates a Task from the data in the request body.
          */
         post: operations["createTask"];
         delete?: never;
@@ -524,8 +540,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * get a single task
-         * @description Retrieves a single Task based on its Task ID.
+         * Get a Task
+         * @description Returns a single Task by its ID.
          */
         get: operations["getTask"];
         put?: never;
@@ -534,10 +550,10 @@ export interface paths {
         options?: never;
         head?: never;
         /**
-         * updates a single Task
-         * @description Updates the Task specified by the id with the fields provided in the request body.
+         * Update a Task
+         * @description Updates the Task with the fields present in the request body. Fields that are omitted stay unchanged.
          */
-        patch: operations["update Task"];
+        patch: operations["updateTask"];
         trace?: never;
     };
     "/tasks/{task_id}/users": {
@@ -548,8 +564,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Task to User Assignments
-         * @description List all task to user assignments the authenticated user/authtoken has access to.The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Task to User Assignments
+         * @description Lists the Users assigned to the Task, together with the budget and recording settings of each assignment.
          */
         get: operations["fetchTaskToUserAssignments"];
         put?: never;
@@ -568,28 +584,24 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * get a single task to user assignment
-         * @description Retrieves a single Task based on its Task ID.
+         * Get a Task to User Assignment
+         * @description Returns the assignment of a single User to the Task.
          */
         get: operations["getTaskToUserAssignment"];
         /**
-         * create a Task to User Assignment
-         * @description Creates a new Task to User Assignment for the given user_id based on the data provided in the request body.
+         * Create or update a Task to User Assignment
+         * @description Assigns the User to the Task, or updates the existing assignment. Returns 201 when the assignment is created and 200 when it already existed. On update, only the properties present in the request body change.
          */
-        put: operations["createTaskToUserAssignment"];
+        put: operations["upsertTaskToUserAssignment"];
         post?: never;
         /**
-         * deletes a Task to User Assignment
-         * @description Deletes a Task to User Assignment based on its task_id and user_id.
+         * Delete a Task to User Assignment
+         * @description Removes the User's assignment to the Task.
          */
         delete: operations["deleteTaskToUserAssignment"];
         options?: never;
         head?: never;
-        /**
-         * update a Task to User Assignment
-         * @description Updates the Task to User Assignment specified by the id with the fields provided in the request body.
-         */
-        patch: operations["updateTaskToUserAssignment"];
+        patch?: never;
         trace?: never;
     };
     "/tasks/{task_id}/leaders": {
@@ -600,8 +612,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Task to Leader Assignments
-         * @description List all task to leader assignments the authenticated user/authtoken has access to.The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Task to Leader Assignments
+         * @description Lists the Users assigned to the Task as leaders.
          */
         get: operations["fetchTaskToLeaderAssignments"];
         put?: never;
@@ -620,19 +632,19 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * get a single task to leader assignment
-         * @description Retrieves a single Task based on its Task ID and User ID.
+         * Get a Task to Leader Assignment
+         * @description Returns the leader assignment of a single User to the Task.
          */
         get: operations["getTaskToLeaderAssignment"];
         /**
-         * create a Task to Leader Assignment
-         * @description Creates a new Task to Leader Assignment for the given user_id based on the data provided in the request body.
+         * Create a Task to Leader Assignment
+         * @description Assigns the User to the Task as a leader. Returns 201 when the assignment is created and 200 when it already existed.
          */
         put: operations["createTaskToLeaderAssignment"];
         post?: never;
         /**
-         * deletes a Task to Leader Assignment
-         * @description Deletes a Task to Leader Assignment based on its task_id and user_id.
+         * Delete a Task to Leader Assignment
+         * @description Removes the User's leader assignment to the Task.
          */
         delete: operations["deleteTaskToLeaderAssignment"];
         options?: never;
@@ -648,8 +660,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Task to Team Assignments
-         * @description List all task to team assignments the authenticated user/authtoken has access to.The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Task to Team Assignments
+         * @description Lists the Teams assigned to the Task.
          */
         get: operations["fetchTaskToTeamAssignments"];
         put?: never;
@@ -668,19 +680,19 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * get a single task to team assignment
-         * @description Retrieves a single Task based on its Task ID and Team ID.
+         * Get a Task to Team Assignment
+         * @description Returns the assignment of a single Team to the Task.
          */
         get: operations["getTaskToTeamAssignment"];
         /**
-         * create a Task to Team Assignment
-         * @description Creates a new Task to Team Assignment for the given team_id based on the data provided in the request body.
+         * Create a Task to Team Assignment
+         * @description Assigns the Team to the Task. Returns 201 when the assignment is created and 200 when it already existed.
          */
         put: operations["createTaskToTeamAssignment"];
         post?: never;
         /**
-         * deletes a Task to Team Assignment
-         * @description Deletes a Task to Team Assignment based on its task_id and team_id.
+         * Delete a Task to Team Assignment
+         * @description Removes the Team's assignment to the Task.
          */
         delete: operations["deleteTaskToTeamAssignment"];
         options?: never;
@@ -696,14 +708,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Drive Logs
-         * @description List all Drive Logs the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Drive Logs
+         * @description Lists the Drive Logs the authenticated user or API token can access.
          */
         get: operations["fetchDriveLogs"];
         put?: never;
         /**
-         * create a Drive Log
-         * @description Creates a new Drive Log based on the data provided in the request body.
+         * Create a Drive Log
+         * @description Creates a Drive Log from the data in the request body.
          */
         post: operations["createDriveLog"];
         delete?: never;
@@ -720,18 +732,22 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * gets a single Drive Log
-         * @description Retrieves a single Drive Log based on its id.
+         * Get a Drive Log
+         * @description Returns a single Drive Log by its ID.
          */
         get: operations["getDriveLog"];
         put?: never;
         post?: never;
-        delete?: never;
+        /**
+         * Delete a Drive Log
+         * @description Deletes the Drive Log, including its Track.
+         */
+        delete: operations["deleteDriveLog"];
         options?: never;
         head?: never;
         /**
-         * updates a single Drive Log
-         * @description Updates the Drive Log specified by the id with the fields provided in the request body.
+         * Update a Drive Log
+         * @description Updates the Drive Log with the fields present in the request body. Fields that are omitted stay unchanged.
          */
         patch: operations["updateDriveLog"];
         trace?: never;
@@ -744,8 +760,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get deleted drive logs
-         * @description List all deleted Working Time Requests the authenticated user/authtoken has access to, optionally filtered by last_modified. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List deleted Drive Logs
+         * @description Lists Drive Logs that were deleted, so a client holding a local copy can reconcile.
          */
         get: operations["fetchDeletedDriveLogs"];
         put?: never;
@@ -764,12 +780,16 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Cars
-         * @description List all Cars the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Cars
+         * @description Lists the Cars the authenticated user or API token can access.
          */
         get: operations["fetchCars"];
         put?: never;
-        post?: never;
+        /**
+         * Create a Car
+         * @description Creates a Car from the data in the request body.
+         */
+        post: operations["createCar"];
         delete?: never;
         options?: never;
         head?: never;
@@ -784,8 +804,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * gets a single Car
-         * @description Retrieves a single Car based on its id.
+         * Get a Car
+         * @description Returns a single Car by its ID.
          */
         get: operations["getCar"];
         put?: never;
@@ -793,7 +813,11 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        /**
+         * Update a Car
+         * @description Updates the Car with the fields present in the request body. Fields that are omitted stay unchanged.
+         */
+        patch: operations["updateCar"];
         trace?: never;
     };
     "/drive-log-categories": {
@@ -804,8 +828,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Drive Log Categories
-         * @description List all Drive Log Categories the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Drive Log Categories
+         * @description Lists the Drive Log Categories the authenticated user or API token can access.
          */
         get: operations["fetchDriveLogCategories"];
         put?: never;
@@ -824,8 +848,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * gets a single Drive Log Category
-         * @description Retrieves a single Drive Log Category based on its id.
+         * Get a Drive Log Category
+         * @description Returns a single Drive Log Category by its ID.
          */
         get: operations["getDriveLogCategory"];
         put?: never;
@@ -844,89 +868,25 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * gets the Track of a Drive Log if present
-         * @description Retrieves Drive Log's Track based on its id.
+         * Get a Drive Log's Track
+         * @description Returns the recorded Track of the Drive Log. Responds with 404 when no Track was recorded.
          */
         get: operations["getTrack"];
         /**
-         * updates a Drive Log's Track
-         * @description Updates the Track specified by the id of a Drive Log with the waypoints provided in the request body.
+         * Replace a Drive Log's Track
+         * @description Replaces the Drive Log's Track with the waypoints in the request body.
          */
         put: operations["updateTrack"];
         /**
-         * create a Track for a Drive Log
-         * @description Creates a new Track for a Drive Log based on the waypoints provided in the request body.
+         * Create a Drive Log's Track
+         * @description Stores a Track for the Drive Log from the waypoints in the request body. A Drive Log holds at most one Track.
          */
         post: operations["createTrack"];
         /**
-         * deletes a Drive Log's Track
-         * @description Deletes a single Track based on a Drive Log's id.
+         * Delete a Drive Log's Track
+         * @description Deletes the Drive Log's Track. The Drive Log itself is kept.
          */
         delete: operations["deleteTrack"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/working-time-requests": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * fetches Working Time Requests
-         * @description List all Working Times Requests the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
-         */
-        get: operations["fetchWorkingTimeRequests"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/working-time-requests/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * gets a single Working Time Request
-         * @description Retrieves a single Working Time Request based on its id.
-         */
-        get: operations["getWorkingTimeRequest"];
-        put?: never;
-        post?: never;
-        /**
-         * deletes a single Working Time Request
-         * @description Deletes a single Working Time based on its id.
-         */
-        delete: operations["deleteWorkingTimeRequest"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/working-time-requests:deleted": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get deleted working time requests
-         * @description List all deleted Working Time Requests the authenticated user/authtoken has access to, optionally filtered by last_modified. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
-         */
-        get: operations["fetchDeletedWorkingTimeRequests"];
-        put?: never;
-        post?: never;
-        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -940,14 +900,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Working Time Date Spans
-         * @description List all Working Times Date Spans the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Working Time Date Spans
+         * @description Lists the Working Time Date Spans the authenticated user or API token can access.
          */
         get: operations["fetchWorkingTimeDateSpans"];
         put?: never;
         /**
-         * create a Working Time Date Span
-         * @description Creates a new Working Time Date Span based on the data provided in the request body.
+         * Create a Working Time Date Span
+         * @description Creates a Working Time Date Span from the data in the request body, and the day-based Working Times it covers.
          */
         post: operations["createWorkingTimeDateSpan"];
         delete?: never;
@@ -964,22 +924,22 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * gets a single Working Time Date Span
-         * @description Retrieves a single Working Time Date Span based on its id.
+         * Get a Working Time Date Span
+         * @description Returns a single Working Time Date Span by its ID.
          */
         get: operations["getWorkingTimeDateSpan"];
         put?: never;
         post?: never;
         /**
-         * deletes a single Working Time Date Span
-         * @description Deletes a single Working Time Date Span based on its id.
+         * Delete a Working Time Date Span
+         * @description Deletes the Working Time Date Span together with the Working Times it covers.
          */
         delete: operations["deleteWorkingTimeDateSpan"];
         options?: never;
         head?: never;
         /**
-         * updates a single Working Time Date Span
-         * @description Updates the Working Time Date Span specified by the id with the fields provided in the request body.
+         * Update a Working Time Date Span
+         * @description Updates the Working Time Date Span with the fields present in the request body, and adjusts the Working Times it covers. Fields that are omitted stay unchanged.
          */
         patch: operations["updateWorkingTimeDateSpan"];
         trace?: never;
@@ -992,8 +952,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get deleted working time requests
-         * @description List all deleted Working Time Date Spans the authenticated user/authtoken has access to, optionally filtered by last_modified. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List deleted Working Time Date Spans
+         * @description Lists Working Time Date Spans that were deleted, so a client holding a local copy can reconcile.
          */
         get: operations["fetchDeletedWorkingTimeDateSpans"];
         put?: never;
@@ -1012,8 +972,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Working Time Types
-         * @description List all Working Time Types the authenticated user/authtoken has access to. The entries can be filtered by the provided query parameters, all of which are optional. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Working Time Types
+         * @description Lists the Working Time Types the authenticated user or API token can access.
          */
         get: operations["fetchWorkingTimeTypes"];
         put?: never;
@@ -1032,15 +992,15 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * gets a single Working Time Type
-         * @description Retrieves a single Working Time Type based on its id.
+         * Get a Working Time Type
+         * @description Returns a single Working Time Type by its ID.
          */
         get: operations["getWorkingTimeType"];
         put?: never;
         post?: never;
         /**
-         * deletes a single Working Time Type
-         * @description Deletes a single Working Time Type based on its id.
+         * Delete a Working Time Type
+         * @description Deletes the Working Time Type. It cannot be deleted while Working Times still reference it.
          */
         delete: operations["deleteWorkingTimeType"];
         options?: never;
@@ -1056,8 +1016,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches Holiday Calendars
-         * @description List all Holiday Calendars the authenticated user/authtoken has access to.The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Holiday Calendars
+         * @description Lists the Holiday Calendars the authenticated user or API token can access.
          */
         get: operations["fetchHolidayCalendars"];
         put?: never;
@@ -1076,8 +1036,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * gets a single Holiday Calendar
-         * @description Retrieves a single Holiday Calendar based on its id.
+         * Get a Holiday Calendar
+         * @description Returns a single Holiday Calendar by its ID.
          */
         get: operations["getHolidayCalendar"];
         put?: never;
@@ -1096,8 +1056,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * fetches all Holidays of a specific Holiday Calendar
-         * @description Retrieves a all Holidays of one Holiday Calendar specified by its id. The number of entries returned is capped by the page size limit. This end point uses cursor pagination. If more entries would be found for a given query, the result envelope contains a 'next_page_token' field with a token that can be used to fetch the next page.
+         * List Holidays
+         * @description Lists the Holidays in the Holiday Calendar.
          */
         get: operations["fetchHolidays"];
         put?: never;
@@ -1112,11 +1072,51 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        Error: {
-            /** @example E0307 */
-            code: string | null;
+        /** @description RFC 9457 Problem Details base members (`type`, `title`, `status`, `detail`, `instance`) — the common shape of all error response bodies. */
+        ProblemDetail: {
+            /**
+             * Format: uri
+             * @example https://errors.timr.com/validation/end-time-required
+             */
+            type: string;
+            /** @example Bad Request */
+            title: string;
+            /** @example 400 */
+            status: number;
             /** @example Concrete error message */
-            message: string | null;
+            detail?: string;
+            /**
+             * Format: uri-reference
+             * @example /working-times/12345
+             */
+            instance?: string;
+        };
+        /**
+         * @description TIMR error response body, extending the Problem Details base with `timestamp`, `trace_id` and per-field `errors[]` for validation, binding, constraint, request-body deserialization, and reference-not-found errors. The semantic identifier is encoded in the `type` URI (e.g. `https://errors.timr.com/conflict/resource-outdated`).
+         *
+         *     Slugs in the `type` URI are lowercase kebab-case: a top-level category (`validation`, `reference-not-found`, `conflict`, `forbidden`, `internal`) optionally followed by a specific sub-slug (`conflict/resource-outdated`, `validation/end-time-required`, `reference-not-found/user`).
+         */
+        Error: components["schemas"]["ProblemDetail"] & {
+            /**
+             * Format: date-time
+             * @example 2026-05-25T09:42:11.000Z
+             */
+            timestamp: string;
+            /** @example 4bf92f3577b34da6a3ce929d0e0e4736 */
+            trace_id?: string | null;
+            errors?: components["schemas"]["ErrorEntry"][] | null;
+        };
+        /** @description Field-level or sub-error entry, shaped like a sub-ProblemDetail. The `type` URI identifies the specific constraint or sub-error category (e.g. `validation/not-null` for a Bean Validation `@NotNull`, `validation/paused-working-time` for a TIMR custom validator code, `validation/type-mismatch` for a value that does not fit its target type, `validation/unknown-property` for a property the resource does not declare, `reference-not-found/user` for a `MappingException`). `field` is the JSONPath of the offending property in the request body, rooted at `$` — array elements included. An error about a query parameter names it plainly instead, without the `$.` prefix. */
+        ErrorEntry: {
+            /**
+             * Format: uri
+             * @example https://errors.timr.com/validation/paused-working-time
+             */
+            type: string;
+            /** @example $.break_times[0].duration */
+            field?: string | null;
+            /** @example break_times must contain exactly one break time of type 'ongoing' */
+            detail: string;
         };
         Duration: {
             type: components["schemas"]["DurationType"];
@@ -1131,50 +1131,53 @@ export interface components {
              * @description Net minutes rounded to the default setting configured. In case of type 'half_day' or 'full_day' these get calculated automatically, based on WorkTimeSchedule configured for User
              * @example 45
              */
-            readonly minutes_rounded: number;
+            minutes_rounded: number;
         };
-        /** @enum {string} */
+        /**
+         * @description How the duration of a single recording is expressed. Not to be confused with `DurationUnit`, which states the unit a Working Time Type is recorded in.
+         * @enum {string}
+         */
         DurationType: "minutes" | "full_day" | "half_day";
         /**
          * Format: date-time
          * @description RFC 3339 date-time (ISO-8601)
-         * @example 2021-07-16T09:20:00+01:00
+         * @example 2021-07-16T08:20:00.000Z
          */
         DateTime: string;
         /**
          * Format: date
          * @description RFC 3339 date (ISO-8601)
-         * @example 2021-07-16
+         * @example 2021-07-16T00:00:00.000Z
          */
         LocalDate: string;
+        /**
+         * @description ISO 8601 month-day form (--MM-DD)
+         * @example --05-20
+         */
+        MonthDay: string;
         /**
          * Format: time
          * @description time of day (ISO-8601)
          * @example 15:20
          */
         LocalTime: string;
-        BreakTime: components["schemas"]["BreakTimeManual"] | components["schemas"]["BreakTimeOngoing"] | components["schemas"]["BreakTimeAutomatic"];
+        BreakTime: {
+            type: components["schemas"]["BreakTimeType"];
+        } & (components["schemas"]["BreakTimeManual"] | components["schemas"]["BreakTimeOngoing"] | components["schemas"]["BreakTimeAutomatic"]);
         /**
          * @example {
          *       "type" : "manual",
          *       "duration_minutes" : 50
          *     }
          */
-        BreakTimeUpdate: components["schemas"]["BreakTimeManual"] | components["schemas"]["BreakTimeOngoing"];
-        /**
-         * @example {
-         *       "type": "manual",
-         *       "duration_minutes": 20,
-         *       "start": null,
-         *       "end": null
-         *     }
-         */
-        BreakTimeManual: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "manual";
+        BreakTimeUpdate: {
+            type: components["schemas"]["BreakTimeType"];
+        } & (components["schemas"]["BreakTimeManual"] | components["schemas"]["BreakTimeOngoing"]);
+        /** @description Members shared by every kind of break time, including the discriminator. */
+        BreakTimeBase: {
+            type: components["schemas"]["BreakTimeType"];
+        };
+        BreakTimeManual: components["schemas"]["BreakTimeBase"] & {
             /**
              * Format: int32
              * @description Duration of break in minutes. Please make sure it matches the duration between 'start' and 'end' if the properties are also given.
@@ -1183,43 +1186,31 @@ export interface components {
             duration_minutes: number;
             /**
              * @description start and end are optional. To avoid discrepancies in the duration given in duration_minutes and the time between start and end the preferable way is to only provide duration_minutes.
-             * @example 2021-07-16T09:30:00+01:00
+             * @example 2021-07-16T08:30:00.000Z
              */
             start?: components["schemas"]["DateTime"] | null;
             /**
              * @description start and end are optional. To avoid discrepancies in the duration given in duration_minutes and the time between start and end the preferable way is to only provide duration_minutes.
-             * @example 2021-07-16T09:40:00+01:00
+             * @example 2021-07-16T08:40:00.000Z
              */
             end?: components["schemas"]["DateTime"] | null;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "manual";
         };
-        /**
-         * @example {
-         *       "type": "ongoing",
-         *       "start": "2021-07-16T17:50:00+01:00"
-         *     }
-         */
-        BreakTimeOngoing: {
+        BreakTimeOngoing: components["schemas"]["BreakTimeBase"] & {
+            start: components["schemas"]["DateTime"];
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
              */
             type: "ongoing";
-            start: components["schemas"]["DateTime"];
         };
-        /**
-         * @example {
-         *       "type": "automatic",
-         *       "duration_minutes": 60,
-         *       "start": "2021-07-16T15:50:00+01:00"
-         *       "end": "2021-07-16T16:50:00+01:00"
-         *     }
-         */
-        BreakTimeAutomatic: {
-            /**
-             * @description discriminator enum property added by openapi-typescript
-             * @enum {string}
-             */
-            type: "automatic";
+        BreakTimeAutomatic: components["schemas"]["BreakTimeBase"] & {
             /**
              * Format: int32
              * @description Duration of break in minutes
@@ -1228,10 +1219,20 @@ export interface components {
             duration_minutes: number;
             start: components["schemas"]["DateTime"] | null;
             end: components["schemas"]["DateTime"] | null;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "automatic";
         };
-        /** @enum {string} */
+        /**
+         * @description Kind of break. `manual` was entered by the user, `automatic` was deducted by timr, `ongoing` is a break that has started and not yet ended.
+         * @enum {string}
+         */
         BreakTimeType: "manual" | "ongoing" | "automatic";
         UserPartial: {
+            /** @description Unique identifier. Treat it as an opaque string. */
             id: string;
             firstname: string | null;
             lastname: string | null;
@@ -1243,14 +1244,18 @@ export interface components {
              */
             email: string | null;
             employee_number: string | null;
+            /** @description Identifier of the corresponding object in an external system. Set and owned by the client. */
             external_id: string | null;
         };
+        /** @description A user's identity (`firstname`, `lastname`, `email`), employment dates (`entry_date`, `resign_date`), and the assigned `work_schedule_model` and `holiday_calendar`. */
         User: components["schemas"]["UserPartial"] & {
             login?: string;
             entry_date?: components["schemas"]["LocalDate"] | null;
             resign_date?: components["schemas"]["LocalDate"] | null;
             work_schedule_model?: components["schemas"]["WorkScheduleModelPartial"] | null;
             holiday_calendar?: components["schemas"]["HolidayCalendarPartial"];
+            /** @description recurring month and day on which the user's vacation year starts */
+            vacation_year_start?: components["schemas"]["MonthDay"] | null;
             metadata?: {
                 [key: string]: unknown;
             } | null;
@@ -1261,7 +1266,10 @@ export interface components {
         UsersPartialPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["UserPartial"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Users. `name` orders by last name, then first name.
+         * @enum {string}
+         */
         UsersSortColumn: "name";
         UserUpdate: {
             login?: string;
@@ -1283,11 +1291,15 @@ export interface components {
             auth_identifier?: string | null;
         };
         TeamPartial: {
+            /** @description Unique identifier. Treat it as an opaque string. */
             id: string;
             name: string;
+            /** @description Full path of the entry within its hierarchy, including its own name. */
             breadcrumbs: string;
+            /** @description Identifier of the corresponding object in an external system. Set and owned by the client. */
             external_id: string | null;
         };
+        /** @description A team, placed in the hierarchy by `parent_team`, with the full path from the root in `breadcrumbs`. */
         Team: components["schemas"]["TeamPartial"] & {
             description: string | null;
             parent_team: components["schemas"]["TeamPartial"] | null;
@@ -1298,23 +1310,32 @@ export interface components {
         TeamsPartialPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["TeamPartial"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Teams. `breadcrumbs` orders by the Team's full path, `name` by its own name only.
+         * @enum {string}
+         */
         TeamsSortColumn: "breadcrumbs" | "name";
         TeamUpdate: {
             name?: string;
             description?: string | null;
             parent_team_id?: string | null;
+            /** @description Identifier of the corresponding object in an external system. Set and owned by the client. */
             external_id?: string | null;
         };
         TeamCreate: components["schemas"]["TeamUpdate"] & Record<string, never>;
+        /** @description A holiday calendar. Its holidays are either generated automatically or maintained manually. */
         HolidayCalendarPartial: {
+            /** @description Unique identifier. Treat it as an opaque string. */
             id: string;
             description: string;
         };
         HolidayCalendarsPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["HolidayCalendarPartial"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Holiday Calendars.
+         * @enum {string}
+         */
         HolidayCalendarsSortColumn: "description";
         Holiday: {
             date: components["schemas"]["LocalDate"];
@@ -1324,19 +1345,66 @@ export interface components {
         HolidaysPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["Holiday"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Holidays.
+         * @enum {string}
+         */
         HolidaysSortColumn: "date";
-        WorkingTimeAccounts: {
+        Accounts: {
             /**
              * Format: date
              * @description date of last balance
-             * @example 2023-03-28
+             * @example 2023-03-28T00:00:00.000Z
              */
             last_balance_date: string | null;
             time_account?: components["schemas"]["TimeAccount"] | null;
-            overtime?: components["schemas"]["Overtime"] | null;
-            allowances?: components["schemas"]["Allowances"] | null;
+            overtime_surcharge_accounts?: components["schemas"]["OvertimeSurchargeAccounts"][] | null;
+            vacation_account?: Omit<components["schemas"]["VacationAccount"], "unit"> | null;
         };
+        VacationAccount: {
+            unit: components["schemas"]["VacationUnit"];
+        } & (components["schemas"]["VacationAccountDays"] | components["schemas"]["VacationAccountMinutes"]);
+        /** @description Members shared by every kind of vacation account, including the discriminator. */
+        VacationAccountBase: {
+            unit: components["schemas"]["VacationUnit"];
+        };
+        VacationAccountDays: components["schemas"]["VacationAccountBase"] & {
+            /** @description vacation balance carried over from the previous vacation period, in days */
+            balance_last_period_days?: number | null;
+            /** @description vacation consumed in the current vacation period, in days */
+            consumed_days?: number | null;
+            /** @description vacation newly granted in the current vacation period, in days */
+            new_days?: number | null;
+            /** @description total vacation balance for the current vacation period, in days */
+            balance_total_days?: number | null;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            unit: "days";
+        };
+        VacationAccountMinutes: components["schemas"]["VacationAccountBase"] & {
+            /** @description vacation balance carried over from the previous vacation period, in minutes */
+            balance_last_period_minutes?: number | null;
+            /** @description vacation consumed in the current vacation period, in minutes */
+            consumed_minutes?: number | null;
+            /** @description vacation newly granted in the current vacation period, in minutes */
+            new_minutes?: number | null;
+            /** @description total vacation balance for the current vacation period, in minutes */
+            balance_total_minutes?: number | null;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            unit: "minutes";
+        };
+        /**
+         * @description Unit a vacation entitlement is expressed in.
+         * @enum {string}
+         */
+        VacationUnit: "days" | "minutes";
         TimeAccount: {
             /** Format: int32 */
             balance_last_period_minutes: number | null;
@@ -1372,34 +1440,63 @@ export interface components {
             work_from_home_days_partial: number | null;
             flex_time_indicator?: components["schemas"]["FlexTimeIndicator"] | null;
         };
-        Overtime: {
+        OvertimeSurchargeAccounts: {
+            rule: components["schemas"]["OvertimeSurchargeRule"];
+            percentage: number | null;
+            overtime: components["schemas"]["OvertimeSurchargeAccount"];
+            surcharge: components["schemas"]["OvertimeSurchargeAccount"];
+        };
+        OvertimeSurchargeRule: {
+            /**
+             * Format: uuid
+             * @description Unique identifier. Treat it as an opaque string.
+             */
+            id: string;
+            name: string;
+            short_name: string;
+        };
+        OvertimeSurchargeAccount: {
             /** Format: int32 */
             balance_last_period_minutes: number | null;
             /** Format: int32 */
-            balance_current_period_minutes: number | null;
+            new_minutes: number | null;
             /** Format: int32 */
             balance_total_minutes: number | null;
         };
-        Allowances: {
-            /** Format: int32 */
-            balance_last_period_minutes: number | null;
-            /** Format: int32 */
-            balance_current_period_minutes: number | null;
-            /** Format: int32 */
-            balance_total_minutes: number | null;
-        };
-        /** @enum {string} */
+        /**
+         * @description Traffic-light rating of the flex time balance. The thresholds are an account setting and are not part of this contract.
+         * @enum {string}
+         */
         FlexTimeIndicator: "green" | "yellow" | "red";
         WorkScheduleModelPartial: {
+            /** @description Unique identifier. Treat it as an opaque string. */
             id: string;
             /** @example full-time */
             name: string;
         };
+        /** @description The weekday targets a user is measured against: `weeks` holds the layout, `type` selects the calculation mode, and `working_time_rules` the recording constraints. */
         WorkScheduleModel: components["schemas"]["WorkScheduleModelPartial"] & {
             id?: string;
             /** @example full-time */
             name?: string;
+            /** @description working-time calculation mode (daily_target_hours or normal_working_time); independent from the internal week layout (fixed_week or alternating_weeks) */
             type: components["schemas"]["WorkScheduleModelType"];
+            /** @description for fixed_week models this array contains exactly one week and week_number/name are omitted;  for alternating_weeks models this array contains all configured weeks and each item includes week_number (0-based) and name */
+            weeks: components["schemas"]["WorkScheduleModelWeek"][];
+            working_time_rules: components["schemas"]["WorkingTimeRules"] | null;
+        };
+        WorkScheduleModelWeek: {
+            /**
+             * Format: int32
+             * @description index of the week in alternating_weeks models (0-based); omitted for fixed_week models
+             * @example 0
+             */
+            week_number?: number | null;
+            /**
+             * @description display name of the week in alternating_weeks models; omitted for fixed_week models
+             * @example Week A
+             */
+            name?: string | null;
             /**
              * Format: int64
              * @description value in minutes
@@ -1413,36 +1510,75 @@ export interface components {
             friday: components["schemas"]["DailyWorkSchedule"];
             saturday: components["schemas"]["DailyWorkSchedule"];
             sunday: components["schemas"]["DailyWorkSchedule"];
-            working_time_rules: components["schemas"]["WorkingTimeRules"] | null;
         };
         WorkScheduleModelsPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["WorkScheduleModel"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Work Schedule Models.
+         * @enum {string}
+         */
         WorkScheduleModelSortColumn: "name";
-        Location: {
+        LocationUpdate: {
             /**
              * Format: float
+             * @description Latitude in decimal degrees.
              * @example 48.2455964
              */
-            lat: number;
+            lat?: number;
             /**
              * Format: float
+             * @description Longitude in decimal degrees.
              * @example 13.0543811
              */
-            lon: number;
+            lon?: number;
             timestamp?: components["schemas"]["DateTime"] | null;
             /** @example Salzburger Straße 2, 5280 Braunau am Inn */
             formatted_address?: string | null;
+            /**
+             * Format: float
+             * @description Horizontal GPS accuracy in meters.
+             * @example 12.5
+             */
+            accuracy?: number | null;
         };
-        /** @enum {string} */
+        LocationCreate: components["schemas"]["LocationUpdate"] & Record<string, never>;
+        Location: {
+            /**
+             * Format: float
+             * @description Latitude in decimal degrees.
+             * @example 48.2455964
+             */
+            lat: number | null;
+            /**
+             * Format: float
+             * @description Longitude in decimal degrees.
+             * @example 13.0543811
+             */
+            lon: number | null;
+            timestamp?: components["schemas"]["DateTime"] | null;
+            /** @example Salzburger Straße 2, 5280 Braunau am Inn */
+            formatted_address?: string | null;
+            /**
+             * Format: float
+             * @description Horizontal GPS accuracy in meters.
+             * @example 12.5
+             */
+            accuracy: number | null;
+        };
+        /**
+         * @description Platform the entry was recorded on.
+         * @enum {string}
+         */
         Platform: "timr_web" | "timr_mobile" | "tour_mobile" | "timr_terminal" | "sync_api" | "timr_api";
         /**
+         * @description Processing state of a Working Time. `running` and `paused` mean the recording is still open; from `changeable` on it is closed and progressively locked down as it is approved, closed and archived.
          * @example changeable
          * @enum {string}
          */
         WorkingTimeStatus: "running" | "paused" | "changeable" | "locked" | "approved" | "closed" | "archived";
         /**
+         * @description How the target working time of the model is defined.
          * @example daily_target_hours
          * @enum {string}
          */
@@ -1464,20 +1600,27 @@ export interface components {
             end?: string | null;
         };
         WorkingTimeRules: {
-            /** @example 074e7048-9097-11eb-a8b3-0242ac130003 */
+            /**
+             * @description Unique identifier. Treat it as an opaque string.
+             * @example 074e7048-9097-11eb-a8b3-0242ac130003
+             */
             id: string;
             name: string;
         };
+        /** @description One continuous stretch from `start` to `end`, classified by its `working_time_type`. Attendance entries carry `break_times`, locations and the platform they were recorded on; an entry derived from a multi-day absence links back to its `working_time_date_span`. */
         WorkingTime: {
-            /** @example 074e7048-9097-11eb-a8b3-0242ac130003 */
+            /**
+             * @description Unique identifier. Treat it as an opaque string.
+             * @example 074e7048-9097-11eb-a8b3-0242ac130003
+             */
             id: string;
             start: components["schemas"]["DateTime"];
             end: components["schemas"]["DateTime"] | null;
             /**
              * Format: int32
-             * @description Total break time in minutes
+             * @description Read-only. Total break time in minutes. Values are calculated as an aggregate of other properties
              */
-            readonly break_time_total_minutes: number;
+            break_time_total_minutes: number;
             /**
              * @example [
              *         {
@@ -1501,13 +1644,14 @@ export interface components {
             user: components["schemas"]["UserPartial"];
             working_time_type: components["schemas"]["WorkingTimeTypePartial"];
             working_time_date_span: components["schemas"]["WorkingTimeDateSpanPartial"] | null;
-            working_time_request: components["schemas"]["WorkingTimeRequestPartial"] | null;
             start_location: components["schemas"]["Location"] | null;
             end_location: components["schemas"]["Location"] | null;
             start_platform: components["schemas"]["Platform"] | null;
             end_platform: components["schemas"]["Platform"] | null;
-            readonly last_modified: components["schemas"]["DateTime"];
-            readonly last_modified_by: components["schemas"]["UserPartial"] | null;
+            /** @description Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) */
+            last_modified: components["schemas"]["DateTime"];
+            /** @description Read-only. The User who last modified the entry, or null if the change was not made in a user context. */
+            last_modified_by: components["schemas"]["UserPartial"] | null;
             status: components["schemas"]["WorkingTimeStatus"];
             metadata?: {
                 [key: string]: unknown;
@@ -1516,11 +1660,18 @@ export interface components {
         WorkingTimesPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["WorkingTime"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Working Times.
+         * @enum {string}
+         */
         WorkingTimesSortColumn: "start" | "last_modified";
-        WorkingTimeUpdate: {
+        WorkingTimeUpsert: {
+            /** @description For WorkingTimeTypes with `edit_unit` `days` or `half_days`, `start` must be midnight (00:00) and on the same day as `end`. RFC 3339 date-time (ISO-8601) */
             start?: components["schemas"]["DateTime"];
-            /** @example 2021-07-16T10:02:00+01:00 */
+            /**
+             * @description For WorkingTimeTypes with `edit_unit` `days` or `half_days`, `end` must be midnight (00:00) and on the same day as `start`. RFC 3339 date-time (ISO-8601)
+             * @example 2021-07-16T09:02:00.000Z
+             */
             end?: components["schemas"]["DateTime"] | null;
             break_times?: components["schemas"]["BreakTimeUpdate"][];
             /** @description Must be specified for WorkingTimeTypes with `edit_unit` `days` or `half_days` only */
@@ -1528,17 +1679,22 @@ export interface components {
             changed?: boolean;
             notes?: string | null;
             working_time_type_id?: string;
-            start_location?: components["schemas"]["Location"] | null;
-            /** @example null */
-            end_location?: components["schemas"]["Location"] | null;
             status?: components["schemas"]["WorkingTimeStatus"];
             metadata?: {
                 [key: string]: unknown;
             } | null;
         };
-        WorkingTimeCreate: {
+        WorkingTimeUpdate: components["schemas"]["WorkingTimeUpsert"] & {
+            start_location?: components["schemas"]["LocationUpdate"] | null;
+            /** @example null */
+            end_location?: components["schemas"]["LocationUpdate"] | null;
+        };
+        WorkingTimeCreate: components["schemas"]["WorkingTimeUpsert"] & {
             user_id: string;
-        } & components["schemas"]["WorkingTimeUpdate"];
+            start_location?: components["schemas"]["LocationCreate"] | null;
+            /** @example null */
+            end_location?: components["schemas"]["LocationCreate"] | null;
+        };
         DeletedEntryWithMetadata: components["schemas"]["DeletedEntryPartial"] & {
             metadata?: {
                 [key: string]: unknown;
@@ -1547,19 +1703,22 @@ export interface components {
         DeletedEntryWithMetadataPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["DeletedEntryWithMetadata"][];
         };
-        /** @enum {string} */
-        DeletedEntryWithMetadataSortColumn: "last_modified";
         /**
+         * @description Processing state of a Project Time. `running` and `paused` mean the recording is still open; from `changeable` on it is closed and progressively locked down as it is approved, cleared, closed and archived.
          * @example changeable
          * @enum {string}
          */
         ProjectTimeStatus: "running" | "paused" | "changeable" | "locked" | "approved" | "cleared" | "closed" | "archived";
         TaskPartial: {
+            /** @description Unique identifier. Treat it as an opaque string. */
             id: string;
             name: string;
+            /** @description Full path of the entry within its hierarchy, including its own name. */
             breadcrumbs: string;
+            /** @description Identifier of the corresponding object in an external system. Set and owned by the client. */
             external_id: string | null;
         };
+        /** @description A task, placed in the tree by `parent_task`, with the full path from the root in `breadcrumbs`. `bookable` and `billable` control recording and invoicing; `lock_date`, time windows and location constrain what may be recorded. */
         Task: components["schemas"]["TaskPartial"] & {
             parent_task: components["schemas"]["TaskPartial"] | null;
             description: string | null;
@@ -1570,8 +1729,8 @@ export interface components {
             start_date: components["schemas"]["LocalDate"] | null;
             end_date: components["schemas"]["LocalDate"] | null;
             lock_date?: components["schemas"]["LocalDate"] | null;
-            earliest_start_time: components["schemas"]["LocalTime"] | null;
-            latest_end_time: components["schemas"]["LocalTime"] | null;
+            earliest_start_time?: components["schemas"]["LocalTime"] | null;
+            latest_end_time?: components["schemas"]["LocalTime"] | null;
             active_from: components["schemas"]["LocalDate"] | null;
             active_to: components["schemas"]["LocalDate"] | null;
             budget_inherited?: boolean;
@@ -1598,8 +1757,8 @@ export interface components {
             billable: boolean;
             project_time_notes_required: boolean;
             lock_date?: components["schemas"]["LocalDate"] | null;
-            earliest_start_time: components["schemas"]["LocalTime"] | null;
-            latest_end_time: components["schemas"]["LocalTime"] | null;
+            earliest_start_time?: components["schemas"]["LocalTime"] | null;
+            latest_end_time?: components["schemas"]["LocalTime"] | null;
             active_from: components["schemas"]["LocalDate"] | null;
             active_to: components["schemas"]["LocalDate"] | null;
             budget_planning_type?: components["schemas"]["BudgetPlanningType"];
@@ -1626,6 +1785,7 @@ export interface components {
             name?: string;
             /** @description returns the id of the immediate parent task if the task has one. Use this id when creating or a updating a task in order to locate it at the right place in your task tree. */
             parent_task_id?: string | null;
+            /** @description Identifier of the corresponding object in an external system. Set and owned by the client. */
             external_id?: string | null;
             description?: string | null;
             description_external?: string | null;
@@ -1649,10 +1809,8 @@ export interface components {
             earliest_start_time?: components["schemas"]["LocalTime"] | null;
             /** @description set this property to limit the task so that it cannot be booked after this time */
             latest_end_time?: components["schemas"]["LocalTime"] | null;
-            /** @description when budget is inherited from parent you cannot set it manually. Set this property to false, if you want to change anything in the tasks budget settings */
-            budget_inherited?: boolean;
-            /** @description when no budget is planned, either don't set this property (on create) or set it to NONE */
-            budget_planning_type?: components["schemas"]["BudgetPlanningType"];
+            /** @description when no budget is planned, either don't set this property (on create) or set it to none. set it to inherited to inherit budget settings from parent task. */
+            budget_planning_type?: components["schemas"]["BudgetPlanningTypeRequest"];
             /**
              * @description how many hours were planned in the calculation
              *     set budget_hours_planned to make timr calculate budget_planned depending on its budget_planning_type:
@@ -1676,16 +1834,10 @@ export interface components {
              *       * fixed_price: out of budget_hourly_rate and budget_planned
              */
             budget_planned?: number | null;
-            /**
-             * @description set this property to true, if you want to include not billable hours for all project times booked on this task
-             * @default false
-             */
-            budget_include_non_billable_project_times: boolean;
-            /**
-             * @description set this property to false if you want to set a child task's location explicitly instead of inheriting it from its parent
-             * @default true
-             */
-            location_inherited: boolean;
+            /** @description set this property to true, if you want to include not billable hours for all project times booked on this task */
+            budget_include_non_billable_project_times?: boolean;
+            /** @description set this property to false if you want to set a child task's location explicitly instead of inheriting it from its parent */
+            location_inherited?: boolean;
             location?: components["schemas"]["TaskLocation"] | null;
             /**
              * Format: int32
@@ -1704,9 +1856,15 @@ export interface components {
         };
         /** @description You can define the location of a task by setting this property. If the task has a parent task, the location is inherited if nothing else is explicitly defined. If you set this property to null, the location will be deleted. */
         TaskLocation: {
-            /** Format: float */
+            /**
+             * Format: float
+             * @description Latitude in decimal degrees.
+             */
             lat: number | null;
-            /** Format: float */
+            /**
+             * Format: float
+             * @description Longitude in decimal degrees.
+             */
             lon: number | null;
             address: string | null;
             city: string | null;
@@ -1718,7 +1876,10 @@ export interface components {
              */
             country: string | null;
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Tasks. `breadcrumbs` orders by the Task's full path, `name` by its own name only.
+         * @enum {string}
+         */
         TasksSortColumn: "breadcrumbs" | "name";
         TaskToUserAssignment: {
             user: components["schemas"]["UserPartial"];
@@ -1729,13 +1890,19 @@ export interface components {
         TaskToUserAssignmentsPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["TaskToUserAssignment"][];
         };
-        TaskToUserAssignmentCreateAndUpdate: {
+        TaskToUserAssignmentUpsert: {
             hours_planned?: number | null;
             recording_lock?: components["schemas"]["RecordingLockType"] | null;
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Task to User Assignments. `user_name` orders by the assigned User's last name, then first name.
+         * @enum {string}
+         */
         TaskToUserAssignmentsSortColumn: "user_name";
-        /** @enum {string} */
+        /**
+         * @description Whether the assigned User may record on the Task, and where the lock comes from. `recordable` allows recording; `locked_automatically` follows the Task's lock date; `locked_manually` and `unlocked_manually` are explicit overrides for this assignment.
+         * @enum {string}
+         */
         RecordingLockType: "recordable" | "locked_automatically" | "locked_manually" | "unlocked_manually";
         /**
          * @description corresponding to the chosen planning type some properties cannot be set:
@@ -1746,6 +1913,16 @@ export interface components {
          * @enum {string}
          */
         BudgetPlanningType: "none" | "task_hourly_rate" | "user_hourly_rate" | "fixed_price";
+        /**
+         * @description corresponding to the chosen planning type some properties cannot be set:
+         *       * none: no further budget properties can be set
+         *       * user_hourly_rate: budget_hourly_rate cannot be set
+         *       * inherited: budget settings are inherited from the parent task
+         *
+         *     for the remaining two types all budget properties are supported
+         * @enum {string}
+         */
+        BudgetPlanningTypeRequest: "none" | "task_hourly_rate" | "user_hourly_rate" | "fixed_price" | "inherited";
         TaskToLeaderAssignment: {
             user: components["schemas"]["UserPartial"];
             automatically_assigned: boolean;
@@ -1753,7 +1930,10 @@ export interface components {
         TaskToLeaderAssignmentsPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["TaskToLeaderAssignment"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Task to Leader Assignments. `user_name` orders by the assigned User's last name, then first name.
+         * @enum {string}
+         */
         TaskToLeaderAssignmentsSortColumn: "user_name";
         TaskToTeamAssignment: {
             team: components["schemas"]["TeamPartial"];
@@ -1762,18 +1942,25 @@ export interface components {
         TaskToTeamAssignmentsPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["TaskToTeamAssignment"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Task to Team Assignments. `team_name` orders by the assigned Team's name.
+         * @enum {string}
+         */
         TaskToTeamAssignmentsSortColumn: "team_name";
+        /** @description One booking on a `task`, from `start` to `end`, optionally `billable`, with `break_times`, notes and locations. */
         ProjectTime: {
-            /** @example 074e7048-9097-11eb-a8b3-0242ac130003 */
+            /**
+             * @description Unique identifier. Treat it as an opaque string.
+             * @example 074e7048-9097-11eb-a8b3-0242ac130003
+             */
             id: string;
             start: components["schemas"]["DateTime"];
             end: components["schemas"]["DateTime"] | null;
             /**
              * Format: int32
-             * @description Total break time in minutes
+             * @description Read-only. Total break time in minutes. Values are calculated as an aggregate of other properties
              */
-            readonly break_time_total_minutes: number;
+            break_time_total_minutes: number;
             break_times: components["schemas"]["BreakTime"][];
             duration: components["schemas"]["Duration"] | null;
             changed: boolean;
@@ -1783,10 +1970,12 @@ export interface components {
             billable: boolean;
             start_location: components["schemas"]["Location"] | null;
             end_location: components["schemas"]["Location"] | null;
-            start_platform: components["schemas"]["Platform"];
+            start_platform: components["schemas"]["Platform"] | null;
             end_platform: components["schemas"]["Platform"] | null;
-            readonly last_modified: components["schemas"]["DateTime"];
-            readonly last_modified_by: components["schemas"]["UserPartial"] | null;
+            /** @description Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) */
+            last_modified: components["schemas"]["DateTime"];
+            /** @description Read-only. The User who last modified the entry, or null if the change was not made in a user context. */
+            last_modified_by: components["schemas"]["UserPartial"] | null;
             status: components["schemas"]["ProjectTimeStatus"];
             metadata?: {
                 [key: string]: unknown;
@@ -1795,9 +1984,12 @@ export interface components {
         ProjectTimesPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["ProjectTime"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Project Times.
+         * @enum {string}
+         */
         ProjectTimesSortColumn: "start" | "last_modified";
-        ProjectTimeUpdate: {
+        ProjectTimeUpsert: {
             start?: components["schemas"]["DateTime"];
             end?: components["schemas"]["DateTime"] | null;
             break_times?: components["schemas"]["BreakTimeUpdate"][];
@@ -1805,18 +1997,26 @@ export interface components {
             notes?: string | null;
             task_id?: string;
             billable?: boolean;
-            start_location?: components["schemas"]["Location"] | null;
-            end_location?: components["schemas"]["Location"] | null;
             status?: components["schemas"]["ProjectTimeStatus"];
             metadata?: {
                 [key: string]: unknown;
             } | null;
         };
-        ProjectTimeCreate: {
+        ProjectTimeUpdate: components["schemas"]["ProjectTimeUpsert"] & {
+            start_location?: components["schemas"]["LocationUpdate"] | null;
+            end_location?: components["schemas"]["LocationUpdate"] | null;
+        };
+        ProjectTimeCreate: components["schemas"]["ProjectTimeUpsert"] & {
             user_id: string;
-        } & components["schemas"]["ProjectTimeUpdate"];
+            start_location?: components["schemas"]["LocationCreate"] | null;
+            end_location?: components["schemas"]["LocationCreate"] | null;
+        };
+        /** @description One trip in a `car`: `start` and `end`, `start_mileage` and `end_mileage` with the resulting `distance`, the `purpose`, the places `visited`, and its `drive_log_category`. May include a recorded GPS `route`. */
         DriveLog: {
-            /** @example 074e7048-9097-11eb-a8b3-0242ac130003 */
+            /**
+             * @description Unique identifier. Treat it as an opaque string.
+             * @example 074e7048-9097-11eb-a8b3-0242ac130003
+             */
             id: string;
             start: components["schemas"]["DateTime"];
             end: components["schemas"]["DateTime"] | null;
@@ -1849,18 +2049,26 @@ export interface components {
             has_track: boolean;
             start_location: components["schemas"]["Location"] | null;
             end_location: components["schemas"]["Location"] | null;
-            start_platform: components["schemas"]["Platform"];
+            start_platform: components["schemas"]["Platform"] | null;
             end_platform: components["schemas"]["Platform"] | null;
-            readonly last_modified: components["schemas"]["DateTime"];
-            readonly last_modified_by: components["schemas"]["UserPartial"] | null;
+            /** @description Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) */
+            last_modified: components["schemas"]["DateTime"];
+            /** @description Read-only. The User who last modified the entry, or null if the change was not made in a user context. */
+            last_modified_by: components["schemas"]["UserPartial"] | null;
             status: components["schemas"]["DriveLogStatus"];
+            metadata?: {
+                [key: string]: unknown;
+            } | null;
         };
         DriveLogsPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["DriveLog"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Drive Logs.
+         * @enum {string}
+         */
         DriveLogsSortColumn: "start" | "last_modified";
-        DriveLogUpdate: {
+        DriveLogUpsert: {
             start?: components["schemas"]["DateTime"];
             end?: components["schemas"]["DateTime"] | null;
             changed?: boolean;
@@ -1872,44 +2080,79 @@ export interface components {
             purpose?: string | null;
             visited?: string | null;
             drive_log_category_id?: string;
-            start_location?: components["schemas"]["Location"] | null;
-            end_location?: components["schemas"]["Location"] | null;
             status?: components["schemas"]["DriveLogStatus"];
+            metadata?: {
+                [key: string]: unknown;
+            } | null;
         };
-        DriveLogCreate: components["schemas"]["DriveLogUpdate"] & {
+        DriveLogUpdate: components["schemas"]["DriveLogUpsert"] & {
+            start_location?: components["schemas"]["LocationUpdate"] | null;
+            end_location?: components["schemas"]["LocationUpdate"] | null;
+        };
+        DriveLogCreate: components["schemas"]["DriveLogUpsert"] & {
             user_id: string;
             car_id: string;
+            start_location?: components["schemas"]["LocationCreate"] | null;
+            end_location?: components["schemas"]["LocationCreate"] | null;
         };
+        CarUpdate: {
+            name?: string;
+            plate?: string;
+            /** @description Identifier of the corresponding object in an external system. Set and owned by the client. */
+            external_id?: string | null;
+            usable?: boolean;
+            metadata?: {
+                [key: string]: unknown;
+            } | null;
+        };
+        CarCreate: components["schemas"]["CarUpdate"] & Record<string, never>;
         CarPartial: {
+            /** @description Unique identifier. Treat it as an opaque string. */
             id: string;
             name: string;
             plate: string;
+            /** @description Identifier of the corresponding object in an external system. Set and owned by the client. */
             external_id: string | null;
         };
+        /** @description A vehicle identified by `name` and license `plate`. `usable` says whether it can currently be selected. */
         Car: components["schemas"]["CarPartial"] & {
             usable: boolean;
+            metadata?: {
+                [key: string]: unknown;
+            } | null;
         };
         CarsPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["Car"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Cars.
+         * @enum {string}
+         */
         CarsSortColumn: "name";
         DriveLogCategoryPartial: {
+            /** @description Unique identifier. Treat it as an opaque string. */
             id: string;
             name: string;
             business: boolean;
             color: string;
         };
+        /** @description A drive log category with a `name` and a display `color`; `business` marks it as business travel. */
         DriveLogCategory: components["schemas"]["DriveLogCategoryPartial"] & {
-            readonly last_modified: components["schemas"]["DateTime"];
-            readonly last_modified_by: components["schemas"]["UserPartial"] | null;
+            /** @description Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) */
+            last_modified: components["schemas"]["DateTime"];
+            /** @description Read-only. The User who last modified the entry, or null if the change was not made in a user context. */
+            last_modified_by: components["schemas"]["UserPartial"] | null;
         };
         DriveLogCategoriesPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["DriveLogCategory"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Drive Log Categories.
+         * @enum {string}
+         */
         DriveLogCategoriesSortColumn: "name";
         VenuePartial: {
+            /** @description Unique identifier. Treat it as an opaque string. */
             id: string;
             name: string;
             city: string;
@@ -1919,11 +2162,13 @@ export interface components {
             country: string;
             /**
              * Format: float
+             * @description Latitude in decimal degrees.
              * @example 48.2455964
              */
             lat?: number;
             /**
              * Format: float
+             * @description Longitude in decimal degrees.
              * @example 13.0543811
              */
             lon?: number;
@@ -1935,61 +2180,50 @@ export interface components {
             /** Format: double */
             lon: number;
         };
-        /** @enum {string} */
+        /**
+         * @description Processing state of a Drive Log. `running` means the recording is still open; from `changeable` on it is closed and progressively locked down as it is approved, cleared, closed and archived.
+         * @enum {string}
+         */
         DriveLogStatus: "changeable" | "locked" | "approved" | "cleared" | "closed" | "archived" | "running";
-        /** @enum {string} */
-        WorkingTimeRequestStatus: "approval_requested" | "in_approval" | "approved" | "rejected" | "cancellation_requested" | "in_cancellation" | "cancelled";
-        /** @description References a request if the working time is part of one.  A working time can either be part of a working time request or a working time date span, never both. */
-        WorkingTimeRequestPartial: {
-            id: string;
-        };
-        WorkingTimeRequest: {
-            id: string;
-            start: components["schemas"]["LocalDate"];
-            start_half_day: boolean;
-            end: components["schemas"]["LocalDate"];
-            end_half_day: boolean;
-            notes: string | null;
-            user: components["schemas"]["UserPartial"];
-            working_time_type: components["schemas"]["WorkingTimeTypePartial"];
-            substitute?: components["schemas"]["UserPartial"] | null;
-            created: components["schemas"]["DateTime"];
-            last_modified: components["schemas"]["DateTime"];
-            readonly last_modified_by: components["schemas"]["UserPartial"] | null;
-            status_comment: string;
-            status: components["schemas"]["WorkingTimeRequestStatus"];
-        };
-        WorkingTimeRequestsPage: components["schemas"]["PagingInformation"] & {
-            data: components["schemas"]["WorkingTimeRequest"][];
-        };
-        /** @enum {string} */
-        WorkingTimeRequestsSortColumn: "start";
         DeletedEntryPartial: {
+            /** @description Unique identifier. Treat it as an opaque string. */
             id: string;
-            readonly last_modified: components["schemas"]["DateTime"];
-            readonly last_modified_by: components["schemas"]["UserPartial"] | null;
+            /** @description Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) */
+            last_modified: components["schemas"]["DateTime"];
+            /** @description Read-only. The User who last modified the entry, or null if the change was not made in a user context. */
+            last_modified_by: components["schemas"]["UserPartial"] | null;
         };
         DeletedEntryPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["DeletedEntryPartial"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for deleted entries.
+         * @enum {string}
+         */
         DeletedEntrySortColumn: "last_modified";
-        /** @description References a date span if the working time is part of one.  A working time can either be part of a working time date span or a request, never both. */
+        /** @description References the date span this working time belongs to, if any. All working times generated for a date span reference the same span; working times recorded on their own have none. */
         WorkingTimeDateSpanPartial: {
+            /** @description Unique identifier. Treat it as an opaque string. */
             id: string;
         };
+        /** @description A span from `start` to `end` of a single `working_time_type`. Every working time derived for a covered day links back to it via `WorkingTime.working_time_date_span`. It can be created directly or become effective through an approved request. */
         WorkingTimeDateSpan: {
+            /** @description Unique identifier. Treat it as an opaque string. */
             id: string;
             start: components["schemas"]["LocalDate"];
+            /** @description Marks the first day of the working time date span as a half day. */
             start_half_day: boolean;
             end: components["schemas"]["LocalDate"];
+            /** @description Marks the last day of the working time date span as a half day. */
             end_half_day: boolean;
             notes: string | null;
             user: components["schemas"]["UserPartial"];
             working_time_type: components["schemas"]["WorkingTimeTypePartial"];
             substitute?: components["schemas"]["UserPartial"] | null;
+            /** @description Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) */
             last_modified: components["schemas"]["DateTime"];
-            readonly last_modified_by: components["schemas"]["UserPartial"] | null;
+            /** @description Read-only. The User who last modified the entry, or null if the change was not made in a user context. */
+            last_modified_by: components["schemas"]["UserPartial"] | null;
             metadata?: {
                 [key: string]: unknown;
             } | null;
@@ -1997,15 +2231,16 @@ export interface components {
         WorkingTimeDateSpanPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["WorkingTimeDateSpan"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Working Time Date Spans.
+         * @enum {string}
+         */
         WorkingTimeDateSpansSortColumn: "start";
         WorkingTimeDateSpanUpdate: {
             start?: components["schemas"]["LocalDate"];
-            /** @default false */
-            start_half_day: boolean;
+            start_half_day?: boolean;
             end?: components["schemas"]["LocalDate"];
-            /** @default false */
-            end_half_day: boolean;
+            end_half_day?: boolean;
             notes?: string | null;
             working_time_type_id?: string;
             substitute_id?: string | null;
@@ -2017,50 +2252,146 @@ export interface components {
             user_id: string;
         } & components["schemas"]["WorkingTimeDateSpanUpdate"];
         WorkingTimeTypePartial: {
+            /** @description Unique identifier. Treat it as an opaque string. */
             id: string;
             name: string;
+            /** @description Identifier of the corresponding object in an external system. Set and owned by the client. */
             external_id: string | null;
         };
+        /** @description A working time type. `category` and `sub_category` place it in the classification, `edit_unit` decides whether it is recorded by time or by day, and `requires_substitute` governs how it is recorded. */
         WorkingTimeType: {
+            /** @description Unique identifier. Treat it as an opaque string. */
             id: string;
             name: string;
             short_name: string | null;
             description: string | null;
+            /** @description Identifier of the corresponding object in an external system. Set and owned by the client. */
             external_id: string | null;
             edit_unit: components["schemas"]["DurationUnit"];
             category: components["schemas"]["WorkingTimeTypeCategory"];
             sub_category: components["schemas"]["WorkingTimeTypeSubCategory"] | null;
-            /** @description Specifies how the user can record this working time type. Only relevant for working time types having edit_unit 'half_days' or 'days', otherwise null */
-            recording_mode_user: components["schemas"]["RecordingModeUser"] | null;
-            non_creditable_deductible: number | null;
-            compensation_deductible: number | null;
+            /** @description Specifies how the user can record this working time type. */
+            recording_mode_user: components["schemas"]["RecordingModeUser"];
             archived: boolean;
             requires_substitute?: boolean;
-            /** @description Policy that defines how automatic break deductions are handled for this working time type. Only applicable for minute based attendance times (WorkingTimeTypeCategory = 'attendance_time' and edit_unit = 'minutes'). Defaults to 'deduction_allowed' if not set. */
-            automatic_break_deduction_policy: components["schemas"]["AutomaticBreakDeductionPolicy"];
         };
-        /** @enum {string} */
+        /**
+         * @description Unit a Working Time Type is recorded in. Not to be confused with `DurationType`, which states how an individual recording's duration is expressed.
+         * @enum {string}
+         */
         DurationUnit: "minutes" | "half_days" | "days";
-        /** @enum {string} */
+        /**
+         * @description Category of a Working Time Type. `attendance_time` counts as time at work, the remaining categories describe kinds of absence.
+         * @enum {string}
+         */
         WorkingTimeTypeCategory: "attendance_time" | "vacation" | "paid_time_off" | "unpaid_time_off" | "suspension" | "break_time";
-        /** @enum {string} */
+        /**
+         * @description Further classification of a Working Time Type within its category.
+         * @enum {string}
+         */
         WorkingTimeTypeSubCategory: "present" | "work_from_home" | "away" | "active_driving_time" | "passive_travelling_time";
-        /** @enum {string} */
+        /**
+         * @description Whether a User may record this Working Time Type themselves. Only meaningful for day-based types.
+         * @enum {string}
+         */
         RecordingModeUser: "not_allowed" | "allowed" | "by_request";
-        /** @enum {string} */
-        AutomaticBreakDeductionPolicy: "deduction_allowed" | "prefer_not_to_deduct" | "never_deduct";
         WorkingTimeTypesPage: components["schemas"]["PagingInformation"] & {
             data: components["schemas"]["WorkingTimeType"][];
         };
-        /** @enum {string} */
+        /**
+         * @description Sort property for Working Time Types.
+         * @enum {string}
+         */
         WorkingTimeTypesSortColumn: "name";
         PagingInformation: {
+            /** @description Token for the next page, or null when this is the last page. */
             next_page_token: string | null;
         };
-        /** @enum {string} */
+        /**
+         * @description Sort direction — `asc` for ascending, `dsc` for descending.
+         * @enum {string}
+         */
         SortDirection: "asc" | "dsc";
     };
-    responses: never;
+    responses: {
+        /** @description Bad Request */
+        BadRequest: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["Error"];
+            };
+        };
+        /** @description Forbidden */
+        Forbidden: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                /**
+                 * @example {
+                 *       "type": "https://errors.timr.com/forbidden",
+                 *       "title": "Forbidden",
+                 *       "status": 403,
+                 *       "instance": "/working-times/074e7048-9097-11eb-a8b3-0242ac130003",
+                 *       "timestamp": "2026-07-16T09:30:00.000Z",
+                 *       "trace_id": "8c41b0d9e7a2465f"
+                 *     }
+                 */
+                "application/problem+json": components["schemas"]["Error"];
+            };
+        };
+        /** @description Not Found */
+        NotFound: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                /**
+                 * @example {
+                 *       "type": "https://errors.timr.com/not-found",
+                 *       "title": "Not Found",
+                 *       "status": 404,
+                 *       "detail": "No working time exists with this identifier.",
+                 *       "instance": "/working-times/074e7048-9097-11eb-a8b3-0242ac130003",
+                 *       "timestamp": "2026-07-16T09:30:00.000Z",
+                 *       "trace_id": "b57e2f13c9d04a86"
+                 *     }
+                 */
+                "application/problem+json": components["schemas"]["Error"];
+            };
+        };
+        /** @description Conflict */
+        Conflict: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                /**
+                 * @example {
+                 *       "type": "https://errors.timr.com/conflict/resource-outdated",
+                 *       "title": "Conflict",
+                 *       "status": 409,
+                 *       "detail": "The object was edited in the meantime, please reload and try again.",
+                 *       "instance": "/working-times/074e7048-9097-11eb-a8b3-0242ac130003",
+                 *       "timestamp": "2026-07-16T09:30:00.000Z",
+                 *       "trace_id": "1d6c8ae4f0b34927"
+                 *     }
+                 */
+                "application/problem+json": components["schemas"]["Error"];
+            };
+        };
+        /** @description Unprocessable Content */
+        UnprocessableContent: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["Error"];
+            };
+        };
+    };
     parameters: never;
     requestBodies: never;
     headers: never;
@@ -2071,49 +2402,42 @@ export interface operations {
     fetchUsers: {
         parameters: {
             query?: {
-                /** @description pass a user name to filter entries by the user name */
+                /** @description Only return Users whose name contains this text. */
                 name?: string;
                 /**
-                 * @description pass entry_date_from to show all users entered on or after defined day
+                 * @description Only return Users whose entry date is on or after this day.
                  * @example
                  */
                 entry_date_from?: components["schemas"]["LocalDate"];
                 /**
-                 * @description pass entry_date_from to show all users entered on or before defined day
+                 * @description Only return Users whose entry date is on or before this day.
                  * @example
                  */
                 entry_date_to?: components["schemas"]["LocalDate"];
                 /**
-                 * @description pass resign_date_from to show all users resigned on or after defined day
+                 * @description Only return Users whose resignation date is on or after this day.
                  * @example
                  */
                 resign_date_from?: components["schemas"]["LocalDate"];
                 /**
-                 * @description pass resign_date_to to show all users resigned on or before defined day
+                 * @description Only return Users whose resignation date is on or before this day.
                  * @example
                  */
                 resign_date_to?: components["schemas"]["LocalDate"];
-                /** @description pass parameter resigned true/false to show all users who are resigned/not resigned */
+                /** @description Only return Users who have resigned (true) or have not resigned (false). */
                 resigned?: boolean;
-                /** @description pass an employee_number to show users with the corresponding employee number */
+                /** @description Only return Users with this employee number. */
                 employee_number?: string;
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
                 /**
-                 * @description pass a value to change the maximum number of entries returned in a single page (at max 500).
+                 * @description Maximum number of entries per page. Values above 500 are capped at 500.
                  * @example
                  */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * Lastname
-                 *      * Firstname
-                 *      * Id
-                 *
-                 *     pass a property by which the returned entries will be sorted if you want a different order
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["UsersSortColumn"];
             };
             header?: never;
@@ -2122,7 +2446,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Users. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -2133,15 +2457,7 @@ export interface operations {
                     "application/json": components["schemas"]["UsersPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     createUser: {
@@ -2158,7 +2474,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description created User entity */
+            /** @description The created User. */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -2167,15 +2483,9 @@ export interface operations {
                     "application/json": components["schemas"]["User"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     getUser: {
@@ -2183,13 +2493,17 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the User.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested User. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2198,24 +2512,8 @@ export interface operations {
                     "application/json": components["schemas"]["User"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     updateUser: {
@@ -2223,6 +2521,10 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the User.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
@@ -2234,7 +2536,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description user successfully updated */
+            /** @description The updated User. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2243,33 +2545,11 @@ export interface operations {
                     "application/json": components["schemas"]["User"];
                 };
             };
-            /** @description bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     getUserWorkingTimeAccounts: {
@@ -2277,40 +2557,65 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the User.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
+                /**
+                 * @description Day to return the balances for.
+                 * @example 2026-07-16T00:00:00.000Z
+                 */
                 date: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The User's working time account balances on the given day. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["WorkingTimeAccounts"];
+                    "application/json": components["schemas"]["Accounts"];
                 };
             };
-            /** @description not allowed */
-            403: {
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getUserAccounts: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description ID of the User.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
+                id: string;
+                /**
+                 * @description Day to return the balances for.
+                 * @example 2026-07-16T00:00:00.000Z
+                 */
+                date: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The User's account balances on the given day. */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Error"];
+                    "application/json": components["schemas"]["Accounts"];
                 };
             };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     getUserWorkScheduleModel: {
@@ -2318,13 +2623,17 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the User.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The Work Schedule Model assigned to the User. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2333,75 +2642,59 @@ export interface operations {
                     "application/json": components["schemas"]["WorkScheduleModel"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     fetchUserTasks: {
         parameters: {
             query?: {
-                /** @description pass task's id to restrict entries having this task as a parent task */
+                /** @description Only return Tasks whose parent is the Task with this ID. */
                 parent_task_id?: string;
                 /**
-                 * @description pass this parameter with value true/false to traverse the whole task tree
+                 * @description Include Tasks from the whole subtree (true) or only direct children (false).
                  * @example true/false
                  */
                 traverse_task_tree?: boolean;
-                /** @description pass a user name to filter entries by the user name */
+                /** @description Only return Users whose name contains this text. */
                 name?: string;
                 /**
-                 * @description pass this parameter with value true/false to show just entries/no entries which are billable
+                 * @description Only return entries that are billable (true) or not billable (false).
                  * @example true/false
                  */
                 bookable?: boolean;
                 /**
-                 * @description pass this parameter with value true/false to show just entries/no entries which are billable
+                 * @description Only return entries that are billable (true) or not billable (false).
                  * @example true/false
                  */
                 billable?: boolean;
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                /** @description Only return Tasks that are active on this day. */
+                active_at?: components["schemas"]["LocalDate"];
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
                 /**
-                 * @description pass a value to change the maximum number of entries returned in a single page (at max 500).
+                 * @description Maximum number of entries per page. Values above 500 are capped at 500.
                  * @example
                  */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * breadcrumbs
-                 *      * id
-                 *
-                 *     pass a property by which the returned entries will be sorted if you want a different order
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["TasksSortColumn"];
             };
             header?: never;
             path: {
+                /**
+                 * @description ID of the User.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Tasks the User is assigned to. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -2412,44 +2705,34 @@ export interface operations {
                     "application/json": components["schemas"]["TasksReducedPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     fetchUserTeamMemberships: {
         parameters: {
             query?: {
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in (based on the Team's name) */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *       * name
-                 *       * id
-                 *
-                 *     pass a property by which the returned entries will be sorted if you want a different order
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["TeamsSortColumn"];
             };
             header?: never;
             path: {
+                /**
+                 * @description ID of the User.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Teams the User is a member of. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -2460,44 +2743,34 @@ export interface operations {
                     "application/json": components["schemas"]["TeamsPartialPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     fetchUserTeamLeaderships: {
         parameters: {
             query?: {
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in (based on the Team's name) */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *       * name
-                 *       * id
-                 *
-                 *     pass a property by which the returned entries will be sorted if you want a different order
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["TeamsSortColumn"];
             };
             header?: never;
             path: {
+                /**
+                 * @description ID of the User.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Teams the User leads. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -2508,35 +2781,21 @@ export interface operations {
                     "application/json": components["schemas"]["TeamsPartialPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     fetchTeams: {
         parameters: {
             query?: {
-                /** @description pass a group name to filter entries by the group name, matching any segment in the breadcrumbs path */
+                /** @description Only return Teams whose name matches this value in any segment of the breadcrumbs path. */
                 name?: string;
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in (based on the Group's name) */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *       * name
-                 *       * id
-                 *
-                 *     pass a property by which the returned entries will be sorted if you want a different order
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["TeamsSortColumn"];
             };
             header?: never;
@@ -2545,7 +2804,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Teams. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -2556,15 +2815,7 @@ export interface operations {
                     "application/json": components["schemas"]["TeamsPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     createTeam: {
@@ -2581,7 +2832,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description created Team entity */
+            /** @description The created Team. */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -2590,15 +2841,9 @@ export interface operations {
                     "application/json": components["schemas"]["Team"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     getTeam: {
@@ -2606,13 +2851,17 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Team.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results */
+            /** @description The requested Team. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2621,24 +2870,8 @@ export interface operations {
                     "application/json": components["schemas"]["Team"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     deleteTeam: {
@@ -2646,37 +2879,26 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Team.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Empty response indicating that delete was successful */
+            /** @description Deleted. No content is returned. */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
         };
     };
     updateTeam: {
@@ -2684,6 +2906,10 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Team.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
@@ -2695,7 +2921,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description team successfully updated */
+            /** @description The updated Team. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2704,62 +2930,38 @@ export interface operations {
                     "application/json": components["schemas"]["Team"];
                 };
             };
-            /** @description bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     fetchTeamMembers: {
         parameters: {
             query?: {
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *        * Lastname
-                 *        * Firstname
-                 *        * Id
-                 *     of the assigned user
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["UsersSortColumn"];
             };
             header?: never;
             path: {
+                /**
+                 * @description ID of the Team.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Team Members. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -2770,15 +2972,7 @@ export interface operations {
                     "application/json": components["schemas"]["UsersPartialPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     getTeamMember: {
@@ -2786,14 +2980,22 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Team.
+                 * @example 3b8e6d14-9d47-11eb-a8b3-0242ac130003
+                 */
                 team_id: string;
+                /**
+                 * @description ID of the User.
+                 * @example 0f1c3a52-9d47-11eb-a8b3-0242ac130003
+                 */
                 user_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested Team Member. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2802,24 +3004,8 @@ export interface operations {
                     "application/json": components["schemas"]["UserPartial"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     addTeamMember: {
@@ -2827,14 +3013,31 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Team.
+                 * @example 3b8e6d14-9d47-11eb-a8b3-0242ac130003
+                 */
                 team_id: string;
+                /**
+                 * @description ID of the User.
+                 * @example 0f1c3a52-9d47-11eb-a8b3-0242ac130003
+                 */
                 user_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description User Partial model of the added team member */
+            /** @description The Team Member, which was already assigned. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserPartial"];
+                };
+            };
+            /** @description The newly assigned Team Member. */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -2843,15 +3046,9 @@ export interface operations {
                     "application/json": components["schemas"]["UserPartial"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     removeTeamMember: {
@@ -2859,67 +3056,58 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Team.
+                 * @example 3b8e6d14-9d47-11eb-a8b3-0242ac130003
+                 */
                 team_id: string;
+                /**
+                 * @description ID of the User.
+                 * @example 0f1c3a52-9d47-11eb-a8b3-0242ac130003
+                 */
                 user_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Empty response indicating that member was added successfully to the team */
+            /** @description Removed. No content is returned. */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
         };
     };
     fetchTeamLeaders: {
         parameters: {
             query?: {
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *        * Lastname
-                 *        * Firstname
-                 *        * Id
-                 *     of the assigned user
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["UsersSortColumn"];
             };
             header?: never;
             path: {
+                /**
+                 * @description ID of the Team.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Team Leaders. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -2930,15 +3118,7 @@ export interface operations {
                     "application/json": components["schemas"]["UsersPartialPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     getTeamLeader: {
@@ -2946,14 +3126,22 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Team.
+                 * @example 3b8e6d14-9d47-11eb-a8b3-0242ac130003
+                 */
                 team_id: string;
+                /**
+                 * @description ID of the User.
+                 * @example 0f1c3a52-9d47-11eb-a8b3-0242ac130003
+                 */
                 user_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested Team Leader. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2962,24 +3150,8 @@ export interface operations {
                     "application/json": components["schemas"]["UserPartial"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     addTeamLeader: {
@@ -2987,14 +3159,31 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Team.
+                 * @example 3b8e6d14-9d47-11eb-a8b3-0242ac130003
+                 */
                 team_id: string;
+                /**
+                 * @description ID of the User.
+                 * @example 0f1c3a52-9d47-11eb-a8b3-0242ac130003
+                 */
                 user_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description User Partial model of the added team leader */
+            /** @description The Team Leader, which was already assigned. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserPartial"];
+                };
+            };
+            /** @description The newly assigned Team Leader. */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -3003,15 +3192,9 @@ export interface operations {
                     "application/json": components["schemas"]["UserPartial"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     removeTeamLeader: {
@@ -3019,49 +3202,43 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Team.
+                 * @example 3b8e6d14-9d47-11eb-a8b3-0242ac130003
+                 */
                 team_id: string;
+                /**
+                 * @description ID of the User.
+                 * @example 0f1c3a52-9d47-11eb-a8b3-0242ac130003
+                 */
                 user_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Empty response indicating that delete was successful */
+            /** @description Deleted. No content is returned. */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
         };
     };
     fetchWorkScheduleModels: {
         parameters: {
             query?: {
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description optionally, pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description optionally, pass a direction in which the entries returned will be sorted in (based on the WorkScheduleModel's name) */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["WorkScheduleModelSortColumn"];
             };
             header?: never;
@@ -3070,7 +3247,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Work Schedule Models. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -3081,15 +3258,7 @@ export interface operations {
                     "application/json": components["schemas"]["WorkScheduleModelsPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     getWorkScheduleModel: {
@@ -3097,13 +3266,17 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Work Schedule Model.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested Work Schedule Model. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -3112,24 +3285,8 @@ export interface operations {
                     "application/json": components["schemas"]["WorkScheduleModel"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     deleteWorkScheduleModel: {
@@ -3137,103 +3294,86 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Work Schedule Model.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Empty response indicating that delete was successful */
+            /** @description Deleted. No content is returned. */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
         };
     };
     fetchWorkingTimes: {
         parameters: {
             query?: {
                 /**
-                 * @description pass a search string to filter entries containing this string in their notes
+                 * @description Only return entries whose notes contain this text.
                  * @example
                  */
                 notes?: string;
                 /**
-                 * @description pass a date to filter entries started from this day on
+                 * @description Only return entries starting on or after this day.
                  * @example
                  */
                 start_from?: components["schemas"]["LocalDate"];
                 /**
-                 * @description pass a date to filter entries started up to (including) this day
+                 * @description Only return entries starting on or before this day.
                  * @example
                  */
                 start_to?: components["schemas"]["LocalDate"];
                 /**
-                 * @description pass a datetime to filter entries modified after this instant
+                 * @description Only return entries modified after this instant.
                  * @example
                  */
                 last_modified_after?: components["schemas"]["DateTime"];
                 /**
-                 * @description pass one or more ids of WorkingTimeTypes to restrict entries based on these types
+                 * @description Only return entries of these Working Time Types.
                  * @example
                  */
                 working_time_types?: string[];
                 /**
-                 * @description optionally, pass one or more WorkingTimeTypeCategories to restrict entries based on these categories
+                 * @description Only return entries whose Working Time Type is in one of these categories.
                  * @example
                  */
                 working_time_type_categories?: components["schemas"]["WorkingTimeTypeCategory"][];
                 /**
-                 * @description pass one or more statuses to filter entries based on their status
+                 * @description Only return entries in one of these statuses.
                  * @example
                  */
                 statuses?: components["schemas"]["WorkingTimeStatus"][];
                 /**
-                 * @description pass one or more user ids to restrict entries based on the user they are associated to
+                 * @description Only return entries belonging to these users.
                  * @example
                  */
                 users?: string[];
                 /**
-                 * @description pass a boolean to filter entries based on whether they have been changed by the user or not
+                 * @description Only return entries that were changed by the user (true) or left unchanged (false).
                  * @example
                  */
                 changed?: boolean;
                 /**
-                 * @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token
+                 * @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
                  * @example
                  */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * start
-                 *      * Id
-                 *
-                 *     pass a property by which the returned entries will be sorted
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["WorkingTimesSortColumn"];
             };
             header?: never;
@@ -3242,7 +3382,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Working Times. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -3253,15 +3393,7 @@ export interface operations {
                     "application/json": components["schemas"]["WorkingTimesPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     createWorkingTime: {
@@ -3278,7 +3410,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description created Working Time entity */
+            /** @description The created Working Time. */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -3287,15 +3419,9 @@ export interface operations {
                     "application/json": components["schemas"]["WorkingTime"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     getWorkingTime: {
@@ -3303,13 +3429,17 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Working Time.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested Working Time. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -3318,24 +3448,8 @@ export interface operations {
                     "application/json": components["schemas"]["WorkingTime"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     deleteWorkingTime: {
@@ -3343,37 +3457,26 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Working Time.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Empty response indicating that delete was successful */
+            /** @description Deleted. No content is returned. */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
         };
     };
     updateWorkingTime: {
@@ -3381,6 +3484,10 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Working Time.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
@@ -3392,7 +3499,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description search results matching criteria */
+            /** @description The updated Working Time. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -3401,56 +3508,38 @@ export interface operations {
                     "application/json": components["schemas"]["WorkingTime"];
                 };
             };
-            /** @description bad request */
-            400: {
+            /** @description No Working Time was created because the working time type requires a request (recordingMode BY_REQUEST); a Working Time Request was created instead. The Location header points to the created Working Time Request. */
+            302: {
                 headers: {
+                    /** @description URI of the created Working Time Request */
+                    Location?: string;
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
+                content?: never;
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     fetchDeletedWorkingTimes: {
         parameters: {
             query?: {
                 /**
-                 * @description optionally, pass a datetime to filter entries modified after this instant
+                 * @description Only return entries modified after this instant.
                  * @example
                  */
-                last_modified?: components["schemas"]["DateTime"];
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                last_modified_after?: components["schemas"]["DateTime"];
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description optionally, pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description optionally, pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * last_modified
-                 *      * Id
-                 *     optionally, pass a property by which the returned entries will be sorted if you want a different order
-                 */
-                sort_by?: components["schemas"]["DeletedEntryWithMetadataSortColumn"];
+                /** @description Property to sort the entries by. */
+                sort_by?: components["schemas"]["DeletedEntrySortColumn"];
             };
             header?: never;
             path?: never;
@@ -3458,7 +3547,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
+            /** @description Page of deleted Working Times. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -3469,84 +3558,72 @@ export interface operations {
                     "application/json": components["schemas"]["DeletedEntryWithMetadataPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     fetchProjectTimes: {
         parameters: {
             query?: {
                 /**
-                 * @description pass a search string to filter entries containing this string in their notes
+                 * @description Only return entries whose notes contain this text.
                  * @example
                  */
                 notes?: string;
                 /**
-                 * @description pass a date to filter entries started from this day on
+                 * @description Only return entries starting on or after this day.
                  * @example
                  */
                 start_from?: components["schemas"]["LocalDate"];
                 /**
-                 * @description pass a date to filter entries started up to (including) this day
+                 * @description Only return entries starting on or before this day.
                  * @example
                  */
                 start_to?: components["schemas"]["LocalDate"];
                 /**
-                 * @description pass a datetime to filter entries modified after this instant
+                 * @description Only return entries modified after this instant.
                  * @example
                  */
                 last_modified_after?: components["schemas"]["DateTime"];
                 /**
-                 * @description pass a tasks id to restrict entries based on its value
+                 * @description Only return entries recorded on the Task with this ID.
                  * @example
                  */
                 task?: string;
                 /**
-                 * @description pass this parameter with value true/false to filter just by task specified or also traverse its task tree
+                 * @description Include entries recorded on the whole subtree of the given Task (true) or only on the Task itself (false).
                  * @example true/false
                  */
                 traverse_task_tree?: boolean;
                 /**
-                 * @description pass this parameter with value true/false to show just entries/no entries which are billable
+                 * @description Only return entries that are billable (true) or not billable (false).
                  * @example true/false
                  */
                 billable?: boolean;
                 /**
-                 * @description pass one or more statuses to filter entries based on their status
+                 * @description Only return entries in one of these statuses.
                  * @example
                  */
                 statuses?: components["schemas"]["ProjectTimeStatus"][];
                 /**
-                 * @description pass one or more user ids to restrict entries based on the user they are associated to
+                 * @description Only return entries belonging to these users.
                  * @example
                  */
                 users?: string[];
                 /**
-                 * @description pass a boolean to filter entries based on whether they have been changed by the user or not
+                 * @description Only return entries that were changed by the user (true) or left unchanged (false).
                  * @example
                  */
                 changed?: boolean;
                 /**
-                 * @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token
+                 * @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
                  * @example
                  */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * start
-                 *      * Id
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["ProjectTimesSortColumn"];
             };
             header?: never;
@@ -3555,7 +3632,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Project Times. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -3566,15 +3643,7 @@ export interface operations {
                     "application/json": components["schemas"]["ProjectTimesPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     createProjectTime: {
@@ -3591,7 +3660,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description created Project Time entity */
+            /** @description The created Project Time. */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -3600,15 +3669,9 @@ export interface operations {
                     "application/json": components["schemas"]["ProjectTime"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     getProjectTime: {
@@ -3616,13 +3679,17 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Project Time.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested Project Time. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -3631,24 +3698,8 @@ export interface operations {
                     "application/json": components["schemas"]["ProjectTime"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     deleteProjectTime: {
@@ -3656,37 +3707,26 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Project Time.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Empty response indicating that delete was successful */
+            /** @description Deleted. No content is returned. */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
         };
     };
     updateProjectTime: {
@@ -3694,6 +3734,10 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Project Time.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
@@ -3705,7 +3749,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description search results matching criteria */
+            /** @description The updated Project Time. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -3714,55 +3758,28 @@ export interface operations {
                     "application/json": components["schemas"]["ProjectTime"];
                 };
             };
-            /** @description bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     fetchDeletedProjectTimes: {
         parameters: {
             query?: {
                 /**
-                 * @description optionally, pass a datetime to filter entries modified after this instant
+                 * @description Only return entries modified after this instant.
                  * @example
                  */
-                last_modified?: components["schemas"]["DateTime"];
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                last_modified_after?: components["schemas"]["DateTime"];
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description optionally, pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description optionally, pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * last_modified
-                 *      * Id
-                 *     optionally, pass a property by which the returned entries will be sorted if you want a different order
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["DeletedEntrySortColumn"];
             };
             header?: never;
@@ -3771,7 +3788,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
+            /** @description Page of deleted Project Times. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -3782,55 +3799,43 @@ export interface operations {
                     "application/json": components["schemas"]["DeletedEntryWithMetadataPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     fetchTasks: {
         parameters: {
             query?: {
-                /** @description pass task's id to restrict entries having this task as a parent task */
+                /** @description Only return Tasks whose parent is the Task with this ID. */
                 parent_task_id?: string;
                 /**
-                 * @description pass this parameter with value true/false to traverse the whole task tree
+                 * @description Include Tasks from the whole subtree (true) or only direct children (false).
                  * @example true/false
                  */
                 traverse_task_tree?: boolean;
-                /** @description pass a user name to filter entries by the user name */
+                /** @description Only return Users whose name contains this text. */
                 name?: string;
                 /**
-                 * @description pass this parameter with value true/false to show just entries/no entries which are billable
+                 * @description Only return entries that are billable (true) or not billable (false).
                  * @example true/false
                  */
                 bookable?: boolean;
                 /**
-                 * @description pass this parameter with value true/false to show just entries/no entries which are billable
+                 * @description Only return entries that are billable (true) or not billable (false).
                  * @example true/false
                  */
                 billable?: boolean;
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                /** @description Only return Tasks that are active on this day. */
+                active_at?: components["schemas"]["LocalDate"];
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
                 /**
-                 * @description pass a value to change the maximum number of entries returned in a single page (at max 500).
+                 * @description Maximum number of entries per page. Values above 500 are capped at 500.
                  * @example
                  */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * breadcrumbs
-                 *      * id
-                 *
-                 *     pass a property by which the returned entries will be sorted if you want a different order
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["TasksSortColumn"];
             };
             header?: never;
@@ -3839,7 +3844,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Tasks. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -3850,15 +3855,7 @@ export interface operations {
                     "application/json": components["schemas"]["TasksPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     createTask: {
@@ -3875,7 +3872,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description created Task entity */
+            /** @description The created Task. */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -3884,15 +3881,9 @@ export interface operations {
                     "application/json": components["schemas"]["Task"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     getTask: {
@@ -3900,13 +3891,17 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Task.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested Task. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -3915,31 +3910,19 @@ export interface operations {
                     "application/json": components["schemas"]["Task"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
-    "update Task": {
+    updateTask: {
         parameters: {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Task.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
@@ -3951,7 +3934,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description task successfully updated */
+            /** @description The updated Task. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -3960,62 +3943,38 @@ export interface operations {
                     "application/json": components["schemas"]["Task"];
                 };
             };
-            /** @description bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     fetchTaskToUserAssignments: {
         parameters: {
             query?: {
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *        * Lastname
-                 *        * Firstname
-                 *        * Id
-                 *     of the assigned user
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["TaskToUserAssignmentsSortColumn"];
             };
             header?: never;
             path: {
+                /**
+                 * @description ID of the Task.
+                 * @example 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+                 */
                 task_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Task to User Assignments. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -4026,24 +3985,8 @@ export interface operations {
                     "application/json": components["schemas"]["TaskToUserAssignmentsPage"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     getTaskToUserAssignment: {
@@ -4051,14 +3994,22 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Task.
+                 * @example 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+                 */
                 task_id: string;
+                /**
+                 * @description ID of the User.
+                 * @example 0f1c3a52-9d47-11eb-a8b3-0242ac130003
+                 */
                 user_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested Task to User Assignment. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4067,32 +4018,24 @@ export interface operations {
                     "application/json": components["schemas"]["TaskToUserAssignment"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
-    createTaskToUserAssignment: {
+    upsertTaskToUserAssignment: {
         parameters: {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Task.
+                 * @example 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+                 */
                 task_id: string;
+                /**
+                 * @description ID of the User.
+                 * @example 0f1c3a52-9d47-11eb-a8b3-0242ac130003
+                 */
                 user_id: string;
             };
             cookie?: never;
@@ -4100,11 +4043,20 @@ export interface operations {
         /** @description Task to User Assignment entity */
         requestBody: {
             content: {
-                "application/json": components["schemas"]["TaskToUserAssignmentCreateAndUpdate"];
+                "application/json": components["schemas"]["TaskToUserAssignmentUpsert"];
             };
         };
         responses: {
-            /** @description created Task to User Assignment */
+            /** @description The updated Task to User Assignment. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskToUserAssignment"];
+                };
+            };
+            /** @description The created Task to User Assignment. */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -4113,15 +4065,9 @@ export interface operations {
                     "application/json": components["schemas"]["TaskToUserAssignment"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     deleteTaskToUserAssignment: {
@@ -4129,104 +4075,58 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Task.
+                 * @example 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+                 */
                 task_id: string;
+                /**
+                 * @description ID of the User.
+                 * @example 0f1c3a52-9d47-11eb-a8b3-0242ac130003
+                 */
                 user_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Empty response indicating that delete was successful */
+            /** @description Deleted. No content is returned. */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-        };
-    };
-    updateTaskToUserAssignment: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                task_id: string;
-                user_id: string;
-            };
-            cookie?: never;
-        };
-        /** @description Task to User Assignment entity */
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TaskToUserAssignmentCreateAndUpdate"];
-            };
-        };
-        responses: {
-            /** @description updated Task to User Assignment */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TaskToUserAssignment"];
-                };
-            };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
         };
     };
     fetchTaskToLeaderAssignments: {
         parameters: {
             query?: {
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *        * Lastname
-                 *        * Firstname
-                 *        * Id
-                 *     of the assigned leader
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["TaskToLeaderAssignmentsSortColumn"];
             };
             header?: never;
             path: {
+                /**
+                 * @description ID of the Task.
+                 * @example 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+                 */
                 task_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Task to Leader Assignments. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -4237,24 +4137,8 @@ export interface operations {
                     "application/json": components["schemas"]["TaskToLeaderAssignmentsPage"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     getTaskToLeaderAssignment: {
@@ -4262,14 +4146,22 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Task.
+                 * @example 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+                 */
                 task_id: string;
+                /**
+                 * @description ID of the User.
+                 * @example 0f1c3a52-9d47-11eb-a8b3-0242ac130003
+                 */
                 user_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested Task to Leader Assignment. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4278,24 +4170,8 @@ export interface operations {
                     "application/json": components["schemas"]["TaskToLeaderAssignment"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     createTaskToLeaderAssignment: {
@@ -4303,14 +4179,31 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Task.
+                 * @example 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+                 */
                 task_id: string;
+                /**
+                 * @description ID of the User.
+                 * @example 0f1c3a52-9d47-11eb-a8b3-0242ac130003
+                 */
                 user_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description created Task to User Assignment */
+            /** @description The Task to Leader Assignment, which already existed. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskToLeaderAssignment"];
+                };
+            };
+            /** @description The created Task to Leader Assignment. */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -4319,15 +4212,9 @@ export interface operations {
                     "application/json": components["schemas"]["TaskToLeaderAssignment"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     deleteTaskToLeaderAssignment: {
@@ -4335,66 +4222,58 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Task.
+                 * @example 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+                 */
                 task_id: string;
+                /**
+                 * @description ID of the User.
+                 * @example 0f1c3a52-9d47-11eb-a8b3-0242ac130003
+                 */
                 user_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Empty response indicating that delete was successful */
+            /** @description Deleted. No content is returned. */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
         };
     };
     fetchTaskToTeamAssignments: {
         parameters: {
             query?: {
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *        * Name
-                 *        * Id
-                 *     of the assigned team
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["TaskToTeamAssignmentsSortColumn"];
             };
             header?: never;
             path: {
+                /**
+                 * @description ID of the Task.
+                 * @example 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+                 */
                 task_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Task to Team Assignments. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -4405,24 +4284,8 @@ export interface operations {
                     "application/json": components["schemas"]["TaskToTeamAssignmentsPage"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     getTaskToTeamAssignment: {
@@ -4430,14 +4293,22 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Task.
+                 * @example 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+                 */
                 task_id: string;
+                /**
+                 * @description ID of the Team.
+                 * @example 3b8e6d14-9d47-11eb-a8b3-0242ac130003
+                 */
                 team_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested Task to Team Assignment. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4446,24 +4317,8 @@ export interface operations {
                     "application/json": components["schemas"]["TaskToTeamAssignment"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     createTaskToTeamAssignment: {
@@ -4471,14 +4326,31 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Task.
+                 * @example 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+                 */
                 task_id: string;
+                /**
+                 * @description ID of the Team.
+                 * @example 3b8e6d14-9d47-11eb-a8b3-0242ac130003
+                 */
                 team_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description created Task to Team Assignment */
+            /** @description The updated Task to Team Assignment. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskToTeamAssignment"];
+                };
+            };
+            /** @description The created Task to Team Assignment. */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -4487,15 +4359,9 @@ export interface operations {
                     "application/json": components["schemas"]["TaskToTeamAssignment"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     deleteTaskToTeamAssignment: {
@@ -4503,105 +4369,93 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Task.
+                 * @example 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+                 */
                 task_id: string;
+                /**
+                 * @description ID of the Team.
+                 * @example 3b8e6d14-9d47-11eb-a8b3-0242ac130003
+                 */
                 team_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Empty response indicating that delete was successful */
+            /** @description Deleted. No content is returned. */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
         };
     };
     fetchDriveLogs: {
         parameters: {
             query?: {
                 /**
-                 * @description pass a date to filter entries started from this day on
+                 * @description Only return entries starting on or after this day.
                  * @example
                  */
                 start_from?: components["schemas"]["LocalDate"];
                 /**
-                 * @description pass a date to filter entries started up to (including) this day
+                 * @description Only return entries starting on or before this day.
                  * @example
                  */
                 start_to?: components["schemas"]["LocalDate"];
                 /**
-                 * @description pass a datetime to filter entries modified after this instant
+                 * @description Only return entries modified after this instant.
                  * @example
                  */
                 last_modified_after?: components["schemas"]["DateTime"];
                 /**
-                 * @description pass one or more ids of cars to restrict entries based on these cars
+                 * @description Only return entries recorded for these Cars.
                  * @example
                  */
                 cars?: string[];
                 /**
-                 * @description pass one or more ids of drive log categories to restrict entries based on these categories
+                 * @description Only return entries in these Drive Log Categories.
                  * @example
                  */
                 drive_log_categories?: string[];
                 /**
-                 * @description pass one or more statuses to filter entries based on their status
+                 * @description Only return entries in one of these statuses.
                  * @example
                  */
                 statuses?: components["schemas"]["DriveLogStatus"][];
                 /**
-                 * @description pass one or more user ids to restrict entries based on the user they are associated to
+                 * @description Only return entries belonging to these users.
                  * @example
                  */
                 users?: string[];
-                /** @description pass a String based on which the entries are filtered if it is contained in the properties route, purpose or visited */
+                /** @description Only return Drive Logs whose route, purpose or visited contains this text. */
                 details?: string;
                 /**
-                 * @description pass a boolean to filter entries based on whether they have been changed by the user or not
+                 * @description Only return entries that were changed by the user (true) or left unchanged (false).
                  * @example
                  */
                 changed?: boolean;
                 /**
-                 * @description pass a boolean to filter entries based on whether they have a track or not
+                 * @description Only return Drive Logs that have a Track (true) or have none (false).
                  * @example
                  */
                 has_track?: boolean;
                 /**
-                 * @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token
+                 * @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
                  * @example
                  */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * start
-                 *      * las_modified_after
-                 *      * id
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["DriveLogsSortColumn"];
             };
             header?: never;
@@ -4610,7 +4464,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Drive Logs. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -4621,15 +4475,7 @@ export interface operations {
                     "application/json": components["schemas"]["DriveLogsPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     createDriveLog: {
@@ -4646,7 +4492,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description created Drive Log entity */
+            /** @description The created Drive Log. */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -4655,15 +4501,9 @@ export interface operations {
                     "application/json": components["schemas"]["DriveLog"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     getDriveLog: {
@@ -4671,13 +4511,17 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Drive Log.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested Drive Log. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4686,24 +4530,35 @@ export interface operations {
                     "application/json": components["schemas"]["DriveLog"];
                 };
             };
-            /** @description not allowed */
-            403: {
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    deleteDriveLog: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description ID of the Drive Log.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. No content is returned. */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
+                content?: never;
             };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
         };
     };
     updateDriveLog: {
@@ -4711,6 +4566,10 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Drive Log.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
@@ -4722,7 +4581,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description search results matching criteria */
+            /** @description The updated Drive Log. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4731,56 +4590,29 @@ export interface operations {
                     "application/json": components["schemas"]["DriveLog"];
                 };
             };
-            /** @description bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     fetchDeletedDriveLogs: {
         parameters: {
             query?: {
                 /**
-                 * @description optionally, pass a datetime to filter entries modified after this instant
+                 * @description Only return entries modified after this instant.
                  * @example
                  */
-                last_modified?: components["schemas"]["DateTime"];
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                last_modified_after?: components["schemas"]["DateTime"];
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description optionally, pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description optionally, pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * last_modified
-                 *      * Id
-                 *     optionally, pass a property by which the returned entries will be sorted if you want a different order
-                 */
-                sort_by?: components["schemas"]["DeletedEntryWithMetadataSortColumn"];
+                /** @description Property to sort the entries by. */
+                sort_by?: components["schemas"]["DeletedEntrySortColumn"];
             };
             header?: never;
             path?: never;
@@ -4788,7 +4620,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
+            /** @description Page of deleted Drive Logs. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -4799,41 +4631,29 @@ export interface operations {
                     "application/json": components["schemas"]["DeletedEntryPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     fetchCars: {
         parameters: {
             query?: {
-                /** @description pass a String based on which the entries are filtered if it is contained in the properties name or plate */
+                /** @description Only return Cars whose name or plate contains this text. */
                 name_or_plate?: string;
                 /**
-                 * @description pass a boolean to filter entries based on whether the car is usable or not
+                 * @description Only return Cars that are usable (true) or not usable (false).
                  * @example
                  */
                 usable?: boolean;
                 /**
-                 * @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token
+                 * @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
                  * @example
                  */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * name
-                 *      * id
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["CarsSortColumn"];
             };
             header?: never;
@@ -4842,7 +4662,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Cars. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -4853,15 +4673,36 @@ export interface operations {
                     "application/json": components["schemas"]["CarsPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
+            400: components["responses"]["BadRequest"];
+        };
+    };
+    createCar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Car entity */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CarCreate"];
+            };
+        };
+        responses: {
+            /** @description The created Car. */
+            201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Error"];
+                    "application/json": components["schemas"]["Car"];
                 };
             };
+            400: components["responses"]["BadRequest"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     getCar: {
@@ -4869,13 +4710,17 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Car.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested Car. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4884,43 +4729,59 @@ export interface operations {
                     "application/json": components["schemas"]["Car"];
                 };
             };
-            /** @description not allowed */
-            403: {
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    updateCar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description ID of the Car.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
+                id: string;
+            };
+            cookie?: never;
+        };
+        /** @description Car entity */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CarUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated Car. */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Error"];
+                    "application/json": components["schemas"]["Car"];
                 };
             };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     fetchDriveLogCategories: {
         parameters: {
             query?: {
                 /**
-                 * @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token
+                 * @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
                  * @example
                  */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * name
-                 *      * id
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["DriveLogCategoriesSortColumn"];
             };
             header?: never;
@@ -4929,7 +4790,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Drive Log Categories. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -4940,15 +4801,7 @@ export interface operations {
                     "application/json": components["schemas"]["DriveLogCategoriesPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     getDriveLogCategory: {
@@ -4956,13 +4809,17 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Drive Log Category.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested Drive Log Category. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4971,24 +4828,8 @@ export interface operations {
                     "application/json": components["schemas"]["DriveLogCategory"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     getTrack: {
@@ -4996,14 +4837,17 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description drive log id */
+                /**
+                 * @description drive log id
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The Track of the Drive Log. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -5012,33 +4856,9 @@ export interface operations {
                     "application/json": components["schemas"]["Track"];
                 };
             };
-            /** @description bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     updateTrack: {
@@ -5046,7 +4866,10 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description drive log id */
+                /**
+                 * @description drive log id
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
@@ -5058,7 +4881,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description working time date span successfully updated */
+            /** @description The updated Working Time Date Span. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -5067,24 +4890,10 @@ export interface operations {
                     "application/json": components["schemas"]["Track"];
                 };
             };
-            /** @description bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            403: components["responses"]["Forbidden"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     createTrack: {
@@ -5092,7 +4901,10 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description drive log id */
+                /**
+                 * @description drive log id
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
@@ -5104,7 +4916,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description created Working Time entity */
+            /** @description The created Working Time. */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -5113,15 +4925,9 @@ export interface operations {
                     "application/json": components["schemas"]["Track"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     deleteTrack: {
@@ -5129,292 +4935,66 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description drive log id */
+                /**
+                 * @description drive log id
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Empty response indicating that delete was successful */
+            /** @description Deleted. No content is returned. */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-        };
-    };
-    fetchWorkingTimeRequests: {
-        parameters: {
-            query?: {
-                /**
-                 * @description pass a date to filter entries started from this day on
-                 * @example
-                 */
-                from?: components["schemas"]["LocalDate"];
-                /**
-                 * @description pass a date to filter entries started up to (including) this day
-                 * @example
-                 */
-                to?: components["schemas"]["LocalDate"];
-                /**
-                 * @description pass a datetime to filter entries modified after this instant
-                 * @example
-                 */
-                last_modified_after?: components["schemas"]["DateTime"];
-                /**
-                 * @description pass one or more ids of Working Time Types to restrict entries based on these types
-                 * @example
-                 */
-                working_time_types?: string[];
-                /**
-                 * @description pass one or more statuses to filter entries based on their status
-                 * @example
-                 */
-                statuses?: components["schemas"]["WorkingTimeRequestStatus"][];
-                /**
-                 * @description pass one or more user ids to restrict entries based on the user they are associated to
-                 * @example
-                 */
-                users?: string[];
-                /**
-                 * @description pass one or more user ids to restrict entries based on the substitute they are associated to
-                 * @example
-                 */
-                substitutes?: string[];
-                /**
-                 * @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token
-                 * @example
-                 */
-                page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
-                limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
-                sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * start
-                 *      * Id
-                 */
-                sort_by?: components["schemas"]["WorkingTimeRequestsSortColumn"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description search results matching criteria */
-            200: {
-                headers: {
-                    /** @description link to the next page including filter parameters and page token */
-                    Link?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["WorkingTimeRequestsPage"];
-                };
-            };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-        };
-    };
-    getWorkingTimeRequest: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description search results matching criteria */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["WorkingTimeRequest"];
-                };
-            };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-        };
-    };
-    deleteWorkingTimeRequest: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Empty response indicating that delete was successful */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-        };
-    };
-    fetchDeletedWorkingTimeRequests: {
-        parameters: {
-            query?: {
-                /**
-                 * @description optionally, pass a datetime to filter entries modified after this instant
-                 * @example
-                 */
-                last_modified?: components["schemas"]["DateTime"];
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
-                page_token?: string;
-                /** @description optionally, pass a value to change the maximum number of entries returned in a single page (at max 500). */
-                limit?: number;
-                /** @description optionally, pass a direction in which the entries returned will be sorted in */
-                sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * last_modified
-                 *      * Id
-                 *     optionally, pass a property by which the returned entries will be sorted if you want a different order
-                 */
-                sort_by?: components["schemas"]["DeletedEntrySortColumn"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    /** @description link to the next page including filter parameters and page token */
-                    Link?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DeletedEntryPage"];
-                };
-            };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
         };
     };
     fetchWorkingTimeDateSpans: {
         parameters: {
             query?: {
                 /**
-                 * @description pass a date to filter entries started from this day on
+                 * @description Only return Working Time Date Spans that end on or after this day.
                  * @example
                  */
                 from?: components["schemas"]["LocalDate"];
                 /**
-                 * @description pass a date to filter entries started up to (including) this day
+                 * @description Only return entries starting on or before this day.
                  * @example
                  */
                 to?: components["schemas"]["LocalDate"];
                 /**
-                 * @description pass a datetime to filter entries modified after this instant
+                 * @description Only return entries modified after this instant.
                  * @example
                  */
                 last_modified_after?: components["schemas"]["DateTime"];
                 /**
-                 * @description pass one or more ids of Working Time Types to restrict entries based on these types
+                 * @description Only return entries of these Working Time Types.
                  * @example
                  */
                 working_time_types?: string[];
                 /**
-                 * @description pass one or more user ids to restrict entries based on the user they are associated to
+                 * @description Only return entries belonging to these users.
                  * @example
                  */
                 users?: string[];
                 /**
-                 * @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token
+                 * @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
                  * @example
                  */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * start
-                 *      * Id
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["WorkingTimeDateSpansSortColumn"];
             };
             header?: never;
@@ -5423,7 +5003,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Working Time Date Spans. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -5434,15 +5014,7 @@ export interface operations {
                     "application/json": components["schemas"]["WorkingTimeDateSpanPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     createWorkingTimeDateSpan: {
@@ -5459,7 +5031,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description created Working Time entity */
+            /** @description The created Working Time. */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -5468,15 +5040,9 @@ export interface operations {
                     "application/json": components["schemas"]["WorkingTimeDateSpan"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     getWorkingTimeDateSpan: {
@@ -5484,13 +5050,17 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Working Time Date Span.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description corresponding working time date span entity for the given id */
+            /** @description The requested Working Time Date Span. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -5499,24 +5069,8 @@ export interface operations {
                     "application/json": components["schemas"]["WorkingTimeDateSpan"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     deleteWorkingTimeDateSpan: {
@@ -5524,37 +5078,26 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Working Time Date Span.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Empty response indicating that delete was successful */
+            /** @description Deleted. No content is returned. */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
         };
     };
     updateWorkingTimeDateSpan: {
@@ -5562,6 +5105,10 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Working Time Date Span.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
@@ -5573,7 +5120,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description working time date span successfully updated */
+            /** @description The updated Working Time Date Span. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -5589,56 +5136,29 @@ export interface operations {
                 };
                 content?: never;
             };
-            /** @description bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            422: components["responses"]["UnprocessableContent"];
         };
     };
     fetchDeletedWorkingTimeDateSpans: {
         parameters: {
             query?: {
                 /**
-                 * @description optionally, pass a datetime to filter entries modified after this instant
+                 * @description Only return entries modified after this instant.
                  * @example
                  */
-                last_modified?: components["schemas"]["DateTime"];
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                last_modified_after?: components["schemas"]["DateTime"];
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description optionally, pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description optionally, pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * last_modified
-                 *      * Id
-                 *     optionally, pass a property by which the returned entries will be sorted if you want a different order
-                 */
-                sort_by?: components["schemas"]["DeletedEntryWithMetadataSortColumn"];
+                /** @description Property to sort the entries by. */
+                sort_by?: components["schemas"]["DeletedEntrySortColumn"];
             };
             header?: never;
             path?: never;
@@ -5646,7 +5166,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful response */
+            /** @description Page of deleted Working Time Date Spans. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -5657,22 +5177,14 @@ export interface operations {
                     "application/json": components["schemas"]["DeletedEntryWithMetadataPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     fetchWorkingTimeTypes: {
         parameters: {
             query?: {
                 /**
-                 * @description filter by name
+                 * @description Only return entries whose name contains this text.
                  * @example
                  */
                 name?: string;
@@ -5702,7 +5214,7 @@ export interface operations {
                  */
                 edit_units?: components["schemas"]["DurationUnit"][];
                 /**
-                 * @description pass a boolean to filter entries based on whether they are archived or not
+                 * @description Only return entries that are archived (true) or not archived (false).
                  * @example
                  */
                 archived?: boolean;
@@ -5712,19 +5224,15 @@ export interface operations {
                  */
                 recording_modes?: components["schemas"]["RecordingModeUser"][];
                 /**
-                 * @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token.
+                 * @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
                  * @example
                  */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * name
-                 *      * Id
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["WorkingTimeTypesSortColumn"];
             };
             header?: never;
@@ -5733,7 +5241,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Working Time Types. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -5744,15 +5252,7 @@ export interface operations {
                     "application/json": components["schemas"]["WorkingTimeTypesPage"];
                 };
             };
-            /** @description bad input parameter */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
         };
     };
     getWorkingTimeType: {
@@ -5760,13 +5260,17 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Working Time Type.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested Working Time Type. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -5775,24 +5279,8 @@ export interface operations {
                     "application/json": components["schemas"]["WorkingTimeType"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     deleteWorkingTimeType: {
@@ -5800,53 +5288,38 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Working Time Type.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Empty response indicating that delete was successful */
+            /** @description Deleted. No content is returned. */
             204: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
         };
     };
     fetchHolidayCalendars: {
         parameters: {
             query?: {
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * Description
-                 *      * Id
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["HolidayCalendarsSortColumn"];
             };
             header?: never;
@@ -5855,7 +5328,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Holiday Calendars. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -5866,24 +5339,8 @@ export interface operations {
                     "application/json": components["schemas"]["HolidayCalendarsPage"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     getHolidayCalendar: {
@@ -5891,13 +5348,17 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /**
+                 * @description ID of the Holiday Calendar.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description The requested Holiday Calendar. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -5906,51 +5367,35 @@ export interface operations {
                     "application/json": components["schemas"]["HolidayCalendarPartial"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     fetchHolidays: {
         parameters: {
             query?: {
-                /** @description Token for retrieving the next page. This token is provided in the response of the previous page as next_page_token */
+                /** @description Token identifying the page to return. Take it from the 'next_page_token' field of the previous response. */
                 page_token?: string;
-                /** @description pass a value to change the maximum number of entries returned in a single page (at max 500). */
+                /** @description Maximum number of entries per page. Values above 500 are capped at 500. */
                 limit?: number;
-                /** @description pass a direction in which the entries returned will be sorted in */
+                /** @description Direction to sort the entries in. */
                 sort_direction?: components["schemas"]["SortDirection"];
-                /**
-                 * @description By default sorted by:
-                 *      * Description
-                 *      * Id
-                 */
+                /** @description Property to sort the entries by. */
                 sort_by?: components["schemas"]["HolidaysSortColumn"];
             };
             header?: never;
             path: {
+                /**
+                 * @description ID of the Holiday Calendar.
+                 * @example 074e7048-9097-11eb-a8b3-0242ac130003
+                 */
                 id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description search results matching criteria */
+            /** @description Page of Holidays in the Holiday Calendar. */
             200: {
                 headers: {
                     /** @description link to the next page including filter parameters and page token */
@@ -5961,24 +5406,8 @@ export interface operations {
                     "application/json": components["schemas"]["HolidaysPage"];
                 };
             };
-            /** @description not allowed */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
 }
