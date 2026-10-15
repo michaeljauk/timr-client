@@ -33,9 +33,9 @@ pnpm exec forge variables set --encrypt TIMR_CLIENT_ID <id>
 pnpm exec forge variables set --encrypt TIMR_CLIENT_SECRET <secret>
 
 # Optional: only set if you need to pin to a non-default REST host
-# (must include the version path segment, e.g. https://api.timr.com/v0.2/).
+# (must include the version path segment, e.g. https://api.timr.com/v1/).
 # Leave unset to let timr-sdk apply its default.
-# pnpm exec forge variables set TIMR_BASE_URL https://api.timr.com/v0.2/
+# pnpm exec forge variables set TIMR_BASE_URL https://api.timr.com/v1/
 
 # Deploy to the development environment and install on your Jira site.
 pnpm forge:deploy
