@@ -1,5 +1,12 @@
 # timr-sdk
 
+## [0.3.2](https://github.com/michaeljauk/timr-client/compare/timr-sdk-v0.3.1...timr-sdk-v0.3.2) (2026-10-15)
+
+
+### Bug Fixes
+
+* **sdk:** point default base url at timr api v1 ([8b6031f](https://github.com/michaeljauk/timr-client/commit/8b6031f692bcafc7b7a8bd8a34f63969ad6fe8a9))
+
 ## [0.3.1](https://github.com/michaeljauk/timr-client/compare/timr-sdk-v0.3.0...timr-sdk-v0.3.1) (2026-04-23)
 
 
