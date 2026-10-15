@@ -54,7 +54,7 @@ describe("createTimrClient (OAuth client_credentials)", () => {
     await timr.GET("/users");
 
     const tokenCall = fetch.mock.calls.find(([u]) => String(u instanceof Request ? u.url : u).includes("/oauth2/token"))!;
-    const apiCall = fetch.mock.calls.find(([u]) => String(u instanceof Request ? u.url : u).includes("/v0.2/"))!;
+    const apiCall = fetch.mock.calls.find(([u]) => String(u instanceof Request ? u.url : u).includes("/v1/"))!;
     expect(tokenCall).toBeDefined();
     expect((apiCall[0] as Request).headers.get("authorization")).toBe(
       "Bearer exchanged_tok",
