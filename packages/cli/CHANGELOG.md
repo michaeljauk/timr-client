@@ -1,5 +1,12 @@
 # timr-cli
 
+## [0.3.2](https://github.com/michaeljauk/timr-client/compare/timr-cli-v0.3.1...timr-cli-v0.3.2) (2026-10-15)
+
+
+### Miscellaneous Chores
+
+* **timr-cli:** Synchronize timr-client versions
+
 ## [0.3.1](https://github.com/michaeljauk/timr-client/compare/timr-cli-v0.3.0...timr-cli-v0.3.1) (2026-04-23)
 
 
