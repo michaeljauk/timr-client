@@ -1,27 +1,30 @@
 # timr OpenAPI spec
 
-The timr API is published by [troii Software GmbH](https://www.troii.com) on SwaggerHub. This repo pins a specific version of that spec in [`openapi.json`](../openapi.json) and generates TypeScript types from it.
+The timr REST API is published by [troii Software GmbH](https://www.troii.com) in the timr Developer Portal. This repo pins a specific version of that spec in [`openapi.json`](../openapi.json) and generates TypeScript types from it.
 
 ## Canonical sources
 
 | What | Where |
 |------|-------|
-| Interactive API docs | <https://app.swaggerhub.com/apis-docs/troii/timr/0.2.13?view=elementsDocs> |
-| Current pinned spec (raw JSON) | <https://api.swaggerhub.com/apis/troii/timr/0.2.14> |
-| All published versions | <https://app.swaggerhub.com/apis/troii/timr> |
-| SwaggerHub API metadata | <https://api.swaggerhub.com/apis/troii/timr> |
+| Interactive API docs | <https://developer.timr.com/> |
+| Current spec (raw YAML) | <https://developer.timr.com/openapi.yaml> |
+| Announcement of REST API 1.0 | <https://support.timr.com/hc/en-us/articles/5933193738012-timr-API-Schnittstelle> |
+
+The portal serves only the current version. Older `0.2.x` specs remain on SwaggerHub (`troii/timr`), but the `/v0.2/` API returns 404 since October 2026.
 
 ## Currently pinned
 
-- **Version:** `0.2.14`
+- **Version:** `1.0.0`
 - **OpenAPI:** `3.0.0`
-- **Base URL:** `https://api.timr.com/v0.2/`
+- **Base URL:** `https://api.timr.com/v1/`
 - **Auth:** Bearer token (`Authorization: Bearer <token>`)
-- **Paths:** 48 across 13 resource groups (plus their `...:deleted` read-only variants)
+- **Paths:** 46 across 12 resource groups (plus their `...:deleted` read-only variants)
 
 ### Resource groups covered by the spec
 
-`cars`, `drive-log-categories`, `drive-logs`, `holiday-calendars`, `project-times`, `tasks`, `teams`, `users`, `work-schedule-models`, `working-time-date-spans`, `working-time-requests`, `working-time-types`, `working-times`, plus the soft-deleted variants (`...:deleted`).
+`cars`, `drive-log-categories`, `drive-logs`, `holiday-calendars`, `project-times`, `tasks`, `teams`, `users`, `work-schedule-models`, `working-time-date-spans`, `working-time-types`, `working-times`, plus the soft-deleted variants (`...:deleted`).
+
+`working-time-requests` existed in `0.2.x` and is not part of `1.0.0`.
 
 ### CLI coverage
 
@@ -29,15 +32,15 @@ Every resource in the spec gets a generated subcommand — `packages/cli/scripts
 
 ## Updating the spec
 
-When troii publishes a new version:
+When troii publishes a new version in the Developer Portal:
 
 ```bash
-# 1. Check the latest version number
-curl -s https://api.swaggerhub.com/apis/troii/timr | jq '.apis[-1].properties[] | select(.type=="X-Version").value'
+# 1. Download the current spec and check its version
+curl -s https://developer.timr.com/openapi.yaml -o openapi.yaml
+grep -m1 "^  version:" openapi.yaml
 
-# 2. Download it
-NEW_VERSION=0.2.15
-curl -s "https://api.swaggerhub.com/apis/troii/timr/$NEW_VERSION" -o openapi.json
+# 2. Convert it to JSON (the CLI generator and the MCP server read JSON)
+npx -y js-yaml@4.1.1 openapi.yaml > openapi.json && rm openapi.yaml
 
 # 3. Regenerate types
 pnpm generate
@@ -52,7 +55,7 @@ pnpm typecheck && pnpm build && pnpm test
 #    - docs/spec.md            (this file)
 
 # 6. Commit with a conventional-commit subject so Release Please picks it up
-#    e.g. feat(sdk): bump spec to 0.2.15
+#    e.g. feat(sdk): bump spec to 1.1.0
 ```
 
 Ship the spec bump as its own PR so downstream consumers can diff it cleanly. Mix unrelated changes into separate PRs.

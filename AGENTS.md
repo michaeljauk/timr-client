@@ -36,12 +36,13 @@ Requires Node 20+ and pnpm 10+. The repo is ESM-only.
 
 ## Spec workflow
 
-The canonical timr API reference is <https://app.swaggerhub.com/apis-docs/troii/timr/0.2.13?view=elementsDocs>. The current pinned version in this repo is in [`openapi.json`](./openapi.json).
+The canonical timr API reference is the timr Developer Portal at <https://developer.timr.com/>. The current pinned version in this repo is in [`openapi.json`](./openapi.json).
 
 See [`docs/spec.md`](./docs/spec.md) for the full update procedure. Short version:
 
 ```bash
-curl -s "https://api.swaggerhub.com/apis/troii/timr/<version>" -o openapi.json
+curl -s https://developer.timr.com/openapi.yaml -o openapi.yaml
+npx -y js-yaml@4.1.1 openapi.yaml > openapi.json && rm openapi.yaml
 pnpm generate
 pnpm typecheck && pnpm build && pnpm test
 ```

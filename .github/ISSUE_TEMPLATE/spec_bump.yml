@@ -6,14 +6,14 @@ body:
     id: new_version
     attributes:
       label: New spec version
-      placeholder: "0.2.15"
+      placeholder: "1.1.0"
     validations:
       required: true
   - type: input
     id: current_version
     attributes:
       label: Currently pinned version
-      placeholder: "0.2.14"
+      placeholder: "1.0.0"
     validations:
       required: true
   - type: textarea
