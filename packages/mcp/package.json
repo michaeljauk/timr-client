@@ -38,6 +38,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@cfworker/json-schema": "^4.1.1",
     "@cloudflare/codemode": "^0.3.4",
     "@modelcontextprotocol/sdk": "^1.25.0",
     "timr-sdk": "workspace:*",
