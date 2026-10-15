@@ -1,5 +1,16 @@
 # timr-sdk
 
+## [1.0.0](https://github.com/michaeljauk/timr-client/compare/timr-sdk-v0.3.3...timr-sdk-v1.0.0) (2026-10-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **sdk:** the working-time-requests paths are gone from the spec and the types.
+
+### Features
+
+* **sdk:** bump spec to timr rest api 1.0.0 ([9bce521](https://github.com/michaeljauk/timr-client/commit/9bce521dc0df888e340a586ba9d6f0cc15cd0c72))
+
 ## [0.3.3](https://github.com/michaeljauk/timr-client/compare/timr-sdk-v0.3.2...timr-sdk-v0.3.3) (2026-10-15)
 
 

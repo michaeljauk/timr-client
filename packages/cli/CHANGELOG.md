@@ -1,5 +1,21 @@
 # timr-cli
 
+## [1.0.0](https://github.com/michaeljauk/timr-client/compare/timr-cli-v0.3.3...timr-cli-v1.0.0) (2026-10-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **cli:** the working-time-requests command is removed, because timr dropped the endpoint.
+
+### Features
+
+* **cli:** regenerate commands for spec 1.0.0 ([0c7a826](https://github.com/michaeljauk/timr-client/commit/0c7a826d4a22ecedd08448a45f7a3fa7159eaf8f))
+
+
+### Bug Fixes
+
+* **cli:** report the package version in --version ([a6ea0af](https://github.com/michaeljauk/timr-client/commit/a6ea0af25b4cc750ce90026af1e6a274b591d5ac))
+
 ## [0.3.3](https://github.com/michaeljauk/timr-client/compare/timr-cli-v0.3.2...timr-cli-v0.3.3) (2026-10-15)
 
 
