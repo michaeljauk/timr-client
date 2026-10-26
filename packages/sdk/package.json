@@ -1,6 +1,6 @@
 {
   "name": "timr-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Community TypeScript SDK for the timr time-tracking API",
   "keywords": [
     "timr",

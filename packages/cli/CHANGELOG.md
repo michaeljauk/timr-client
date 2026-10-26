@@ -1,5 +1,12 @@
 # timr-cli
 
+## [1.0.1](https://github.com/michaeljauk/timr-client/compare/timr-cli-v1.0.0...timr-cli-v1.0.1) (2026-10-26)
+
+
+### Bug Fixes
+
+* **cli:** stop printing usage after every command ([#34](https://github.com/michaeljauk/timr-client/issues/34)) ([f6e6c59](https://github.com/michaeljauk/timr-client/commit/f6e6c59ae06b2326749eebf8e92ea6259ea3f6c9))
+
 ## [1.0.0](https://github.com/michaeljauk/timr-client/compare/timr-cli-v0.3.3...timr-cli-v1.0.0) (2026-10-15)
 
 
