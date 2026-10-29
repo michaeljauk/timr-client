@@ -117,7 +117,7 @@ The [CLI README](./packages/cli/README.md) lists the commands.
 
 Use the option that your agent supports:
 
-- **Claude Code skill.** `timr-cli` contains a skill. A global install (`npm install -g timr-cli`) copies it to `~/.claude/skills/timr/`. In Claude Code, run `/timr` or ask in plain words. Other agents that read the same `SKILL.md` format can use it too.
+- **Claude Code skill.** `timr-cli` contains a skill. `timr skill install` copies it to `~/.claude/skills/timr/`. In Claude Code, run `/timr` or ask in plain words. Other agents that read the same `SKILL.md` format can use it too.
 - **MCP server.** `timr-mcp` gives access to the full API through two Code Mode tools (`search`, `execute`) over stdio. Add it with `claude mcp add --scope user timr npx -- -y timr-mcp`, or point any MCP client at `npx -y timr-mcp`. The [MCP README](./packages/mcp/README.md) covers auth and examples.
 
 ---

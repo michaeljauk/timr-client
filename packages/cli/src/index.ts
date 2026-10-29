@@ -1,5 +1,6 @@
 import { defineCommand, runMain } from "citty";
 import { authCommand } from "./commands/auth.js";
+import { skillCommand } from "./commands/skill.js";
 import { generatedSubCommands } from "./commands/generated/_root.js";
 
 declare const __PKG_VERSION__: string;
@@ -14,6 +15,7 @@ const main = defineCommand({
   },
   subCommands: {
     auth: authCommand,
+    skill: skillCommand,
     ...generatedSubCommands,
   },
 });

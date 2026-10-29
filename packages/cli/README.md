@@ -24,6 +24,9 @@ pnpm dlx timr-cli --help
 pnpm add -g timr-cli
 npm install -g timr-cli
 bun add -g timr-cli
+
+# Optional: Claude Code skill
+timr skill install
 ```
 
 Requires Node 20+.
@@ -153,7 +156,17 @@ Workflow:
 
 ## Claude Code skill
 
-A [Claude Code](https://claude.ai/code) skill is bundled and auto-installs to `~/.claude/skills/timr/SKILL.md` on `npm install -g timr-cli`. Once installed, you can ask Claude things like:
+A [Claude Code](https://claude.ai/code) skill is bundled: the hand-written `SKILL.md` and the generated `SCHEMA.md`. Install it with:
+
+```bash
+timr skill install
+```
+
+The command copies both files to `$CLAUDE_CONFIG_DIR/skills/timr/`, default `~/.claude/skills/timr/`. Run it again after an update. `--dir <path>` picks another target. If the target is a symlink, for example to a checkout of this repo, the command copies nothing.
+
+A global install also runs a postinstall script that copies the skill. npm 11.19 and later and pnpm skip install scripts by default, so do not rely on it.
+
+Once installed, you can ask Claude things like:
 
 - "How many hours did I track last month?"
 - "Break down my April hours by task"
