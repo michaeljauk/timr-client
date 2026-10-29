@@ -17,7 +17,7 @@ Devs hit **Start** on a Jira issue → running timr project-time entry. Hit **St
 
 | Topic | Decision |
 |---|---|
-| Distribution | Private install (one Jira Cloud site), not Marketplace |
+| Distribution | Private install on one Jira Cloud site, not Marketplace |
 | Logging UX | Start/Stop timer on issue panel (Clockify/Everhour pattern). No Jira worklog mirroring in MVP. |
 | Mapping scope | Project-level defaults + per-issue override |
 | Mapping permissions | Jira project admins only (Forge `PROJECT_ADMIN` condition) |
