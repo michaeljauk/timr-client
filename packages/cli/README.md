@@ -162,7 +162,7 @@ A [Claude Code](https://claude.ai/code) skill is bundled: the hand-written `SKIL
 timr skill install
 ```
 
-The command copies both files to `$CLAUDE_CONFIG_DIR/skills/timr/`, default `~/.claude/skills/timr/`. Run it again after an update. `--dir <path>` picks another target. If the target is a symlink, for example to a checkout of this repo, the command copies nothing.
+The command copies both files to `$CLAUDE_CONFIG_DIR/skills/timr/`, default `~/.claude/skills/timr/`. Run it again after an update. `--dir <path>` picks another target. If the target folder or a file in it is a symlink, for example to a checkout of this repo, the command copies nothing. `CLAUDE_CONFIG_DIR` must be an absolute path.
 
 A global install also runs a postinstall script that copies the skill. npm 11.19 and later and pnpm skip install scripts by default, so do not rely on it.
 
