@@ -79,7 +79,7 @@ When you add or change a generated command's shape, update `packages/cli/skills/
 
 ## Claude Code skill
 
-`packages/cli/skills/timr/SKILL.md` and the generated `SCHEMA.md` are bundled into the published `timr-cli` tarball. `timr skill install` copies both to `$CLAUDE_CONFIG_DIR/skills/timr/` (default `~/.claude/skills/timr/`). `packages/cli/scripts/postinstall.js` runs that command on `npm install -g`, but npm 11.19+ and pnpm skip install scripts by default.
+`packages/cli/skills/timr/SKILL.md` and the generated `SCHEMA.md` are bundled into the published `timr-cli` tarball. `timr skill install` copies both to `$CLAUDE_CONFIG_DIR/skills/timr/` (default `~/.claude/skills/timr/`). `packages/cli/scripts/postinstall.js` runs that command on `npm install -g`, but npm 12+ and pnpm 10+ block install scripts by default.
 
 - Keep the skill focused on *workflows* (questions to answer, recipes with `jq`), not an endpoint-by-endpoint dump.
 - Update the skill whenever you add or rename a CLI command, change flag names, or add env vars.
