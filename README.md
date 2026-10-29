@@ -38,7 +38,6 @@ Typical use cases:
 | [`timr-sdk`](./packages/sdk) | [![npm](https://img.shields.io/npm/v/timr-sdk.svg)](https://www.npmjs.com/package/timr-sdk) | Typed SDK with built-in OAuth (client_credentials) or static bearer token |
 | [`timr-cli`](./packages/cli) | [![npm](https://img.shields.io/npm/v/timr-cli.svg)](https://www.npmjs.com/package/timr-cli) | Command-line interface built on the SDK |
 | [`timr-mcp`](./packages/mcp) | [![npm](https://img.shields.io/npm/v/timr-mcp.svg)](https://www.npmjs.com/package/timr-mcp) | MCP (stdio) server with Cloudflare-style Code Mode: two tools (`search`, `execute`) instead of one tool for each of the 82 endpoints |
-| [`jira-forge`](./packages/jira-forge) | _private_ | Atlassian Forge app that syncs developer time from Jira issues to timr. Private install only, not on npm or the Atlassian Marketplace. |
 
 All published packages use timr REST API version **1.0.0**, pinned in [`openapi.json`](./openapi.json).
 
