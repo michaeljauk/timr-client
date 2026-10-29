@@ -1,6 +1,6 @@
 # timr-client
 
-A fully typed TypeScript SDK, CLI, and MCP server for the [timr](https://timr.com) time-tracking API. Unofficial, community-maintained.
+A typed TypeScript SDK, CLI, and MCP server for the [timr](https://timr.com) time-tracking API. Unofficial, community-maintained.
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/michaeljauk)
 
@@ -18,18 +18,18 @@ A fully typed TypeScript SDK, CLI, and MCP server for the [timr](https://timr.co
 
 ## Why
 
-The [timr API](https://developer.timr.com/) ships a clean OpenAPI spec but no first-party TypeScript client. This repo fills that gap:
+The [timr API](https://developer.timr.com/) has an OpenAPI spec, but timr ships no TypeScript client. This repo adds three packages:
 
-- **`timr-sdk`** - fully typed client generated from the spec. One runtime dependency ([`openapi-fetch`](https://openapi-ts.dev/openapi-fetch/)). Tree-shakeable, ESM, works in Node and edge runtimes.
-- **`timr-cli`** - scriptable wrapper for common workflows. Prints JSON so you can pipe through `jq`.
-- **`timr-mcp`** - Model Context Protocol (stdio) server for AI agents. Uses Cloudflare-style [Code Mode](https://blog.cloudflare.com/dynamic-workers/) — agents write JavaScript against the spec instead of calling one tool per endpoint.
+- **`timr-sdk`**: a typed client, generated from the spec. It has one runtime dependency ([`openapi-fetch`](https://openapi-ts.dev/openapi-fetch/)). It is tree-shakeable ESM and runs in Node and edge runtimes.
+- **`timr-cli`**: a command-line wrapper for scripts. It prints JSON, so you can pipe the output through `jq`.
+- **`timr-mcp`**: a Model Context Protocol (stdio) server for AI agents. It uses Cloudflare-style [Code Mode](https://blog.cloudflare.com/dynamic-workers/): the agent writes JavaScript against the spec instead of calling one tool per endpoint.
 
 Typical use cases:
 
-- Reconcile tracked hours against an issue tracker (Jira, Linear, GitHub Issues)
-- Export month-end project times for invoicing or controlling
-- Audit which team members haven't booked time in a given period
-- Feed a dashboard or BI tool with live data
+- Compare tracked hours with an issue tracker (Jira, Linear, GitHub Issues)
+- Export project times at month end for invoices or controlling
+- Find team members who booked no time in a period
+- Send live data to a dashboard or BI tool
 
 ## Packages
 
@@ -37,21 +37,21 @@ Typical use cases:
 |---------|---------|-------------|
 | [`timr-sdk`](./packages/sdk) | [![npm](https://img.shields.io/npm/v/timr-sdk.svg)](https://www.npmjs.com/package/timr-sdk) | Typed SDK with built-in OAuth (client_credentials) or static bearer token |
 | [`timr-cli`](./packages/cli) | [![npm](https://img.shields.io/npm/v/timr-cli.svg)](https://www.npmjs.com/package/timr-cli) | Command-line interface built on the SDK |
-| [`timr-mcp`](./packages/mcp) | [![npm](https://img.shields.io/npm/v/timr-mcp.svg)](https://www.npmjs.com/package/timr-mcp) | MCP (stdio) server using Cloudflare-style Code Mode — two tools (`search`, `execute`) instead of 80+ per-endpoint tools |
+| [`timr-mcp`](./packages/mcp) | [![npm](https://img.shields.io/npm/v/timr-mcp.svg)](https://www.npmjs.com/package/timr-mcp) | MCP (stdio) server with Cloudflare-style Code Mode: two tools (`search`, `execute`) instead of one tool for each of the 82 endpoints |
 | [`jira-forge`](./packages/jira-forge) | _private_ | Atlassian Forge app that syncs developer time from Jira issues to timr. Private install only, not on npm or the Atlassian Marketplace. |
 
-All published packages track timr REST API version **1.0.0** (pinned in [`openapi.json`](./openapi.json)).
+All published packages use timr REST API version **1.0.0**, pinned in [`openapi.json`](./openapi.json).
 
 ## API reference
 
-The timr API is documented by troii in the timr Developer Portal. Use it as the authoritative reference for endpoints, field semantics, and error codes:
+troii documents the timr API in the timr Developer Portal. It is the reference for endpoints, field semantics, and error codes:
 
 - **Interactive docs:** <https://developer.timr.com/>
 - **Raw OpenAPI spec (YAML):** <https://developer.timr.com/openapi.yaml>
 
-The SwaggerHub entry `troii/timr` stops at the legacy `0.2.x` API and is no longer the source.
+The SwaggerHub entry `troii/timr` stops at the old `0.2.x` API. Do not use it.
 
-See [`docs/spec.md`](./docs/spec.md) for how the spec is sourced, pinned, and bumped in this repo.
+[`docs/spec.md`](./docs/spec.md) tells where the spec comes from and how this repo pins and updates it.
 
 ---
 
@@ -84,14 +84,14 @@ const { data } = await timr.GET("/project-times", {
 });
 
 for (const pt of data?.data ?? []) {
-  // every field is typed - hover in your editor to see the real shape
+  // every field is typed: hover in your editor to see the shape
   console.log(pt.id, pt.duration);
 }
 ```
 
-Every request, response, and query parameter is typed - hover any field in your editor to see what the API returns.
+The SDK types every request, response, and query parameter. Hover a field in your editor to see what the API returns.
 
-See the [SDK README](./packages/sdk/README.md) for auth options, custom fetch, and error handling.
+The [SDK README](./packages/sdk/README.md) covers auth options, custom fetch, and error handling.
 
 ## CLI quickstart
 
@@ -110,22 +110,22 @@ timr project-times list --start-from 2026-04-01 --start-to 2026-04-30
 timr tasks list --name "Website" --bookable
 ```
 
-Every list endpoint returns `{ data: T[], next_page_token: string | null }`. Field names for `T` are documented in the auto-generated [`packages/cli/skills/timr/SCHEMA.md`](./packages/cli/skills/timr/SCHEMA.md) - or inspect live with `jq '.data[0] | keys'`.
+Every list endpoint returns `{ data: T[], next_page_token: string | null }`. The generated [`packages/cli/skills/timr/SCHEMA.md`](./packages/cli/skills/timr/SCHEMA.md) lists the fields of `T`. To see them on live data, pipe the output through `jq '.data[0] | keys'`.
 
-See the [CLI README](./packages/cli/README.md) for commands and the [SDK README](./packages/sdk/README.md) for TypeScript usage.
+The [CLI README](./packages/cli/README.md) lists the commands.
 
 ### AI agent integration
 
-Two options, pick whichever your agent supports:
+Use the option that your agent supports:
 
-- **Claude Code skill** — ships inside `timr-cli` and auto-installs to `~/.claude/skills/timr/` on `npm install -g timr-cli`. Use `/timr` (or just ask naturally) in any Claude Code session. Also usable with other runners that honor the same `SKILL.md` format.
-- **MCP server** — `timr-mcp` exposes the full API via two Code-Mode tools (`search`, `execute`) over stdio. Add with `claude mcp add --scope user timr npx -- -y timr-mcp`, or point any MCP client at `npx -y timr-mcp`. See the [MCP README](./packages/mcp/README.md) for auth and examples.
+- **Claude Code skill.** `timr-cli` contains a skill. A global install (`npm install -g timr-cli`) copies it to `~/.claude/skills/timr/`. In Claude Code, run `/timr` or ask in plain words. Other agents that read the same `SKILL.md` format can use it too.
+- **MCP server.** `timr-mcp` gives access to the full API through two Code Mode tools (`search`, `execute`) over stdio. Add it with `claude mcp add --scope user timr npx -- -y timr-mcp`, or point any MCP client at `npx -y timr-mcp`. The [MCP README](./packages/mcp/README.md) covers auth and examples.
 
 ---
 
-## Reconciling against an issue tracker
+## Comparing hours with an issue tracker
 
-The typical workflow the CLI was built for:
+The CLI was built for this workflow:
 
 ```bash
 # 1. pull all tracked hours for a period
@@ -134,11 +134,11 @@ timr project-times list --start-from 2026-04-01 --start-to 2026-04-30 > timr.jso
 # 2. pull issues from your tracker (Jira, Linear, ...)
 acli jira workitem search --jql "updated >= 2026-04-01" --output json > issues.json
 
-# 3. diff them with your favourite tool
+# 3. compare them with your own rules
 jq -s 'your rules here' timr.json issues.json
 ```
 
-A ready-made reconciliation tool is not part of this repo on purpose - this SDK stays tracker-agnostic. Build your own, or watch for a companion repo.
+This repo has no comparison tool, so the SDK stays independent of any tracker. Build your own rules on top of the JSON output.
 
 ## Development
 
@@ -150,14 +150,14 @@ pnpm test
 pnpm typecheck
 ```
 
-Requires Node 20+ and pnpm 10+. Turborepo orchestrates workspace tasks.
+You need Node 20 or later and pnpm 10 or later. Turborepo runs the workspace tasks.
 
 ## Testing the CLI locally
 
-Before publishing to npm you can run the CLI straight from the workspace.
+You can run the CLI from the workspace, without a release to npm.
 
 ```bash
-# 1. install + build the workspace
+# 1. install and build the workspace
 pnpm install
 pnpm build
 
@@ -165,7 +165,7 @@ pnpm build
 node packages/cli/dist/index.js --help
 ```
 
-For convenience, alias it for the session:
+To keep the commands short, set an alias for the session:
 
 ```bash
 alias timr-dev="node $(pwd)/packages/cli/dist/index.js"
@@ -176,15 +176,15 @@ timr-dev users list --limit 5
 timr-dev project-times list --start-from 2026-04-01 --start-to 2026-04-30 | jq '.data | length'
 ```
 
-Or symlink it globally:
+Or link it globally:
 
 ```bash
 cd packages/cli && pnpm link --global     # exposes `timr` on your PATH
 timr --help
-pnpm unlink --global timr-cli             # undo when you're done
+pnpm unlink --global timr-cli             # remove the link when you are done
 ```
 
-Hot-reload during development (rebuilds on every file change):
+To rebuild on every file change:
 
 ```bash
 pnpm --filter timr-cli dev
@@ -192,7 +192,7 @@ pnpm --filter timr-cli dev
 node packages/cli/dist/index.js --help
 ```
 
-Regenerate CLI commands after editing `openapi.json`:
+If you edit `openapi.json`, generate the CLI commands again:
 
 ```bash
 pnpm --filter timr-cli generate && pnpm build
@@ -200,36 +200,36 @@ pnpm --filter timr-cli generate && pnpm build
 
 ### Authentication for local runs
 
-The CLI auth flow is identical to the published version:
+Local runs use the same auth flow as the published CLI:
 
 1. Create an OAuth client in timr (`Settings > API Access`, grant `client_credentials`, scope `timrclient openid`).
-2. `timr-dev auth login` and paste the `client_id` + `client_secret`. The CLI does a token exchange before saving, so a wrong secret fails fast.
-3. Subsequent commands reuse the stored credentials and cache the access token in memory.
+2. Run `timr-dev auth login` and paste the `client_id` and `client_secret`. The CLI requests a token before it saves them, so a wrong secret fails at once.
+3. Later commands use the stored credentials and keep the access token in memory.
 
-Shortcuts if you don't want to store credentials:
+If you do not want to store credentials:
 
 ```bash
-# one-shot static bearer
+# static bearer token for one command
 timr-dev --token "eyJ..." users list
 
-# one-shot OAuth via env
+# OAuth from environment variables for one command
 TIMR_CLIENT_ID=... TIMR_CLIENT_SECRET=... timr-dev users list
 
-# target staging or a self-hosted instance
-timr-dev --base-url https://api.staging.timr.com/v0.2/ users list
+# send requests to a different API host (default: https://api.timr.com/v1/)
+timr-dev --base-url https://<host>/v1/ users list
 ```
 
 ### Smoke test checklist
 
 ```bash
 timr-dev auth status                                    # exits 2 until login
-timr-dev auth login && timr-dev auth status             # should succeed
-timr-dev --help                                         # 13 resources + auth
-timr-dev users list --limit 1 | jq '.data[0] | keys'   # proves a real API call
-timr-dev cars list --help                               # proves generated flags
+timr-dev auth login && timr-dev auth status             # succeeds
+timr-dev --help                                         # 12 resources plus auth
+timr-dev users list --limit 1 | jq '.data[0] | keys'   # makes a real API call
+timr-dev cars list --help                               # shows the generated flags
 ```
 
-If any of those fail, re-run `pnpm build` and check `pnpm -r typecheck`.
+If one of these fails, run `pnpm build` again, then `pnpm -r typecheck`.
 
 ### Updating the spec
 
@@ -240,7 +240,7 @@ pnpm generate
 pnpm build
 ```
 
-The release is driven by the commit messages — `feat(sdk): bump spec to 1.1.0` is enough; Release Please picks it up on the next merge to `main`.
+Commit messages drive the release. `feat(sdk): bump spec to 1.1.0` is enough: Release Please picks it up on the next merge to `main`.
 
 ### Project layout
 
@@ -277,12 +277,12 @@ timr-client/
 
 ## Contributing
 
-Issues and pull requests are welcome. A few ground rules:
+Issues and pull requests are welcome. The rules:
 
-- **Conventional Commits drive releases** - `feat:` bumps minor, `fix:` patches, `feat!:` majors (via Release Please). Enforced locally by a `commit-msg` husky hook running commitlint.
-- **Generated code stays generated** - don't hand-edit `packages/sdk/src/generated.ts`.
-- **Spec drift should be a PR on its own** - bump `openapi.json`, regenerate, and ship that alone so downstream consumers see the diff clearly.
-- Lowercase commit subjects.
+- **Conventional Commits drive releases.** Release Please makes `feat:` a minor release, `fix:` a patch, and `feat!:` a major. A husky `commit-msg` hook runs commitlint locally.
+- **Do not edit generated code by hand**, for example `packages/sdk/src/generated.ts`. Change the spec or the generator instead.
+- **A spec update gets its own PR.** Bump `openapi.json`, generate again, and ship only that, so consumers see the spec diff on its own.
+- Write commit subjects in lowercase.
 
 ## Disclaimer
 
@@ -290,7 +290,8 @@ Unofficial and not affiliated with [troii Software GmbH](https://www.troii.com),
 
 ## Support
 
-Built by [Michael Jauk](https://github.com/michaeljauk). If this saves you time, consider [buying me a coffee](https://buymeacoffee.com/michaeljauk).
+Built by [Michael Jauk](https://github.com/michaeljauk). If this saves you time, consider
+[buying me a coffee](https://buymeacoffee.com/michaeljauk).
 
 ## License
 
