@@ -2,7 +2,7 @@
 
 Jira Cloud Forge app that syncs developer time from Jira issues to timr.
 
-Private install for netcero. Not published to npm, not listed on the Atlassian
+Private install only. Not published to npm, not listed on the Atlassian
 Marketplace.
 
 ## Status
@@ -17,7 +17,7 @@ Plan: `docs/jira-forge-plan.md` and `~/.claude/plans/composed-noodling-harp.md`.
 
 ## Bootstrap (one-time)
 
-You need the Atlassian Forge CLI authenticated with the netcero developer site.
+You need the Atlassian Forge CLI, authenticated with your Jira developer site.
 
 ```bash
 cd packages/jira-forge
@@ -54,16 +54,17 @@ pnpm forge:tunnel               # live function reload against the deployed UI
 ## QA
 
 `scripts/qa.sh` is a gstack smoke that opens a Jira dev-site issue, enters the
-Forge iframe, and screenshots the panel. Requires a pre-warmed session:
+Forge iframe, and screenshots the panel. It needs a saved browser session and
+the URL of a test issue on your dev site:
 
 ```bash
 # One-time: log in manually, save cookies.
-$B handoff https://netcero-dev.atlassian.net
+$B handoff https://<your-site>.atlassian.net
 # …log in with SSO in the visible browser, then:
-$B state save netcero-dev-forge
+$B state save jira-forge-dev
 
-# Subsequent runs reuse the saved state:
-pnpm qa
+# Later runs reuse the saved state:
+JIRA_ISSUE_URL=https://<your-site>.atlassian.net/browse/<KEY>-1 pnpm qa
 ```
 
 CI-runnable E2E coverage lives in `e2e/` (Playwright with `storageState`) from

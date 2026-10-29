@@ -17,7 +17,7 @@ Devs hit **Start** on a Jira issue → running timr project-time entry. Hit **St
 
 | Topic | Decision |
 |---|---|
-| Distribution | Private install (netcero Jira Cloud), not Marketplace |
+| Distribution | Private install on one Jira Cloud site, not Marketplace |
 | Logging UX | Start/Stop timer on issue panel (Clockify/Everhour pattern). No Jira worklog mirroring in MVP. |
 | Mapping scope | Project-level defaults + per-issue override |
 | Mapping permissions | Jira project admins only (Forge `PROJECT_ADMIN` condition) |
@@ -144,7 +144,7 @@ packages/jira-forge/
 ### M1 — walking skeleton (~1 day)
 - Scaffold `packages/jira-forge` with manifest, empty resolver, one `jira:issuePanel` that renders "Hello {user} from {issueKey}".
 - Wire `timr-sdk` into a single resolver that calls `GET /tasks` and prints the first 5 in the panel.
-- Set up Forge dev tunnel, deploy to a dev site, verify install on netcero test project.
+- Set up Forge dev tunnel, deploy to a dev site, verify install on a test project.
 - CI: add `jira-forge` to root turbo pipeline (build + typecheck). Skip `forge lint` in CI for now — requires Atlassian auth.
 
 **Exit criteria:** panel renders on a Jira issue, shows live timr tasks.
