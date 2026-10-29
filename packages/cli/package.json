@@ -1,6 +1,6 @@
 {
   "name": "timr-cli",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Command-line interface for the timr time-tracking API",
   "keywords": [
     "timr",

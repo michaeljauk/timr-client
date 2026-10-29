@@ -1,5 +1,18 @@
 # timr-cli
 
+## [1.1.0](https://github.com/michaeljauk/timr-client/compare/timr-cli-v1.0.1...timr-cli-v1.1.0) (2026-10-29)
+
+
+### Features
+
+* **cli:** add `skill install` command ([5dd22b8](https://github.com/michaeljauk/timr-client/commit/5dd22b82bcf09b8c4ab4c3d5355daabe1c749ecc))
+
+
+### Bug Fixes
+
+* **cli:** never write through a symlinked skill file ([ca0f532](https://github.com/michaeljauk/timr-client/commit/ca0f532852899b590acab77093f1909e74709351))
+* **cli:** run `skill install` from the postinstall script ([f295a23](https://github.com/michaeljauk/timr-client/commit/f295a231f54acc8eba122584359fe61c9c78eb03))
+
 ## [1.0.1](https://github.com/michaeljauk/timr-client/compare/timr-cli-v1.0.0...timr-cli-v1.0.1) (2026-10-26)
 
 
