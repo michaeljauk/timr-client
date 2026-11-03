@@ -38,11 +38,11 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@cfworker/json-schema": "^4.1.1",
-    "@cloudflare/codemode": "^0.3.4",
-    "@modelcontextprotocol/sdk": "^1.25.0",
+    "@cfworker/json-schema": "^4.1.4",
+    "@cloudflare/codemode": "^0.5.6",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "timr-sdk": "workspace:*",
-    "zod": "^4.0.0"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
