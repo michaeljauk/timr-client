@@ -81,6 +81,7 @@ describe("working-time-requests", () => {
     expect(req.method).toBe("DELETE");
     expect(new URL(req.url).pathname).toBe("/v1/working-time-requests/req-1");
     expect(stderr).toEqual([WARNING]);
+    expect(stdout).toEqual([]);
   });
 
   it("list-deleted hits the :deleted path", async () => {
