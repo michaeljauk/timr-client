@@ -1,5 +1,12 @@
 # timr-sdk
 
+## [1.2.0](https://github.com/michaeljauk/timr-client/compare/timr-sdk-v1.1.0...timr-sdk-v1.2.0) (2026-11-25)
+
+
+### Miscellaneous Chores
+
+* **timr-sdk:** Synchronize timr-client versions
+
 ## [1.1.0](https://github.com/michaeljauk/timr-client/compare/timr-sdk-v1.0.1...timr-sdk-v1.1.0) (2026-10-29)
 
 

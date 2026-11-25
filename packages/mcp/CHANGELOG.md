@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/michaeljauk/timr-client/compare/timr-mcp-v1.1.0...timr-mcp-v1.2.0) (2026-11-25)
+
+
+### Miscellaneous Chores
+
+* **timr-mcp:** Synchronize timr-client versions
+
 ## [1.1.0](https://github.com/michaeljauk/timr-client/compare/timr-mcp-v1.0.1...timr-mcp-v1.1.0) (2026-10-29)
 
 
