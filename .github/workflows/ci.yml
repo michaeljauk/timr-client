@@ -19,6 +19,10 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm generate
+      - name: Fail on stale generated files
+        run: |
+          git status --porcelain
+          test -z "$(git status --porcelain)"
       - run: pnpm typecheck
       - run: pnpm build
       - run: pnpm test
