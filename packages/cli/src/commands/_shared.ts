@@ -2,6 +2,7 @@ import {
   createTimrClient,
   DEFAULT_SCOPE,
   DEFAULT_TOKEN_URL,
+  TimrError,
   type TimrClient,
 } from "timr-sdk";
 import { consola } from "consola";
@@ -117,4 +118,30 @@ export function numOrUndef(v: unknown): number | undefined {
 export function csv(v: unknown): string[] | undefined {
   if (typeof v !== "string" || v === "") return undefined;
   return v.split(",").map((s) => s.trim()).filter(Boolean);
+}
+
+export function warnUndocumented(resource: string): void {
+  process.stderr.write(
+    `warn: ${resource} is not part of the official timr API 1.0 spec and may stop working without notice.\n`,
+  );
+}
+
+export async function withUndocumentedHint<T>(
+  resource: string,
+  request: () => Promise<T>,
+  byId = false,
+): Promise<T> {
+  warnUndocumented(resource);
+  try {
+    return await request();
+  } catch (err) {
+    if (err instanceof TimrError && err.status === 404) {
+      process.stderr.write(
+        byId
+          ? `hint: the id was not found, or timr no longer serves ${resource}. Run \`timr ${resource} list --limit 1\` to tell them apart.\n`
+          : `hint: timr may no longer serve ${resource}. It is undocumented, so the API can drop it without notice.\n`,
+      );
+    }
+    throw err;
+  }
 }

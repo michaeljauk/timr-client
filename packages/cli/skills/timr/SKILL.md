@@ -50,7 +50,7 @@ Conventions (mechanical, derived from the OpenAPI spec):
 
 **Never guess field names.** Two ways to learn the real shape:
 
-1. Read [`SCHEMA.md`](./SCHEMA.md) next to this file - auto-generated from the pinned OpenAPI spec, lists every resource's fields with types.
+1. Read [`SCHEMA.md`](./SCHEMA.md) next to this file - auto-generated from the pinned OpenAPI spec plus the repo's `packages/cli/spec/undocumented.json`, lists every resource's fields with types.
 2. Ask the API. Example: *"what fields does a User have?"*
    ```bash
    timr users list --limit 1 | jq '.data[0] | keys'
@@ -80,6 +80,19 @@ while :; do
   [ -z "$token" ] && break
 done
 ```
+
+## Requests waiting for approval
+
+To list working-time requests that still need an approval:
+
+```bash
+timr working-time-requests list --states approval_requested \
+  | jq '.data[] | {id, user: .user.fullname, start, end, type: .working_time_type.name, state}'
+```
+
+Use `--states approval_requested,in_approval` to include requests that are already in an approval step. The item field is `state`, not `status`. Read the other fields in [`SCHEMA.md`](./SCHEMA.md).
+
+This command is undocumented upstream: timr API v1 serves it, but the official 1.0.0 spec does not list it. The CLI prints a warning on stderr on every call, and stdout stays JSON. If `list` fails with 404, timr may have dropped the endpoint. Tell the user, and do not retry. A 404 from `get <id>` or `delete <id>` usually means an unknown id. Requests for minute-based working-time types (for example a doctor's appointment of 30 minutes) did not appear in this endpoint in our tests, so an empty result does not prove that nothing waits for approval.
 
 ## Reconciling against Jira / Linear / GitHub
 

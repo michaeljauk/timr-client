@@ -1,0 +1,308 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "timr API paths missing from the official spec",
+    "version": "1.0.0",
+    "description": "These paths are served by timr API v1 but are missing from the official 1.0.0 spec. Observed 2026-11. They may change or disappear without notice. Remove an entry once the official spec defines it."
+  },
+  "paths": {
+    "/working-time-requests": {
+      "get": {
+        "operationId": "fetchWorkingTimeRequests",
+        "x-timr-undocumented": true,
+        "tags": ["Working Time Request"],
+        "summary": "List Working Time Requests",
+        "description": "Lists the Working Time Requests the authenticated user has access to. All filters are optional. Uses cursor pagination.",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Only return entries starting on or after this day.",
+            "required": false,
+            "schema": { "$ref": "#/components/schemas/LocalDate" }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "Only return entries starting on or before this day.",
+            "required": false,
+            "schema": { "$ref": "#/components/schemas/LocalDate" }
+          },
+          {
+            "name": "last_modified_after",
+            "in": "query",
+            "description": "Only return entries modified after this instant.",
+            "required": false,
+            "schema": { "$ref": "#/components/schemas/DateTime" }
+          },
+          {
+            "name": "working_time_types",
+            "in": "query",
+            "description": "Only return entries of these Working Time Type ids.",
+            "required": false,
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "states",
+            "in": "query",
+            "description": "Only return entries in these states.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/components/schemas/WorkingTimeRequestState" }
+            }
+          },
+          {
+            "name": "users",
+            "in": "query",
+            "description": "Only return entries of these user ids.",
+            "required": false,
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "substitutes",
+            "in": "query",
+            "description": "Only return entries with these substitute user ids.",
+            "required": false,
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of entries per page (at most 500).",
+            "required": false,
+            "schema": { "minimum": 1, "default": 20, "type": "integer", "format": "int32" }
+          },
+          {
+            "name": "sort_direction",
+            "in": "query",
+            "description": "Direction to sort the entries in.",
+            "required": false,
+            "schema": {
+              "allOf": [{ "$ref": "#/components/schemas/SortDirection" }],
+              "default": "asc"
+            }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "description": "Property to sort the entries by.",
+            "required": false,
+            "schema": {
+              "allOf": [{ "$ref": "#/components/schemas/WorkingTimeRequestsSortColumn" }],
+              "default": "start"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Page of Working Time Requests.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/WorkingTimeRequestsPage" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" }
+        }
+      }
+    },
+    "/working-time-requests/{id}": {
+      "get": {
+        "operationId": "getWorkingTimeRequest",
+        "x-timr-undocumented": true,
+        "tags": ["Working Time Request"],
+        "summary": "Get a Working Time Request",
+        "description": "Retrieves a single Working Time Request by its id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Working Time Request.",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Working Time Request.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/WorkingTimeRequest" }
+              }
+            }
+          },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "operationId": "deleteWorkingTimeRequest",
+        "x-timr-undocumented": true,
+        "tags": ["Working Time Request"],
+        "summary": "Delete a Working Time Request",
+        "description": "Deletes a single Working Time Request by its id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Working Time Request.",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Deleted. No content is returned." },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/working-time-requests:deleted": {
+      "get": {
+        "operationId": "fetchDeletedWorkingTimeRequests",
+        "x-timr-undocumented": true,
+        "tags": ["Working Time Request"],
+        "summary": "List deleted Working Time Requests",
+        "description": "Lists Working Time Requests that were deleted, so a client holding a local copy can reconcile.",
+        "parameters": [
+          {
+            "name": "last_modified_after",
+            "in": "query",
+            "description": "Only return entries modified after this instant.",
+            "required": false,
+            "schema": { "$ref": "#/components/schemas/DateTime" }
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of entries per page. Values above 500 are capped at 500.",
+            "required": false,
+            "schema": { "minimum": 1, "default": 20, "type": "integer", "format": "int32" }
+          },
+          {
+            "name": "sort_direction",
+            "in": "query",
+            "description": "Direction to sort the entries in.",
+            "required": false,
+            "schema": {
+              "allOf": [{ "$ref": "#/components/schemas/SortDirection" }],
+              "default": "asc"
+            }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "description": "Property to sort the entries by.",
+            "required": false,
+            "schema": {
+              "allOf": [{ "$ref": "#/components/schemas/DeletedEntrySortColumn" }],
+              "default": "last_modified"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Page of deleted Working Time Requests.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DeletedEntryPage" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "WorkingTimeRequestState": {
+        "type": "string",
+        "enum": [
+          "approval_requested",
+          "in_approval",
+          "approved",
+          "rejected",
+          "cancellation_requested",
+          "in_cancellation",
+          "cancelled"
+        ]
+      },
+      "WorkingTimeRequestsSortColumn": {
+        "type": "string",
+        "enum": ["start"]
+      },
+      "WorkingTimeRequest": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "start": { "$ref": "#/components/schemas/LocalDate" },
+          "start_half_day": { "type": "boolean" },
+          "end": { "$ref": "#/components/schemas/LocalDate" },
+          "end_half_day": { "type": "boolean" },
+          "notes": { "type": "string", "nullable": true },
+          "user": { "$ref": "#/components/schemas/UserPartial" },
+          "working_time_type": { "$ref": "#/components/schemas/WorkingTimeTypePartial" },
+          "substitute": {
+            "nullable": true,
+            "allOf": [{ "$ref": "#/components/schemas/UserPartial" }]
+          },
+          "created": { "$ref": "#/components/schemas/DateTime" },
+          "last_modified": { "$ref": "#/components/schemas/DateTime" },
+          "last_modified_by": {
+            "readOnly": true,
+            "nullable": true,
+            "allOf": [{ "$ref": "#/components/schemas/UserPartial" }]
+          },
+          "status_comment": { "type": "string" },
+          "state": { "$ref": "#/components/schemas/WorkingTimeRequestState" }
+        },
+        "required": [
+          "id",
+          "start",
+          "start_half_day",
+          "end",
+          "end_half_day",
+          "notes",
+          "user",
+          "working_time_type",
+          "created",
+          "last_modified",
+          "last_modified_by",
+          "status_comment",
+          "state"
+        ]
+      },
+      "WorkingTimeRequestsPage": {
+        "allOf": [
+          { "$ref": "#/components/schemas/PagingInformation" },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": { "$ref": "#/components/schemas/WorkingTimeRequest" }
+              }
+            },
+            "required": ["data"]
+          }
+        ]
+      }
+    }
+  }
+}

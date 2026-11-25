@@ -4,6 +4,8 @@ Auto-generated from `openapi.json` (timr API **1.0.0**). Do not hand-edit.
 
 Every list endpoint returns `{ data: T[], next_page_token: string | null }`. The tables below document `T` for each resource, plus all nested schemas referenced from responses.
 
+Resources marked _undocumented_ are served by timr API v1 but missing from the official spec. Their fields were observed, not published, and may change.
+
 ## List resources
 
 | CLI | Endpoint | Item type |
@@ -20,6 +22,7 @@ Every list endpoint returns `{ data: T[], next_page_token: string | null }`. The
 | `timr working-time-date-spans list` | `GET /working-time-date-spans` | [WorkingTimeDateSpan](#workingtimedatespan) |
 | `timr working-time-types list` | `GET /working-time-types` | [WorkingTimeType](#workingtimetype) |
 | `timr holiday-calendars list` | `GET /holiday-calendars` | [HolidayCalendarPartial](#holidaycalendarpartial) |
+| `timr working-time-requests list` _(undocumented)_ | `GET /working-time-requests` | [WorkingTimeRequest](#workingtimerequest) |
 
 ## Schemas
 
@@ -1187,6 +1190,40 @@ _no documented fields_
 | `metadata` | object \| null |  |
 
 ### WorkingTimeDateSpansSortColumn
+
+_no documented fields_
+
+### WorkingTimeRequest
+
+| field | type | required |
+|---|---|---|
+| `id` | string | yes |
+| `start` | [LocalDate](#localdate) | yes |
+| `start_half_day` | boolean | yes |
+| `end` | [LocalDate](#localdate) | yes |
+| `end_half_day` | boolean | yes |
+| `notes` | string \| null | yes |
+| `user` | [UserPartial](#userpartial) | yes |
+| `working_time_type` | [WorkingTimeTypePartial](#workingtimetypepartial) | yes |
+| `substitute` | [UserPartial](#userpartial) \| null |  |
+| `created` | [DateTime](#datetime) | yes |
+| `last_modified` | [DateTime](#datetime) | yes |
+| `last_modified_by` | [UserPartial](#userpartial) \| null | yes |
+| `status_comment` | string | yes |
+| `state` | [WorkingTimeRequestState](#workingtimerequeststate) | yes |
+
+### WorkingTimeRequestState
+
+_no documented fields_
+
+### WorkingTimeRequestsPage
+
+| field | type | required |
+|---|---|---|
+| `next_page_token` | string \| null | yes |
+| `data` | [WorkingTimeRequest](#workingtimerequest)[] | yes |
+
+### WorkingTimeRequestsSortColumn
 
 _no documented fields_
 
