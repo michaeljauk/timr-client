@@ -87,7 +87,7 @@ When you add or change a generated command's shape, update `packages/cli/skills/
 
 - Keep the skill focused on *workflows* (questions to answer, recipes with `jq`), not an endpoint-by-endpoint dump.
 - Update the skill whenever you add or rename a CLI command, change flag names, or add env vars.
-- Bump the `version:` field in the frontmatter in lockstep with the CLI's `package.json` version.
+- Do not edit the `version:` field in the frontmatter. Release Please bumps it together with the CLI's `package.json` through the `x-release-please-version` marker, and a test fails if the two differ.
 
 ## Extending the SDK
 

@@ -20,7 +20,8 @@
     "packages/cli": {
       "package-name": "timr-cli",
       "component": "timr-cli",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [{ "type": "generic", "path": "skills/timr/SKILL.md" }]
     },
     "packages/mcp": {
       "package-name": "timr-mcp",
