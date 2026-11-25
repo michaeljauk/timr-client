@@ -1,16 +1,18 @@
 #!/usr/bin/env node
-// Reads openapi.json and emits a human- and agent-readable field reference
-// at packages/cli/skills/timr/SCHEMA.md. Regenerated on every spec bump.
-import { readFileSync, writeFileSync } from "node:fs";
+// Reads openapi.json, merged with spec/undocumented.json, and emits a human-
+// and agent-readable field reference at packages/cli/skills/timr/SCHEMA.md.
+// Regenerated on every spec bump and every fragment edit.
+import { writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { loadSpec } from "./load-spec.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..", "..", "..");
 const specPath = resolve(repoRoot, "openapi.json");
 const outPath = resolve(__dirname, "..", "skills", "timr", "SCHEMA.md");
 
-const spec = JSON.parse(readFileSync(specPath, "utf8"));
+const spec = loadSpec(specPath, resolve(__dirname, "..", "spec", "undocumented.json"), () => {});
 const schemas = spec.components?.schemas ?? {};
 
 function resolveRef(ref) {
@@ -126,6 +128,10 @@ out.push(
   "Every list endpoint returns `{ data: T[], next_page_token: string | null }`. The tables below document `T` for each resource, plus all nested schemas referenced from responses.\n",
 );
 
+out.push(
+  "Resources marked _undocumented_ are served by timr API v1 but missing from the official spec. Their fields were observed, not published, and may change.\n",
+);
+
 out.push("## List resources\n");
 out.push("| CLI | Endpoint | Item type |");
 out.push("|---|---|---|");
@@ -134,7 +140,8 @@ for (const resource of resourceOrder()) {
   if (!op) continue;
   const item = listResponseItemSchema(resource);
   const typeCell = item?.name ? `[${item.name}](#${slug(item.name)})` : "_inline_";
-  out.push(`| \`timr ${resource} list\` | \`GET /${resource}\` | ${typeCell} |`);
+  const note = op["x-timr-undocumented"] ? " _(undocumented)_" : "";
+  out.push(`| \`timr ${resource} list\`${note} | \`GET /${resource}\` | ${typeCell} |`);
 }
 out.push("");
 

@@ -75,7 +75,7 @@ Optional overrides:
 
 All commands print JSON to stdout. Errors go to stderr with a non-zero exit code.
 
-Run `timr --help` for the full list - every resource in the OpenAPI spec has a matching subcommand (`cars`, `drive-logs`, `holiday-calendars`, `project-times`, `tasks`, `teams`, `users`, `work-schedule-models`, `working-times`, etc.).
+Run `timr --help` for the full list - every resource in the OpenAPI spec has a matching subcommand (`cars`, `drive-logs`, `holiday-calendars`, `project-times`, `tasks`, `teams`, `users`, `work-schedule-models`, `working-times`, etc.), plus `working-time-requests` from the repo's `packages/cli/spec/undocumented.json` (see below).
 
 Conventions:
 
@@ -113,6 +113,24 @@ timr users list \
   [--resigned] \
   [--limit 500]
 ```
+
+### `timr working-time-requests list`
+
+Lists requests for absence and similar working-time types, for example requests that wait for approval.
+
+```bash
+timr working-time-requests list \
+  --states approval_requested,in_approval \
+  [--users user-1,user-2] \
+  [--from 2030-01-01 --to 2030-12-31] \
+  [--limit 500]
+```
+
+States: `approval_requested`, `in_approval`, `approved`, `rejected`, `cancellation_requested`, `in_cancellation`, `cancelled`. The item field is `state`, and the filter is `--states`.
+
+This command is undocumented upstream. timr API v1 still serves `/working-time-requests`, but the official 1.0.0 spec does not list it. The CLI keeps it in the repo's `packages/cli/spec/undocumented.json` and prints one warning line on stderr before each call. stdout stays pure JSON. If timr stops serving the path, `list` fails with a 404, prints a hint on stderr and exits non-zero. For `get <id>` and `delete <id>`, the hint also names an unknown id as the likely cause. In our tests, requests for minute-based working-time types (for example a doctor's appointment of 30 minutes) did not appear in this endpoint.
+
+Other verbs: `get <id>`, `delete <id>`, `list-deleted`.
 
 ## Response shape
 
