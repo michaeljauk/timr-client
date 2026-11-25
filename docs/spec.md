@@ -24,11 +24,13 @@ The portal serves only the current version. Older `0.2.x` specs remain on Swagge
 
 `cars`, `drive-log-categories`, `drive-logs`, `holiday-calendars`, `project-times`, `tasks`, `teams`, `users`, `work-schedule-models`, `working-time-date-spans`, `working-time-types`, `working-times`, plus the soft-deleted variants (`...:deleted`).
 
-`working-time-requests` existed in `0.2.x` and is not part of `1.0.0`.
+`working-time-requests` existed in `0.2.x` and is not part of the `1.0.0` spec. timr API v1 still serves it (observed 2026-11), so the CLI restores it from `packages/cli/spec/undocumented.json`.
 
 ### CLI coverage
 
-Every resource in the spec gets a generated subcommand — `packages/cli/scripts/generate-commands.mjs` walks `openapi.json` and emits one file per resource under `packages/cli/src/commands/generated/`. Run `timr --help` to see the full surface. The SDK additionally exposes every path via `timr.GET("/path", ...)` with full type coverage.
+Every resource in the spec gets a generated subcommand - `packages/cli/scripts/generate-commands.mjs` walks `openapi.json` and emits one file per resource under `packages/cli/src/commands/generated/`. Run `timr --help` to see the full surface. The SDK additionally exposes every path of `openapi.json` via `timr.GET("/path", ...)` with full type coverage.
+
+Paths that v1 serves but the official spec lacks live in `packages/cli/spec/undocumented.json`, an OpenAPI fragment whose operations carry `x-timr-undocumented: true`. The generators merge it into `openapi.json` in memory; `openapi.json` itself stays untouched. If a spec bump defines a path and method from the fragment, the official entry wins and the generator warns that the fragment entry is obsolete. Remove it then. Commands for fragment operations print one warning line on stderr before each call, and a 404 adds a hint on stderr: for `list` and `list-deleted` that timr may have dropped the endpoint, for `get <id>` and `delete <id>` that the id is unknown or the endpoint is gone. The SDK types come from `openapi.json` only and do not cover these paths.
 
 ## Updating the spec
 

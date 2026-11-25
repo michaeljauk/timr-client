@@ -103,7 +103,8 @@ pnpm dlx timr-cli --help
 timr auth login
 timr auth status
 
-# Every resource in the spec has a matching subcommand
+# Every resource in the spec has a matching subcommand,
+# plus working-time-requests (undocumented upstream)
 timr --help
 timr project-times list --start-from 2026-04-01 --start-to 2026-04-30
 timr tasks list --name "Website" --bookable
