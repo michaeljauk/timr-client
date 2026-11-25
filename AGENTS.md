@@ -51,7 +51,11 @@ Spec bumps ship as their own PR.
 
 ## CLI commands are generated
 
-The CLI's per-resource commands under `packages/cli/src/commands/generated/` are emitted by `packages/cli/scripts/generate-commands.mjs` from `openapi.json`. Do **not** hand-edit those files. The generator maps:
+The CLI's per-resource commands under `packages/cli/src/commands/generated/` are emitted by `packages/cli/scripts/generate-commands.mjs` from `openapi.json`. Do **not** hand-edit those files.
+
+Paths that timr API v1 serves but the official spec lacks live in `packages/cli/spec/undocumented.json`. The generators merge that fragment into `openapi.json` in memory and mark its commands with a stderr warning. If a spec bump defines one of its entries, remove the entry. See [`docs/spec.md`](./docs/spec.md).
+
+The generator maps:
 
 - `GET /x` -> `list`, `POST /x` -> `create`
 - `GET /x/{id}` -> `get`, `PATCH` -> `update`, `PUT` -> `replace`, `DELETE` -> `delete`
