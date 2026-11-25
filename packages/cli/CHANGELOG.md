@@ -1,5 +1,17 @@
 # timr-cli
 
+## [1.2.0](https://github.com/michaeljauk/timr-client/compare/timr-cli-v1.1.0...timr-cli-v1.2.0) (2026-11-25)
+
+
+### Features
+
+* **cli:** restore working-time-requests from an undocumented spec fragment ([98595e3](https://github.com/michaeljauk/timr-client/commit/98595e3a774e7e74f6d8ba64dd4ec1a738aee4c4))
+
+
+### Bug Fixes
+
+* **cli:** print nothing when a command returns no body ([c9d36f2](https://github.com/michaeljauk/timr-client/commit/c9d36f21151280631e7078b1231127c762967815))
+
 ## [1.1.0](https://github.com/michaeljauk/timr-client/compare/timr-cli-v1.0.1...timr-cli-v1.1.0) (2026-10-29)
 
 
