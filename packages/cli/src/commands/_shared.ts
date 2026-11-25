@@ -79,6 +79,7 @@ export async function resolveClient(args: GlobalArgs): Promise<TimrClient> {
 }
 
 export function printJson(value: unknown): void {
+  if (value === undefined) return;
   process.stdout.write(JSON.stringify(value, null, 2) + "\n");
 }
 
