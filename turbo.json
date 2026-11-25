@@ -6,8 +6,8 @@
       "outputs": ["dist/**"]
     },
     "generate": {
-      "inputs": ["../../openapi.json", "scripts/**"],
-      "outputs": ["src/generated.ts", "src/commands/generated/**", "src/spec.json"]
+      "inputs": ["../../openapi.json", "scripts/**", "spec/**"],
+      "outputs": ["src/generated.ts", "src/commands/generated/**", "src/spec.json", "skills/timr/SCHEMA.md"]
     },
     "dev": {
       "cache": false,
