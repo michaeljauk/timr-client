@@ -1,5 +1,12 @@
 # timr-cli
 
+## [1.2.1](https://github.com/michaeljauk/timr-client/compare/timr-cli-v1.2.0...timr-cli-v1.2.1) (2026-11-26)
+
+
+### Bug Fixes
+
+* **cli:** report the package version in the skill frontmatter ([6f4d695](https://github.com/michaeljauk/timr-client/commit/6f4d695e61a8ae7931a7e53f04aaff4e8d1950be))
+
 ## [1.2.0](https://github.com/michaeljauk/timr-client/compare/timr-cli-v1.1.0...timr-cli-v1.2.0) (2026-11-25)
 
 
