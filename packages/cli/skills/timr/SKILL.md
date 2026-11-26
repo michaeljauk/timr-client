@@ -1,6 +1,6 @@
 ---
 name: timr
-version: 1.2.0 # x-release-please-version
+version: 1.2.1 # x-release-please-version
 description: "timr time-tracking CLI: query project times, tasks, users, teams, working times, cars, drive logs, holidays, and more. Use when the user asks about timr, time-tracking, tracked hours, project times, task bookings, or wants to audit who booked time in a period."
 ---
 
